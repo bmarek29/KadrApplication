@@ -12,14 +12,14 @@ package kadrapplication;
 public class Uzytkownik {
     private int id_uzytkownik;
     private String uprawnienia;
-    private String data_utworzenia;
+    private long data_utworzenia;
     private String login;
     private String haslo;
 
     public Uzytkownik() {
     }
 
-    public Uzytkownik(int id_uzytkownik, String uprawnienia, String data_utworzenia, String login, String haslo) {
+    public Uzytkownik(int id_uzytkownik, String uprawnienia, long data_utworzenia, String login, String haslo) {
         this.id_uzytkownik = id_uzytkownik;
         this.uprawnienia = uprawnienia;
         this.data_utworzenia = data_utworzenia;
@@ -43,11 +43,11 @@ public class Uzytkownik {
         this.uprawnienia = uprawnienia;
     }
 
-    public String getData_utworzenia() {
+    public long getData_utworzenia() {
         return data_utworzenia;
     }
 
-    public void setData_utworzenia(String data_utworzenia) {
+    public void setData_utworzenia(long data_utworzenia) {
         this.data_utworzenia = data_utworzenia;
     }
 

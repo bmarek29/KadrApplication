@@ -5,12 +5,21 @@
  */
 package kadrapplication;
 
+import java.awt.Color;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -52,8 +61,12 @@ public class Frame extends JFrame {
         showTabAtIndex(jPanelNowyPracownik, 1);  
         showTabAtIndex(jPanelNoweStanowisko, 2);
         showTabAtIndex(jPanelNoweStanowiskoPodlegle, 3);
+        
         jLabelNowyUzytkownikError.setVisible(false);
         jLabelNowyUzytkownikDodano.setVisible(false);
+        
+        jLabelNowyPracownikkError.setVisible(false);
+        jLabelNowyPracownikDodano.setVisible(false);
     }
 
     private void initTabbedPaneList() {
@@ -88,9 +101,19 @@ public class Frame extends JFrame {
         model.addElement("administrator");
         model.addElement("pracownik_kadr");
         model.addElement(("kierownik_kadr"));
-        
         return model;
     }
+    
+    public long generateDateInMiliseconds(){
+        Date d = new Date();
+        long milliseconds = d.getTime();
+        return milliseconds;
+    }
+    
+    public Date changeLongToDate(long milliseconds){
+        return new Date(milliseconds);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,16 +145,26 @@ public class Frame extends JFrame {
         jTextHaslo = new javax.swing.JPasswordField();
         jPanelNowyUzytkownik = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldLoginAdd = new javax.swing.JTextField();
+        jTextFieldNowyUzytkownikLoginAdd = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextFieldHasloAdd = new javax.swing.JTextField();
+        jTextFieldNowyUzytkownikHasloAdd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButtonNowyUzytkownikDodaj = new javax.swing.JButton();
         jLabelNowyUzytkownikError = new javax.swing.JLabel();
         jLabelNowyUzytkownikDodano = new javax.swing.JLabel();
         jComboBoxUprawnieniaAdd = new javax.swing.JComboBox();
         jPanelNoweStanowisko = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jTextFieldNoweStanowiskoNazwa = new javax.swing.JTextField();
+        jButtonNoweStanowiskoDodaj = new javax.swing.JButton();
+        jLabelNoweStanowiskoDodano = new javax.swing.JLabel();
+        jLabelNoweStanowiskoError = new javax.swing.JLabel();
         jPanelNoweStanowiskoPodlegle = new javax.swing.JPanel();
+        jLabelNoweStanowiskoPodlegleError2 = new javax.swing.JLabel();
+        jTextFieldNoweStanowiskoPodlegleNazwa1 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jLabelNoweStanowiskoPodlegleDodano1 = new javax.swing.JLabel();
+        jButtonNoweStanowiskoPodlegleDodaj = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanelNowyPracownik = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -141,17 +174,20 @@ public class Frame extends JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldNowyPracownikImie = new javax.swing.JTextField();
+        jTextFieldNowyPracownikNazwisko = new javax.swing.JTextField();
+        jTextFieldNowyPracownikPensja = new javax.swing.JTextField();
+        jTextFieldNowyPracownikDataUrodzenia = new javax.swing.JTextField();
+        jTextFieldNowyPracownikTytul = new javax.swing.JTextField();
+        jTextFieldNowyPracownikPesel = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        jComboBoxNowyPracownikPlec = new javax.swing.JComboBox();
+        jCheckBoxNowyPracownikStudent = new javax.swing.JCheckBox();
+        jLabelNowyPracownikkError = new javax.swing.JLabel();
+        jLabelNowyPracownikDodano = new javax.swing.JLabel();
+        jButtonNowyPracownikDodaj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 400));
@@ -293,6 +329,11 @@ public class Frame extends JFrame {
         jLabel4.setText("Uprawnienia");
 
         jButtonNowyUzytkownikDodaj.setText("Dodaj użytkownika");
+        jButtonNowyUzytkownikDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNowyUzytkownikDodajActionPerformed(evt);
+            }
+        });
 
         jLabelNowyUzytkownikError.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelNowyUzytkownikError.setForeground(new java.awt.Color(204, 0, 0));
@@ -317,8 +358,8 @@ public class Frame extends JFrame {
                 .addGap(50, 50, 50)
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonNowyUzytkownikDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                    .addComponent(jTextFieldLoginAdd)
-                    .addComponent(jTextFieldHasloAdd)
+                    .addComponent(jTextFieldNowyUzytkownikLoginAdd)
+                    .addComponent(jTextFieldNowyUzytkownikHasloAdd)
                     .addComponent(jComboBoxUprawnieniaAdd, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelNowyUzytkownikLayout.createSequentialGroup()
@@ -338,13 +379,13 @@ public class Frame extends JFrame {
                     .addComponent(jComboBoxUprawnieniaAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldLoginAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNowyUzytkownikLoginAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNowyUzytkownikError)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextFieldHasloAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNowyUzytkownikHasloAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNowyUzytkownikDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -356,30 +397,122 @@ public class Frame extends JFrame {
 
         jPanelNoweStanowisko.setName("Nowe stanowisko"); // NOI18N
 
+        jLabel16.setText("Nazwa");
+
+        jTextFieldNoweStanowiskoNazwa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNoweStanowiskoNazwaActionPerformed(evt);
+            }
+        });
+
+        jButtonNoweStanowiskoDodaj.setText("Dodaj użytkownika");
+        jButtonNoweStanowiskoDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNoweStanowiskoDodajActionPerformed(evt);
+            }
+        });
+
+        jLabelNoweStanowiskoDodano.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelNoweStanowiskoDodano.setForeground(new java.awt.Color(0, 153, 0));
+        jLabelNoweStanowiskoDodano.setText("Dodano pomyślnie.");
+
+        jLabelNoweStanowiskoError.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelNoweStanowiskoError.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelNoweStanowiskoError.setText("Pole musi być wypełnione!");
+
         javax.swing.GroupLayout jPanelNoweStanowiskoLayout = new javax.swing.GroupLayout(jPanelNoweStanowisko);
         jPanelNoweStanowisko.setLayout(jPanelNoweStanowiskoLayout);
         jPanelNoweStanowiskoLayout.setHorizontalGroup(
             jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
+            .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16)
+                .addGap(37, 37, 37)
+                .addComponent(jTextFieldNoweStanowiskoNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelNoweStanowiskoError)
+                .addContainerGap(297, Short.MAX_VALUE))
+            .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
+                    .addGap(112, 112, 112)
+                    .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabelNoweStanowiskoDodano)
+                    .addGap(179, 179, 179)))
         );
         jPanelNoweStanowiskoLayout.setVerticalGroup(
             jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+            .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jTextFieldNoweStanowiskoNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNoweStanowiskoError))
+                .addContainerGap(293, Short.MAX_VALUE))
+            .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
+                    .addGap(193, 193, 193)
+                    .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelNoweStanowiskoDodano))
+                    .addContainerGap(126, Short.MAX_VALUE)))
         );
 
         jTabbedPaneMain.addTab("Nowe stanowisko", jPanelNoweStanowisko);
 
         jPanelNoweStanowiskoPodlegle.setName("Nowe stanowisko podległe"); // NOI18N
 
+        jLabelNoweStanowiskoPodlegleError2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelNoweStanowiskoPodlegleError2.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelNoweStanowiskoPodlegleError2.setText("Pole musi być wypełnione!");
+
+        jTextFieldNoweStanowiskoPodlegleNazwa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Nazwa");
+
+        jLabelNoweStanowiskoPodlegleDodano1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelNoweStanowiskoPodlegleDodano1.setForeground(new java.awt.Color(0, 153, 0));
+        jLabelNoweStanowiskoPodlegleDodano1.setText("Dodano pomyślnie.");
+
+        jButtonNoweStanowiskoPodlegleDodaj.setText("Dodaj użytkownika");
+
         javax.swing.GroupLayout jPanelNoweStanowiskoPodlegleLayout = new javax.swing.GroupLayout(jPanelNoweStanowiskoPodlegle);
         jPanelNoweStanowiskoPodlegle.setLayout(jPanelNoweStanowiskoPodlegleLayout);
         jPanelNoweStanowiskoPodlegleLayout.setHorizontalGroup(
             jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
+            .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
+                .addGroup(jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel17)
+                        .addGap(37, 37, 37)
+                        .addComponent(jTextFieldNoweStanowiskoPodlegleNazwa1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNoweStanowiskoPodlegleError2))
+                    .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jButtonNoweStanowiskoPodlegleDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(jLabelNoweStanowiskoPodlegleDodano1)))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
         jPanelNoweStanowiskoPodlegleLayout.setVerticalGroup(
             jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+            .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jTextFieldNoweStanowiskoPodlegleNazwa1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNoweStanowiskoPodlegleError2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addGroup(jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonNoweStanowiskoPodlegleDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNoweStanowiskoPodlegleDodano1))
+                .addGap(137, 137, 137))
         );
 
         jTabbedPaneMain.addTab("Nowe stanowisko podległe", jPanelNoweStanowiskoPodlegle);
@@ -405,7 +538,7 @@ public class Frame extends JFrame {
 
         jLabel8.setText("Nazwisko");
 
-        jLabel9.setText("jLabel9");
+        jLabel9.setText("Pensja");
 
         jLabel10.setText("Data urodzenia");
 
@@ -415,27 +548,31 @@ public class Frame extends JFrame {
 
         jLabel13.setText("Student");
 
-        jTextField1.setText("jTextField1");
+        jTextFieldNowyPracownikImie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNowyPracownikImieActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField1");
-
-        jTextField3.setText("jTextField1");
-
-        jTextField4.setText("jTextField1");
-
-        jTextField5.setText("jTextField1");
-
-        jTextField6.setText("jTextField1");
-
-        jLabel14.setText("jLabel14");
-
-        jTextField8.setText("jTextField1");
+        jLabel14.setText("Stanowisko");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel15.setText("Płeć");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxNowyPracownikPlec.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jCheckBoxNowyPracownikStudent.setText("Tak");
+
+        jLabelNowyPracownikkError.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelNowyPracownikkError.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelNowyPracownikkError.setText("Pola z czerwonym tłem muszą zostać wypełnione!");
+
+        jLabelNowyPracownikDodano.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelNowyPracownikDodano.setForeground(new java.awt.Color(0, 153, 0));
+        jLabelNowyPracownikDodano.setText("Dodano pomyślnie.");
+
+        jButtonNowyPracownikDodaj.setText("Dodaj użytkownika");
 
         javax.swing.GroupLayout jPanelNowyPracownikLayout = new javax.swing.GroupLayout(jPanelNowyPracownik);
         jPanelNowyPracownik.setLayout(jPanelNowyPracownikLayout);
@@ -445,83 +582,91 @@ public class Frame extends JFrame {
                 .addContainerGap()
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldNowyPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldNowyPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldNowyPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(67, 67, 67)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldNowyPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNowyPracownikLayout.createSequentialGroup()
                         .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jTextFieldNowyPracownikNazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                            .addComponent(jComboBoxNowyPracownikPlec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNowyPracownikLayout.createSequentialGroup()
                         .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel14))
+                            .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(181, 181, 181))
+                            .addComponent(jCheckBoxNowyPracownikStudent)
+                            .addComponent(jTextFieldNowyPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(59, 59, 59)
+                .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(43, 43, 43)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelNowyPracownikkError)
+                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                        .addComponent(jButtonNowyPracownikDodaj)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelNowyPracownikDodano)))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanelNowyPracownikLayout.setVerticalGroup(
             jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jTextFieldNowyPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel14)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNowyPracownikNazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxNowyPracownikPlec, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNowyPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNowyPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(jTextFieldNowyPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabelNowyPracownikkError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addComponent(jLabel13)
+                    .addComponent(jCheckBoxNowyPracownikStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jTextFieldNowyPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jButtonNowyPracownikDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNowyPracownikDodano))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Nowy pracownik", jPanelNowyPracownik);
@@ -563,6 +708,51 @@ public class Frame extends JFrame {
         }
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
+    private void jTextFieldNowyPracownikImieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNowyPracownikImieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNowyPracownikImieActionPerformed
+
+    private void jTextFieldNoweStanowiskoNazwaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNoweStanowiskoNazwaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNoweStanowiskoNazwaActionPerformed
+
+    private void jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed
+
+    private void jButtonNowyUzytkownikDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNowyUzytkownikDodajActionPerformed
+        Uzytkownik u = new Uzytkownik();
+        if(jTextFieldNowyUzytkownikLoginAdd.getText().length() == 0){
+            jTextFieldNowyUzytkownikLoginAdd.setBackground(Color.red);
+            jLabelNowyUzytkownikError.setVisible(true);
+        }
+        if(jTextFieldNowyUzytkownikHasloAdd.getText().length() == 0){
+            jTextFieldNowyUzytkownikHasloAdd.setBackground(Color.red);
+            jLabelNowyUzytkownikError.setVisible(true);
+        }
+        if(jTextFieldNowyUzytkownikLoginAdd.getText().length() != 0 && jTextFieldNowyUzytkownikHasloAdd.getText().length() != 0){
+            u.setData_utworzenia(generateDateInMiliseconds());
+            u.setHaslo(jTextFieldNowyUzytkownikHasloAdd.getText());
+            u.setLogin(jTextFieldNowyUzytkownikLoginAdd.getText());
+            u.setUprawnienia(jComboBoxUprawnieniaAdd.getSelectedItem().toString());
+            try {
+                if(km.addUzytkownik(u) == 1){
+                    jLabelNowyUzytkownikDodano.setVisible(true);
+                    jLabelNowyUzytkownikError.setVisible(false);
+                    jTextFieldNowyUzytkownikHasloAdd.setBackground(Color.white);
+                    jTextFieldNowyUzytkownikLoginAdd.setBackground(Color.white);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_jButtonNowyUzytkownikDodajActionPerformed
+
+    private void jButtonNoweStanowiskoDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNoweStanowiskoDodajActionPerformed
+        
+    }//GEN-LAST:event_jButtonNoweStanowiskoDodajActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -603,13 +793,17 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonKartoteka;
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JButton jButtonLogowanie;
+    private javax.swing.JButton jButtonNoweStanowiskoDodaj;
+    private javax.swing.JButton jButtonNoweStanowiskoPodlegleDodaj;
     private javax.swing.JButton jButtonNowy;
+    private javax.swing.JButton jButtonNowyPracownikDodaj;
     private javax.swing.JButton jButtonNowyUzytkownikDodaj;
     private javax.swing.JButton jButtonUsuwanie;
     private javax.swing.JButton jButtonZarzadzanie;
     private javax.swing.JButton jButtonZatwierdzanie;
+    private javax.swing.JCheckBox jCheckBoxNowyPracownikStudent;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBoxNowyPracownikPlec;
     private javax.swing.JComboBox jComboBoxUprawnieniaAdd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -618,6 +812,8 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -627,6 +823,12 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelLoginError;
+    private javax.swing.JLabel jLabelNoweStanowiskoDodano;
+    private javax.swing.JLabel jLabelNoweStanowiskoError;
+    private javax.swing.JLabel jLabelNoweStanowiskoPodlegleDodano1;
+    private javax.swing.JLabel jLabelNoweStanowiskoPodlegleError2;
+    private javax.swing.JLabel jLabelNowyPracownikDodano;
+    private javax.swing.JLabel jLabelNowyPracownikkError;
     private javax.swing.JLabel jLabelNowyUzytkownikDodano;
     private javax.swing.JLabel jLabelNowyUzytkownikError;
     private javax.swing.JLabel jLabelWarningHaslo;
@@ -639,15 +841,16 @@ public class Frame extends JFrame {
     private javax.swing.JPanel jPanelNowyPracownik;
     private javax.swing.JPanel jPanelNowyUzytkownik;
     private javax.swing.JTabbedPane jTabbedPaneMain;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextFieldHasloAdd;
-    private javax.swing.JTextField jTextFieldLoginAdd;
+    private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
+    private javax.swing.JTextField jTextFieldNoweStanowiskoPodlegleNazwa1;
+    private javax.swing.JTextField jTextFieldNowyPracownikDataUrodzenia;
+    private javax.swing.JTextField jTextFieldNowyPracownikImie;
+    private javax.swing.JTextField jTextFieldNowyPracownikNazwisko;
+    private javax.swing.JTextField jTextFieldNowyPracownikPensja;
+    private javax.swing.JTextField jTextFieldNowyPracownikPesel;
+    private javax.swing.JTextField jTextFieldNowyPracownikTytul;
+    private javax.swing.JTextField jTextFieldNowyUzytkownikHasloAdd;
+    private javax.swing.JTextField jTextFieldNowyUzytkownikLoginAdd;
     private javax.swing.JPasswordField jTextHaslo;
     private javax.swing.JTextField jTextLogin;
     private javax.swing.JPanel tlo;

@@ -9,12 +9,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.util.List;
+
 
 /**
  *
@@ -66,7 +68,7 @@ public class KadrManager {
                 Uzytkownik uzytkownik = new Uzytkownik(
                         rs.getInt("id_uzytkownik"),
                         rs.getString("data_utworzenia"),
-                        rs.getString("uprawnienia"), 
+                        rs.getLong("uprawnienia"), 
                         rs.getString("login"),
                         rs.getString("haslo")
                 );
@@ -108,5 +110,28 @@ public class KadrManager {
             System.err.println("bladGetUserPrivilage "+e);
         }
         return privilage;
+    }
+    
+    public int addUzytkownik(Uzytkownik u) throws SQLException{
+        int dodano = 0;
+        
+        try {
+            getConnection();
+            ps = con.prepareStatement("insert into uzytkownik(data_utworzenia,uprawnienia,login,haslo) values (?,?,?,?)");
+            ps.setLong(1, u.getData_utworzenia());
+            ps.setString(2, u.getUprawnienia());
+            ps.setString(3, u.getLogin());
+            ps.setString(4, u.getHaslo());
+            dodano = ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println("error "+e);
+        }finally{
+            ps.close();
+            con.close();
+        }
+        return dodano;
     }
 }
