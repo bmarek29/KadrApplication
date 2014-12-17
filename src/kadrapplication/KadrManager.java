@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import java.util.List;
 
 /**
  *
@@ -55,5 +56,57 @@ public class KadrManager {
         return model;
     }
 
+    public List<Uzytkownik> getUzytkownikData(){
+        ArrayList<Uzytkownik> uzytkownicy = new ArrayList<Uzytkownik>();
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from uzytkownik");
+            uzytkownicy.clear();
+            while (rs.next()) {
+                Uzytkownik uzytkownik = new Uzytkownik(
+                        rs.getInt("id_uzytkownik"),
+                        rs.getString("data_utworzenia"),
+                        rs.getString("uprawnienia"), 
+                        rs.getString("login"),
+                        rs.getString("haslo")
+                );
+                uzytkownicy.add(uzytkownik);
+            }
 
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }    
+        return uzytkownicy;
+    }
+    
+    public boolean checkUserInDB(String login, String haslo){
+        String pass = "";
+        try {
+            getConnection();
+            rs = st.executeQuery("select haslo from uzytkownik where login='" + login + "'");
+            while(rs.next()){
+               pass = rs.getString("haslo"); 
+            }
+            if (pass.equals(haslo))
+                return true;
+        } catch (Exception e) {
+            System.err.println("bladcheckUserInDB "+e);
+        }
+        return false;
+    }
+    
+    public String getUserPrivilage(String login){
+        String privilage = "";
+        try {
+            getConnection();
+            rs = st.executeQuery("select uprawnienia from uzytkownik where login='" + login + "'");
+            while (rs.next()){
+               privilage = rs.getString("uprawnienia"); 
+            }
+            
+        } catch (Exception e) {
+            System.err.println("bladGetUserPrivilage "+e);
+        }
+        return privilage;
+    }
 }

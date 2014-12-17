@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package kadrapplication;
+
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+
 /**
  *
  * @author qqq
@@ -16,38 +18,47 @@ public class Frame extends JFrame {
 
     private ArrayList<JPanel> tabList = new ArrayList<>();
     KadrManager km = new KadrManager();
-    
+    private String privilage = "niezalogowany";
     public Frame() {
         super("Start");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e) {}  
+        } catch (Exception e) {
+        }
         setResizable(false);
-        setLocation(400, 150);
+        setLocationByPlatform(true);
         initComponents();
-        
+
         initTabbedPaneList();
+
+        //km.getPracownikData();
+    }
+    private void tabActionLogowanie(){     
+        jLabelWarningLogin.setVisible(false);
+        jLabelWarningHaslo.setVisible(false);
+        jLabelLoginError.setVisible(false);
     }
 
-    private void initTabbedPaneList(){
+    private void initTabbedPaneList() {
         fillTabList();
         hideTabs();
-        showTabAtIndex(jPanelLogowanie, 0);   
+        showTabAtIndex(jPanelLogowanie, 0);
+        tabActionLogowanie();
     }
-    
-    private void showTabAtIndex(JPanel jP, int index){
+
+    private void showTabAtIndex(JPanel jP, int index) {
         jTabbedPaneMain.add(jP, index);
         jTabbedPaneMain.setTitleAt(index, jP.getName());
     }
-    
-    private void fillTabList(){
+
+    private void fillTabList() {
         tabList.add(jPanelLogowanie);
         tabList.add(jPanel3);
         tabList.add(jPanel4);
         tabList.add(jPanel5);
     }
-    
+
     private void hideTabs() {
         for (JPanel tab : tabList) {
             jTabbedPaneMain.remove(tab);
@@ -73,11 +84,22 @@ public class Frame extends JFrame {
         tlo = new javax.swing.JPanel();
         jTabbedPaneMain = new javax.swing.JTabbedPane();
         jPanelLogowanie = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextLogin = new javax.swing.JTextField();
+        jButtonLogin = new javax.swing.JButton();
+        jLabelWarningLogin = new javax.swing.JLabel();
+        jLabelWarningHaslo = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelZalogowanoJako = new javax.swing.JLabel();
+        jLabelLoginError = new javax.swing.JLabel();
+        jTextHaslo = new javax.swing.JPasswordField();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonNowy.setText("Nowy");
         jButtonNowy.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +107,7 @@ public class Frame extends JFrame {
                 jButtonNowyActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonNowy, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 99, -1));
 
         jButtonZatwierdzanie.setText("Zatwierdzanie");
         jButtonZatwierdzanie.addActionListener(new java.awt.event.ActionListener() {
@@ -92,14 +115,19 @@ public class Frame extends JFrame {
                 jButtonZatwierdzanieActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonZatwierdzanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
         jButtonUsuwanie.setText("Usuwanie");
+        getContentPane().add(jButtonUsuwanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 69, 99, -1));
 
         jButtonKartoteka.setText("Kartoteka");
+        getContentPane().add(jButtonKartoteka, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 98, 99, -1));
 
         jButtonZarzadzanie.setText("Zarządzanie");
+        getContentPane().add(jButtonZarzadzanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 127, 99, -1));
 
         jButtonDrukowanie.setText("Drukowanie");
+        getContentPane().add(jButtonDrukowanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 156, 99, -1));
 
         jButtonLogowanie.setText("Logowanie");
         jButtonLogowanie.addActionListener(new java.awt.event.ActionListener() {
@@ -107,20 +135,92 @@ public class Frame extends JFrame {
                 jButtonLogowanieActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonLogowanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 363, 99, -1));
+
+        tlo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabbedPaneMain.setName(""); // NOI18N
 
         jPanelLogowanie.setName("Logowanie"); // NOI18N
 
+        jLabel1.setText("Login");
+
+        jLabel2.setText("Hasło");
+
+        jButtonLogin.setText("Zaloguj");
+        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoginActionPerformed(evt);
+            }
+        });
+
+        jLabelWarningLogin.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelWarningLogin.setText("pole nie może być puste!");
+        jLabelWarningLogin.setToolTipText("");
+
+        jLabelWarningHaslo.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelWarningHaslo.setText("pole nie może być puste!");
+
+        jLabel3.setText("Zalogowano jako:");
+
+        jLabelZalogowanoJako.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelZalogowanoJako.setText("nie zalogowano");
+
+        jLabelLoginError.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelLoginError.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelLoginError.setText("Nieprawidłowy login lub hasło.");
+
         javax.swing.GroupLayout jPanelLogowanieLayout = new javax.swing.GroupLayout(jPanelLogowanie);
         jPanelLogowanie.setLayout(jPanelLogowanieLayout);
         jPanelLogowanieLayout.setHorizontalGroup(
             jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
+            .addGroup(jPanelLogowanieLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelLogowanieLayout.createSequentialGroup()
+                        .addComponent(jLabelLoginError)
+                        .addGap(0, 4, Short.MAX_VALUE))
+                    .addComponent(jTextHaslo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextLogin))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelWarningLogin)
+                    .addComponent(jLabelWarningHaslo))
+                .addGap(340, 340, 340))
+            .addGroup(jPanelLogowanieLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelZalogowanoJako)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelLogowanieLayout.setVerticalGroup(
             jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGroup(jPanelLogowanieLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelWarningLogin))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelWarningHaslo)
+                    .addComponent(jTextHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonLogin)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelLoginError)
+                .addGap(144, 144, 144)
+                .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelZalogowanoJako))
+                .addContainerGap())
         );
 
         jTabbedPaneMain.addTab("Logowanie", jPanelLogowanie);
@@ -129,11 +229,11 @@ public class Frame extends JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("", jPanel3);
@@ -142,11 +242,11 @@ public class Frame extends JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("", jPanel4);
@@ -155,67 +255,18 @@ public class Frame extends JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("", jPanel5);
 
-        javax.swing.GroupLayout tloLayout = new javax.swing.GroupLayout(tlo);
-        tlo.setLayout(tloLayout);
-        tloLayout.setHorizontalGroup(
-            tloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneMain)
-        );
-        tloLayout.setVerticalGroup(
-            tloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneMain, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
+        tlo.add(jTabbedPaneMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonNowy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonZatwierdzanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(jButtonUsuwanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonLogowanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonKartoteka, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonZarzadzanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonDrukowanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tlo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tlo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonNowy)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonZatwierdzanie)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonUsuwanie)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonKartoteka)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonZarzadzanie)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDrukowanie)
-                        .addGap(184, 184, 184)
-                        .addComponent(jButtonLogowanie)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        getContentPane().add(tlo, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 11, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -229,8 +280,25 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonZatwierdzanieActionPerformed
 
     private void jButtonLogowanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogowanieActionPerformed
-        // TODO add your handling code here:
+        initTabbedPaneList();
     }//GEN-LAST:event_jButtonLogowanieActionPerformed
+
+    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        if (jTextLogin.getText().length() == 0)
+            jLabelWarningLogin.setVisible(true);
+        if (jTextHaslo.getText().length() == 0)
+            jLabelWarningHaslo.setVisible(true);
+        if (jTextLogin.getText().length() != 0 && jTextHaslo.getText().length() != 0){
+            if (km.checkUserInDB(jTextLogin.getText(), jTextHaslo.getText())){
+                this.privilage = km.getUserPrivilage(jTextLogin.getText());
+                jLabelZalogowanoJako.setText(this.privilage);
+                jLabelLoginError.setVisible(false);
+            }else{
+                jLabelLoginError.setVisible(true);
+            }
+        }
+            
+    }//GEN-LAST:event_jButtonLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,16 +338,26 @@ public class Frame extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDrukowanie;
     private javax.swing.JButton jButtonKartoteka;
+    private javax.swing.JButton jButtonLogin;
     private javax.swing.JButton jButtonLogowanie;
     private javax.swing.JButton jButtonNowy;
     private javax.swing.JButton jButtonUsuwanie;
     private javax.swing.JButton jButtonZarzadzanie;
     private javax.swing.JButton jButtonZatwierdzanie;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelLoginError;
+    private javax.swing.JLabel jLabelWarningHaslo;
+    private javax.swing.JLabel jLabelWarningLogin;
+    private javax.swing.JLabel jLabelZalogowanoJako;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelLogowanie;
     private javax.swing.JTabbedPane jTabbedPaneMain;
+    private javax.swing.JPasswordField jTextHaslo;
+    private javax.swing.JTextField jTextLogin;
     private javax.swing.JPanel tlo;
     // End of variables declaration//GEN-END:variables
 }
