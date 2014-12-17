@@ -11,13 +11,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 /**
  *
  * @author qqq
  */
-public class KadrManager{
+public class KadrManager {
+
     private Connection con;
     private Statement st;
     private ResultSet rs;
@@ -31,16 +34,16 @@ public class KadrManager{
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, "root", "");
             st = con.createStatement();
-            
+
             System.out.println("połączono");
         } catch (Exception e) {
-            System.out.println("sql error: "+e);
+            System.out.println("sql error: " + e);
         }
     }
-    
+
     public FillTable getPracownikData() {
-        ArrayList<Pracownik> pracowniks = new ArrayList<Pracownik>();
-        //Addon addon = new Addon();
+        ArrayList<Pracownik> pracowniks = new ArrayList<>();
+
         try {
             getConnection();
             rs = st.executeQuery("select * from pracownik");
@@ -51,4 +54,6 @@ public class KadrManager{
         }
         return model;
     }
+
+
 }

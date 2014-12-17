@@ -4,25 +4,54 @@
  * and open the template in the editor.
  */
 package kadrapplication;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
 /**
  *
  * @author qqq
  */
 public class Frame extends JFrame {
 
-    /**
-     * Creates new form Frame
-     */
+    private ArrayList<JPanel> tabList = new ArrayList<>();
+    KadrManager km = new KadrManager();
+    
     public Frame() {
         super("Start");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {}  
         setResizable(false);
         setLocation(400, 150);
         initComponents();
         
-    KadrManager km = new KadrManager();
-    km.getConnection();
+        initTabbedPaneList();
+    }
+
+    private void initTabbedPaneList(){
+        fillTabList();
+        hideTabs();
+        showTabAtIndex(jPanelLogowanie, 0);   
+    }
+    
+    private void showTabAtIndex(JPanel jP, int index){
+        jTabbedPaneMain.add(jP, index);
+        jTabbedPaneMain.setTitleAt(index, jP.getName());
+    }
+    
+    private void fillTabList(){
+        tabList.add(jPanelLogowanie);
+        tabList.add(jPanel3);
+        tabList.add(jPanel4);
+        tabList.add(jPanel5);
+    }
+    
+    private void hideTabs() {
+        for (JPanel tab : tabList) {
+            jTabbedPaneMain.remove(tab);
+        }
     }
 
     /**
@@ -34,40 +63,174 @@ public class Frame extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jButtonNowy = new javax.swing.JButton();
+        jButtonZatwierdzanie = new javax.swing.JButton();
+        jButtonUsuwanie = new javax.swing.JButton();
+        jButtonKartoteka = new javax.swing.JButton();
+        jButtonZarzadzanie = new javax.swing.JButton();
+        jButtonDrukowanie = new javax.swing.JButton();
+        jButtonLogowanie = new javax.swing.JButton();
+        tlo = new javax.swing.JPanel();
+        jTabbedPaneMain = new javax.swing.JTabbedPane();
+        jPanelLogowanie = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+        jButtonNowy.setText("Nowy");
+        jButtonNowy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNowyActionPerformed(evt);
+            }
+        });
+
+        jButtonZatwierdzanie.setText("Zatwierdzanie");
+        jButtonZatwierdzanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonZatwierdzanieActionPerformed(evt);
+            }
+        });
+
+        jButtonUsuwanie.setText("Usuwanie");
+
+        jButtonKartoteka.setText("Kartoteka");
+
+        jButtonZarzadzanie.setText("Zarządzanie");
+
+        jButtonDrukowanie.setText("Drukowanie");
+
+        jButtonLogowanie.setText("Logowanie");
+        jButtonLogowanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogowanieActionPerformed(evt);
+            }
+        });
+
+        jTabbedPaneMain.setName(""); // NOI18N
+
+        jPanelLogowanie.setName("Logowanie"); // NOI18N
+
+        javax.swing.GroupLayout jPanelLogowanieLayout = new javax.swing.GroupLayout(jPanelLogowanie);
+        jPanelLogowanie.setLayout(jPanelLogowanieLayout);
+        jPanelLogowanieLayout.setHorizontalGroup(
+            jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 539, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+        jPanelLogowanieLayout.setVerticalGroup(
+            jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 347, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("Logowanie", jPanelLogowanie);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 539, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 347, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("", jPanel3);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 539, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 347, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("", jPanel4);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 539, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 347, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("", jPanel5);
+
+        javax.swing.GroupLayout tloLayout = new javax.swing.GroupLayout(tlo);
+        tlo.setLayout(tloLayout);
+        tloLayout.setHorizontalGroup(
+            tloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPaneMain)
+        );
+        tloLayout.setVerticalGroup(
+            tloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPaneMain, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonNowy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonZatwierdzanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addComponent(jButtonUsuwanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonLogowanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonKartoteka, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonZarzadzanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonDrukowanie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tlo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tlo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonNowy)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonZatwierdzanie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonUsuwanie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonKartoteka)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonZarzadzanie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDrukowanie)
+                        .addGap(184, 184, 184)
+                        .addComponent(jButtonLogowanie)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonNowyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNowyActionPerformed
+
+    }//GEN-LAST:event_jButtonNowyActionPerformed
+
+    private void jButtonZatwierdzanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieActionPerformed
+
+    }//GEN-LAST:event_jButtonZatwierdzanieActionPerformed
+
+    private void jButtonLogowanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogowanieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonLogowanieActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,6 +268,18 @@ public class Frame extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButtonDrukowanie;
+    private javax.swing.JButton jButtonKartoteka;
+    private javax.swing.JButton jButtonLogowanie;
+    private javax.swing.JButton jButtonNowy;
+    private javax.swing.JButton jButtonUsuwanie;
+    private javax.swing.JButton jButtonZarzadzanie;
+    private javax.swing.JButton jButtonZatwierdzanie;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanelLogowanie;
+    private javax.swing.JTabbedPane jTabbedPaneMain;
+    private javax.swing.JPanel tlo;
     // End of variables declaration//GEN-END:variables
 }
