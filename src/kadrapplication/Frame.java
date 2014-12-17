@@ -19,6 +19,7 @@ public class Frame extends JFrame {
     private ArrayList<JPanel> tabList = new ArrayList<>();
     KadrManager km = new KadrManager();
     private String privilage = "niezalogowany";
+    
     public Frame() {
         super("Start");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,16 +35,24 @@ public class Frame extends JFrame {
 
         //km.getPracownikData();
     }
-    private void tabActionLogowanie(){     
+    private void tabActionLogowanie(){
+        hideTabs();
+        showTabAtIndex(jPanelLogowanie, 0);
         jLabelWarningLogin.setVisible(false);
         jLabelWarningHaslo.setVisible(false);
         jLabelLoginError.setVisible(false);
+        jLabelZalogowanoJako.setText(privilage);
+    }
+    
+    private void tabActionNowy(){
+        hideTabs();
+        showTabAtIndex(jPanelNowyUzytkownik, 0);
+        showTabAtIndex(jPanelNowyPracownik, 1);              
     }
 
     private void initTabbedPaneList() {
+        tabList.clear();
         fillTabList();
-        hideTabs();
-        showTabAtIndex(jPanelLogowanie, 0);
         tabActionLogowanie();
     }
 
@@ -54,9 +63,12 @@ public class Frame extends JFrame {
 
     private void fillTabList() {
         tabList.add(jPanelLogowanie);
-        tabList.add(jPanel3);
-        tabList.add(jPanel4);
-        tabList.add(jPanel5);
+        tabList.add(jPanelNowyUzytkownik);
+        tabList.add(jPanelNowyPracownik);
+        tabList.add(jPanelNowyUzytkownik);
+        tabList.add(jPanelNoweStanowiskoPodlegle);
+        tabList.add(jPanelNoweStanowisko);
+        tabList.add(jPanel6);
     }
 
     private void hideTabs() {
@@ -94,9 +106,11 @@ public class Frame extends JFrame {
         jLabelZalogowanoJako = new javax.swing.JLabel();
         jLabelLoginError = new javax.swing.JLabel();
         jTextHaslo = new javax.swing.JPasswordField();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        jPanelNowyUzytkownik = new javax.swing.JPanel();
+        jPanelNowyPracownik = new javax.swing.JPanel();
+        jPanelNoweStanowisko = new javax.swing.JPanel();
+        jPanelNoweStanowiskoPodlegle = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,8 +153,6 @@ public class Frame extends JFrame {
 
         tlo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPaneMain.setName(""); // NOI18N
-
         jPanelLogowanie.setName("Logowanie"); // NOI18N
 
         jLabel1.setText("Login");
@@ -182,11 +194,9 @@ public class Frame extends JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanelLogowanieLayout.createSequentialGroup()
-                        .addComponent(jLabelLoginError)
-                        .addGap(0, 4, Short.MAX_VALUE))
-                    .addComponent(jTextHaslo, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextLogin))
+                    .addComponent(jLabelLoginError)
+                    .addComponent(jTextHaslo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelWarningLogin)
@@ -225,44 +235,80 @@ public class Frame extends JFrame {
 
         jTabbedPaneMain.addTab("Logowanie", jPanelLogowanie);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanelNowyUzytkownik.setName("Nowy użytkownik"); // NOI18N
+
+        javax.swing.GroupLayout jPanelNowyUzytkownikLayout = new javax.swing.GroupLayout(jPanelNowyUzytkownik);
+        jPanelNowyUzytkownik.setLayout(jPanelNowyUzytkownikLayout);
+        jPanelNowyUzytkownikLayout.setHorizontalGroup(
+            jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 714, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanelNowyUzytkownikLayout.setVerticalGroup(
+            jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
-        jTabbedPaneMain.addTab("", jPanel3);
+        jTabbedPaneMain.addTab("Nowy użytkownik", jPanelNowyUzytkownik);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanelNowyPracownik.setName("Nowy pracownik"); // NOI18N
 
-        jTabbedPaneMain.addTab("", jPanel4);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelNowyPracownikLayout = new javax.swing.GroupLayout(jPanelNowyPracownik);
+        jPanelNowyPracownik.setLayout(jPanelNowyPracownikLayout);
+        jPanelNowyPracownikLayout.setHorizontalGroup(
+            jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 714, Short.MAX_VALUE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanelNowyPracownikLayout.setVerticalGroup(
+            jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
-        jTabbedPaneMain.addTab("", jPanel5);
+        jTabbedPaneMain.addTab("Nowy pracownik", jPanelNowyPracownik);
+
+        jPanelNoweStanowisko.setName("Nowe stanowisko"); // NOI18N
+
+        javax.swing.GroupLayout jPanelNoweStanowiskoLayout = new javax.swing.GroupLayout(jPanelNoweStanowisko);
+        jPanelNoweStanowisko.setLayout(jPanelNoweStanowiskoLayout);
+        jPanelNoweStanowiskoLayout.setHorizontalGroup(
+            jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 714, Short.MAX_VALUE)
+        );
+        jPanelNoweStanowiskoLayout.setVerticalGroup(
+            jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 379, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("Nowe stanowisko", jPanelNoweStanowisko);
+
+        jPanelNoweStanowiskoPodlegle.setName("Nowe stanowisko podległe"); // NOI18N
+
+        javax.swing.GroupLayout jPanelNoweStanowiskoPodlegleLayout = new javax.swing.GroupLayout(jPanelNoweStanowiskoPodlegle);
+        jPanelNoweStanowiskoPodlegle.setLayout(jPanelNoweStanowiskoPodlegleLayout);
+        jPanelNoweStanowiskoPodlegleLayout.setHorizontalGroup(
+            jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 714, Short.MAX_VALUE)
+        );
+        jPanelNoweStanowiskoPodlegleLayout.setVerticalGroup(
+            jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 379, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("Nowe stanowisko podległe", jPanelNoweStanowiskoPodlegle);
+
+        jPanel6.setName("..."); // NOI18N
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 714, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 379, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneMain.addTab("...", jPanel6);
 
         tlo.add(jTabbedPaneMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
@@ -272,7 +318,7 @@ public class Frame extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNowyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNowyActionPerformed
-
+        tabActionNowy();
     }//GEN-LAST:event_jButtonNowyActionPerformed
 
     private void jButtonZatwierdzanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieActionPerformed
@@ -285,19 +331,20 @@ public class Frame extends JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         if (jTextLogin.getText().length() == 0)
-            jLabelWarningLogin.setVisible(true);
-        if (jTextHaslo.getText().length() == 0)
-            jLabelWarningHaslo.setVisible(true);
-        if (jTextLogin.getText().length() != 0 && jTextHaslo.getText().length() != 0){
-            if (km.checkUserInDB(jTextLogin.getText(), jTextHaslo.getText())){
+        jLabelWarningLogin.setVisible(true);
+        if (String.valueOf(jTextHaslo.getPassword()).length() == 0)
+        jLabelWarningHaslo.setVisible(true);
+        if (jTextLogin.getText().length() != 0 && String.valueOf(jTextHaslo.getPassword()).length() != 0){
+            if (km.checkUserInDB(jTextLogin.getText(), String.valueOf(jTextHaslo.getPassword()))){
                 this.privilage = km.getUserPrivilage(jTextLogin.getText());
                 jLabelZalogowanoJako.setText(this.privilage);
                 jLabelLoginError.setVisible(false);
+                jLabelWarningHaslo.setVisible(false);
+                jLabelWarningLogin.setVisible(false);
             }else{
                 jLabelLoginError.setVisible(true);
             }
         }
-            
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     /**
@@ -351,10 +398,12 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabelWarningHaslo;
     private javax.swing.JLabel jLabelWarningLogin;
     private javax.swing.JLabel jLabelZalogowanoJako;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelLogowanie;
+    private javax.swing.JPanel jPanelNoweStanowisko;
+    private javax.swing.JPanel jPanelNoweStanowiskoPodlegle;
+    private javax.swing.JPanel jPanelNowyPracownik;
+    private javax.swing.JPanel jPanelNowyUzytkownik;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JPasswordField jTextHaslo;
     private javax.swing.JTextField jTextLogin;
