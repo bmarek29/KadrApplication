@@ -44,12 +44,13 @@ public class KadrManager {
         }
     }
 
-    public FillTable getPracownikData() {
+    public FillTable getPracownikDataTable() {
         ArrayList<Pracownik> pracowniks = new ArrayList<>();
 
         try {
             getConnection();
             rs = st.executeQuery("select * from pracownik");
+            
             this.model = new FillTable(rs);
 
         } catch (Exception e) {
