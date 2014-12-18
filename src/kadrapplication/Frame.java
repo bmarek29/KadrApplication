@@ -182,8 +182,7 @@ public class Frame extends JFrame {
     }
 
     public int getStanowiskoId(String nazwa) {
-        int id = km.getStanowiskoIdByNazwa(nazwa);
-        return id;
+        return km.getStanowiskoIdByNazwa(nazwa);
     }
 
     public void disablePracownikTextFields() {
@@ -276,6 +275,18 @@ public class Frame extends JFrame {
         jTextFieldNowyPracownikDataKoncaUmowy = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jPanelPrzegladanieUzytkownikow = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTablePrzUzytkownikow = new javax.swing.JTable();
+        jTextFieldPrzUzytkLogin = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        jTextFieldPrzUzytkUprawnienia = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        jTextFieldPrzUzytDataUtworzenia = new javax.swing.JTextField();
+        jTextFieldPrzUzytHaslo = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
         jPanelPrzegladaniePracownikow = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -761,15 +772,106 @@ public class Frame extends JFrame {
 
         jPanelPrzegladanieUzytkownikow.setName("Przeglądanie użytkowników"); // NOI18N
 
+        jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
+        jTablePrzUzytkownikow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePrzUzytkownikowMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(jTablePrzUzytkownikow);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 40, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jScrollPane4.setViewportView(jPanel2);
+
+        jTextFieldPrzUzytkLogin.setEditable(false);
+
+        jLabel33.setText("Uprawnienia");
+
+        jTextFieldPrzUzytkUprawnienia.setEditable(false);
+
+        jLabel34.setText("Data utworzenia");
+
+        jTextFieldPrzUzytDataUtworzenia.setEditable(false);
+
+        jTextFieldPrzUzytHaslo.setEditable(false);
+        jTextFieldPrzUzytHaslo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrzUzytHasloActionPerformed(evt);
+            }
+        });
+
+        jLabel36.setText("Login");
+
+        jLabel37.setText("Hasło");
+
         javax.swing.GroupLayout jPanelPrzegladanieUzytkownikowLayout = new javax.swing.GroupLayout(jPanelPrzegladanieUzytkownikow);
         jPanelPrzegladanieUzytkownikow.setLayout(jPanelPrzegladanieUzytkownikowLayout);
         jPanelPrzegladanieUzytkownikowLayout.setHorizontalGroup(
             jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                .addContainerGap(456, Short.MAX_VALUE)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel37)
+                    .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                        .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                                .addComponent(jLabel34)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel36)
+                                    .addComponent(jLabel33))
+                                .addGap(37, 37, 37)))
+                        .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldPrzUzytHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPrzUzytDataUtworzenia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPrzUzytkUprawnienia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPrzUzytkLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(42, 42, 42))
+            .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(245, Short.MAX_VALUE)))
         );
         jPanelPrzegladanieUzytkownikowLayout.setVerticalGroup(
             jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 336, Short.MAX_VALUE)
+            .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextFieldPrzUzytkLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel36))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPrzUzytkUprawnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPrzUzytDataUtworzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPrzUzytHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel37))
+                .addContainerGap(199, Short.MAX_VALUE))
+            .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jTabbedPaneMain.addTab("Przeglądanie użytkowników", jPanelPrzegladanieUzytkownikow);
@@ -821,30 +923,36 @@ public class Frame extends JFrame {
 
         jLabel23.setText("Nazwisko");
 
+        jTextFieldPrzPracownikNazwisko.setEditable(false);
         jTextFieldPrzPracownikNazwisko.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel24.setText("Płeć");
 
         jLabel25.setText("Data urodzenia");
 
+        jTextFieldPrzPracownikDataUrodzenia.setEditable(false);
         jTextFieldPrzPracownikDataUrodzenia.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel26.setText("Tytuł");
 
+        jTextFieldPrzPracownikTytul.setEditable(false);
         jTextFieldPrzPracownikTytul.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel27.setText("Pesel");
 
+        jTextFieldPrzPracownikPesel.setEditable(false);
         jTextFieldPrzPracownikPesel.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel28.setText("Student");
 
         jLabel29.setText("Pensja");
 
+        jTextFieldPrzPracownikPensja.setEditable(false);
         jTextFieldPrzPracownikPensja.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel30.setText("Data przyjęcia");
 
+        jTextFieldPrzPracownikDataPrzyjecia.setEditable(false);
         jTextFieldPrzPracownikDataPrzyjecia.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel31.setText("Stanowisko");
@@ -854,6 +962,7 @@ public class Frame extends JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jListPrzPracownikPodlegleList.setEnabled(false);
         jScrollPane3.setViewportView(jListPrzPracownikPodlegleList);
 
         jLabelPrzPracownikPodlegleLabel.setText("Podległe stanowiska");
@@ -862,8 +971,10 @@ public class Frame extends JFrame {
         jComboBoxPrzPracownikPlec.setEnabled(false);
 
         jComboBoxPrzPracownikStanowisko.setModel(cmbPracownikStanowisko());
+        jComboBoxPrzPracownikStanowisko.setEnabled(false);
 
         jCheckBoxPrzPracownikStudent.setText("Tak");
+        jCheckBoxPrzPracownikStudent.setEnabled(false);
         jCheckBoxPrzPracownikStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxPrzPracownikStudentActionPerformed(evt);
@@ -909,13 +1020,14 @@ public class Frame extends JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(20, 20, 20)
+                                .addComponent(jButton2))
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                 .addGap(17, 17, 17)
-                                .addComponent(jButtonPrzPracownikZatwierdz)))
+                                .addComponent(jButtonPrzPracownikZatwierdz))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -939,28 +1051,32 @@ public class Frame extends JFrame {
                                 .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldPrzPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jCheckBoxPrzPracownikStudent)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel22)
-                                .addComponent(jLabel23)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                    .addComponent(jLabel26)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                    .addComponent(jLabel25)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldPrzPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                    .addComponent(jLabel24)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldPrzPracownikNazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jComboBoxPrzPracownikPlec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                    .addComponent(jLabel27)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                        .addComponent(jLabel22)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel23)
+                                    .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                        .addComponent(jLabel26)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                        .addComponent(jLabel25)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldPrzPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                        .addComponent(jLabel24)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextFieldPrzPracownikNazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jComboBoxPrzPracownikPlec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                        .addComponent(jLabel27)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelPrzPracownikPodlegleLabel)
                         .addGap(44, 44, 44))))
@@ -983,13 +1099,17 @@ public class Frame extends JFrame {
                             .addComponent(jTextFieldPrzPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22)
-                            .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelPrzPracownikPodlegleLabel))
-                        .addGap(12, 12, 12)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addComponent(jLabelPrzPracownikPodlegleLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel22))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel23)
                                     .addComponent(jTextFieldPrzPracownikNazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1004,24 +1124,23 @@ public class Frame extends JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel26)
-                                    .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel27)
-                            .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28)
-                            .addComponent(jCheckBoxPrzPracownikStudent))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel29)
-                            .addComponent(jTextFieldPrzPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel30)
-                            .addComponent(jTextFieldPrzPracownikDataPrzyjecia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(11, 11, 11)
+                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jCheckBoxPrzPracownikStudent))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel29)
+                                    .addComponent(jTextFieldPrzPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel30)
+                                    .addComponent(jTextFieldPrzPracownikDataPrzyjecia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(8, 8, 8)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel31)
@@ -1297,6 +1416,23 @@ public class Frame extends JFrame {
         }
     }//GEN-LAST:event_jButtonPrzPracownikSzukajActionPerformed
 
+    private void jTextFieldPrzUzytHasloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrzUzytHasloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPrzUzytHasloActionPerformed
+
+    private void jTablePrzUzytkownikowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzUzytkownikowMouseClicked
+        long selectedId = (long)jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
+        Uzytkownik u;
+        u = km.getUzytkownikById(selectedId);
+        
+        jTextFieldPrzUzytkLogin.setText(u.getLogin());
+        jTextFieldPrzUzytkUprawnienia.setText(u.getUprawnienia());
+        jTextFieldPrzUzytDataUtworzenia.setText(dateLongToString(u.getData_utworzenia()));
+        jTextFieldPrzUzytHaslo.setText(u.getHaslo());
+        
+                
+    }//GEN-LAST:event_jTablePrzUzytkownikowMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1381,6 +1517,10 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1400,6 +1540,7 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabelZalogowanoJako;
     private javax.swing.JList jListPrzPracownikPodlegleList;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelLogowanie;
     private javax.swing.JPanel jPanelNoweStanowisko;
@@ -1411,8 +1552,11 @@ public class Frame extends JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTable jTablePrzPracownik;
+    private javax.swing.JTable jTablePrzUzytkownikow;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
     private javax.swing.JTextField jTextFieldNowyPracownikDataKoncaUmowy;
     private javax.swing.JTextField jTextFieldNowyPracownikDataUrodzenia;
@@ -1431,6 +1575,10 @@ public class Frame extends JFrame {
     private javax.swing.JTextField jTextFieldPrzPracownikSzukaj;
     private javax.swing.JTextField jTextFieldPrzPracownikTytul;
     private javax.swing.JTextField jTextFieldPrzPracwonikImie;
+    private javax.swing.JTextField jTextFieldPrzUzytDataUtworzenia;
+    private javax.swing.JTextField jTextFieldPrzUzytHaslo;
+    private javax.swing.JTextField jTextFieldPrzUzytkLogin;
+    private javax.swing.JTextField jTextFieldPrzUzytkUprawnienia;
     private javax.swing.JPasswordField jTextHaslo;
     private javax.swing.JTextField jTextLogin;
     private javax.swing.JPanel tlo;

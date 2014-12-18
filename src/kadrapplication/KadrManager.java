@@ -70,6 +70,27 @@ public class KadrManager {
         }
         return p;
     }
+    
+    public Uzytkownik getUzytkownikById(long id){
+        Uzytkownik p = null;
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from uzytkownik where id_uzytkownik='"+id+"'");
+            while(rs.next()){
+                p = new Uzytkownik(
+                        rs.getInt("id_uzytkownik"),
+                        rs.getLong("data_utworzenia"),
+                        rs.getString("uprawnienia"),
+                        rs.getString("login"),
+                        rs.getString("haslo")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return p;
+    }
+    
     public FillTable getPracownikDataTable() {
         try {
             getConnection();
@@ -147,9 +168,9 @@ public class KadrManager {
             uzytkownicy.clear();
             while (rs.next()) {
                 Uzytkownik uzytkownik = new Uzytkownik(
-                        rs.getInt("id_uzytkownik"),
-                        rs.getString("data_utworzenia"),
-                        rs.getLong("uprawnienia"), 
+                        rs.getInt("id_uzytkownik"),                        
+                        rs.getLong("data_utworzenia"),
+                        rs.getString("uprawnienia"),
                         rs.getString("login"),
                         rs.getString("haslo")
                 );
@@ -160,6 +181,19 @@ public class KadrManager {
             System.out.println("bład " + e);
         }    
         return uzytkownicy;
+    }
+    
+    public FillTable getUzytkownikDataTable() {
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_uzytkownik,uprawnienia,login from uzytkownik");
+            
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
     }
     
     public boolean checkUserInDB(String login, String haslo){

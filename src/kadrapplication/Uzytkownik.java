@@ -11,18 +11,19 @@ package kadrapplication;
  */
 public class Uzytkownik {
     private int id_uzytkownik;
+    private long data_utworzenia;    
     private String uprawnienia;
-    private long data_utworzenia;
     private String login;
     private String haslo;
 
     public Uzytkownik() {
     }
 
-    public Uzytkownik(int id_uzytkownik, String uprawnienia, long data_utworzenia, String login, String haslo) {
+    public Uzytkownik(int id_uzytkownik,long data_utworzenia  ,String uprawnienia, String login, String haslo) {
         this.id_uzytkownik = id_uzytkownik;
-        this.uprawnienia = uprawnienia;
+        
         this.data_utworzenia = data_utworzenia;
+        this.uprawnienia = uprawnienia;
         this.login = login;
         this.haslo = haslo;
     }
