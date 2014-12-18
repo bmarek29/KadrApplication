@@ -43,7 +43,7 @@ public class Frame extends JFrame {
         initComponents();
 
         initTabbedPaneList();
-
+        
         //km.getPracownikData();
     }
     private void tabActionLogowanie(){
@@ -59,14 +59,17 @@ public class Frame extends JFrame {
         hideTabs();
         showTabAtIndex(jPanelNowyUzytkownik, 0);
         showTabAtIndex(jPanelNowyPracownik, 1);  
-        showTabAtIndex(jPanelNoweStanowisko, 2);
-        showTabAtIndex(jPanelNoweStanowiskoPodlegle, 3);
+        showTabAtIndex(jPanelNoweStanowisko, 2);        
         
         jLabelNowyUzytkownikError.setVisible(false);
         jLabelNowyUzytkownikDodano.setVisible(false);
         
-        jLabelNowyPracownikkError.setVisible(false);
+        jLabelNoweStanowiskoError.setVisible(false);
+        jLabelNoweStanowiskoDodano.setVisible(false);
+        
         jLabelNowyPracownikDodano.setVisible(false);
+        jLabelNowyPracownikkError.setVisible(false);
+        jCheckBoxNowyPracownikStudent.setSelected(false);
     }
 
     private void initTabbedPaneList() {
@@ -85,7 +88,6 @@ public class Frame extends JFrame {
         tabList.add(jPanelNowyUzytkownik);
         tabList.add(jPanelNowyPracownik);
         tabList.add(jPanelNowyUzytkownik);
-        tabList.add(jPanelNoweStanowiskoPodlegle);
         tabList.add(jPanelNoweStanowisko);
         tabList.add(jPanel6);
     }
@@ -104,6 +106,28 @@ public class Frame extends JFrame {
         return model;
     }
     
+    public DefaultComboBoxModel cmbPracownikPlec(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("Mężczyzna");
+        model.addElement("Kobieta");
+        return model;
+    }
+    
+    public DefaultComboBoxModel cmbPracownikStanowisko(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        try {
+            List<Stanowisko> stanowiska = new ArrayList<>(km.getAllStanowiskoList());
+            for (Stanowisko s : stanowiska) {
+                model.addElement(s.getNazwa());
+            }
+
+        } catch (Exception e) {
+        }
+        return model;
+    }
+    
+    
+    
     public long generateDateInMiliseconds(){
         Date d = new Date();
         long milliseconds = d.getTime();
@@ -112,6 +136,18 @@ public class Frame extends JFrame {
     
     public Date changeLongToDate(long milliseconds){
         return new Date(milliseconds);
+    }
+    
+    public long getDateInMilisecFromString(String s) throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = formatter.parse(s);
+        long mili = date.getTime();        
+        return mili;
+    }
+    
+    public int getStanowiskoId(String nazwa){
+        int id = km.getStanowiskoIdByNazwa(nazwa); 
+        return id;
     }
     
     /**
@@ -159,12 +195,6 @@ public class Frame extends JFrame {
         jButtonNoweStanowiskoDodaj = new javax.swing.JButton();
         jLabelNoweStanowiskoDodano = new javax.swing.JLabel();
         jLabelNoweStanowiskoError = new javax.swing.JLabel();
-        jPanelNoweStanowiskoPodlegle = new javax.swing.JPanel();
-        jLabelNoweStanowiskoPodlegleError2 = new javax.swing.JLabel();
-        jTextFieldNoweStanowiskoPodlegleNazwa1 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabelNoweStanowiskoPodlegleDodano1 = new javax.swing.JLabel();
-        jButtonNoweStanowiskoPodlegleDodaj = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanelNowyPracownik = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -188,6 +218,7 @@ public class Frame extends JFrame {
         jLabelNowyPracownikkError = new javax.swing.JLabel();
         jLabelNowyPracownikDodano = new javax.swing.JLabel();
         jButtonNowyPracownikDodaj = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 400));
@@ -405,7 +436,7 @@ public class Frame extends JFrame {
             }
         });
 
-        jButtonNoweStanowiskoDodaj.setText("Dodaj użytkownika");
+        jButtonNoweStanowiskoDodaj.setText("Dodaj stanowisko");
         jButtonNoweStanowiskoDodaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNoweStanowiskoDodajActionPerformed(evt);
@@ -425,20 +456,23 @@ public class Frame extends JFrame {
         jPanelNoweStanowiskoLayout.setHorizontalGroup(
             jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel16)
-                .addGap(37, 37, 37)
-                .addComponent(jTextFieldNoweStanowiskoNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelNoweStanowiskoError)
+                .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel16)
+                        .addGap(37, 37, 37)
+                        .addComponent(jTextFieldNoweStanowiskoNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNoweStanowiskoError))
+                    .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(jLabelNoweStanowiskoDodano)))
                 .addContainerGap(297, Short.MAX_VALUE))
             .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
-                    .addGap(112, 112, 112)
-                    .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLabelNoweStanowiskoDodano)
-                    .addGap(179, 179, 179)))
+                    .addContainerGap(112, Short.MAX_VALUE)
+                    .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(446, 446, 446)))
         );
         jPanelNoweStanowiskoLayout.setVerticalGroup(
             jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,74 +482,17 @@ public class Frame extends JFrame {
                     .addComponent(jLabel16)
                     .addComponent(jTextFieldNoweStanowiskoNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNoweStanowiskoError))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addComponent(jLabelNoweStanowiskoDodano)
+                .addGap(135, 135, 135))
             .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelNoweStanowiskoLayout.createSequentialGroup()
                     .addGap(193, 193, 193)
-                    .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelNoweStanowiskoDodano))
+                    .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(126, Short.MAX_VALUE)))
         );
 
         jTabbedPaneMain.addTab("Nowe stanowisko", jPanelNoweStanowisko);
-
-        jPanelNoweStanowiskoPodlegle.setName("Nowe stanowisko podległe"); // NOI18N
-
-        jLabelNoweStanowiskoPodlegleError2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelNoweStanowiskoPodlegleError2.setForeground(new java.awt.Color(204, 0, 0));
-        jLabelNoweStanowiskoPodlegleError2.setText("Pole musi być wypełnione!");
-
-        jTextFieldNoweStanowiskoPodlegleNazwa1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed(evt);
-            }
-        });
-
-        jLabel17.setText("Nazwa");
-
-        jLabelNoweStanowiskoPodlegleDodano1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelNoweStanowiskoPodlegleDodano1.setForeground(new java.awt.Color(0, 153, 0));
-        jLabelNoweStanowiskoPodlegleDodano1.setText("Dodano pomyślnie.");
-
-        jButtonNoweStanowiskoPodlegleDodaj.setText("Dodaj użytkownika");
-
-        javax.swing.GroupLayout jPanelNoweStanowiskoPodlegleLayout = new javax.swing.GroupLayout(jPanelNoweStanowiskoPodlegle);
-        jPanelNoweStanowiskoPodlegle.setLayout(jPanelNoweStanowiskoPodlegleLayout);
-        jPanelNoweStanowiskoPodlegleLayout.setHorizontalGroup(
-            jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
-                .addGroup(jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel17)
-                        .addGap(37, 37, 37)
-                        .addComponent(jTextFieldNoweStanowiskoPodlegleNazwa1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelNoweStanowiskoPodlegleError2))
-                    .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jButtonNoweStanowiskoPodlegleDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(jLabelNoweStanowiskoPodlegleDodano1)))
-                .addContainerGap(278, Short.MAX_VALUE))
-        );
-        jPanelNoweStanowiskoPodlegleLayout.setVerticalGroup(
-            jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelNoweStanowiskoPodlegleLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jTextFieldNoweStanowiskoPodlegleNazwa1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNoweStanowiskoPodlegleError2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                .addGroup(jPanelNoweStanowiskoPodlegleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNoweStanowiskoPodlegleDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNoweStanowiskoPodlegleDodano1))
-                .addGap(137, 137, 137))
-        );
-
-        jTabbedPaneMain.addTab("Nowe stanowisko podległe", jPanelNoweStanowiskoPodlegle);
 
         jPanel6.setName("..."); // NOI18N
 
@@ -556,11 +533,11 @@ public class Frame extends JFrame {
 
         jLabel14.setText("Stanowisko");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(cmbPracownikStanowisko());
 
         jLabel15.setText("Płeć");
 
-        jComboBoxNowyPracownikPlec.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxNowyPracownikPlec.setModel(cmbPracownikPlec());
 
         jCheckBoxNowyPracownikStudent.setText("Tak");
 
@@ -573,6 +550,14 @@ public class Frame extends JFrame {
         jLabelNowyPracownikDodano.setText("Dodano pomyślnie.");
 
         jButtonNowyPracownikDodaj.setText("Dodaj użytkownika");
+        jButtonNowyPracownikDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNowyPracownikDodajActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel17.setText("format: dd/mm/rrrr");
 
         javax.swing.GroupLayout jPanelNowyPracownikLayout = new javax.swing.GroupLayout(jPanelNowyPracownik);
         jPanelNowyPracownik.setLayout(jPanelNowyPracownikLayout);
@@ -613,17 +598,22 @@ public class Frame extends JFrame {
                         .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBoxNowyPracownikStudent)
                             .addComponent(jTextFieldNowyPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(59, 59, 59)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(43, 43, 43)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelNowyPracownikkError)
+                        .addGap(59, 59, 59)
+                        .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(43, 43, 43)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelNowyPracownikkError)
+                            .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                                .addComponent(jButtonNowyPracownikDodaj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelNowyPracownikDodano))))
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jButtonNowyPracownikDodaj)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelNowyPracownikDodano)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel17)))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanelNowyPracownikLayout.setVerticalGroup(
@@ -646,7 +636,8 @@ public class Frame extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNowyPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -716,19 +707,19 @@ public class Frame extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNoweStanowiskoNazwaActionPerformed
 
-    private void jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNoweStanowiskoPodlegleNazwa1ActionPerformed
-
     private void jButtonNowyUzytkownikDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNowyUzytkownikDodajActionPerformed
         Uzytkownik u = new Uzytkownik();
         if(jTextFieldNowyUzytkownikLoginAdd.getText().length() == 0){
             jTextFieldNowyUzytkownikLoginAdd.setBackground(Color.red);
             jLabelNowyUzytkownikError.setVisible(true);
+        }else{
+            jTextFieldNowyUzytkownikLoginAdd.setBackground(Color.white);
         }
         if(jTextFieldNowyUzytkownikHasloAdd.getText().length() == 0){
             jTextFieldNowyUzytkownikHasloAdd.setBackground(Color.red);
             jLabelNowyUzytkownikError.setVisible(true);
+        }else{
+            jTextFieldNowyUzytkownikHasloAdd.setBackground(Color.white);
         }
         if(jTextFieldNowyUzytkownikLoginAdd.getText().length() != 0 && jTextFieldNowyUzytkownikHasloAdd.getText().length() != 0){
             u.setData_utworzenia(generateDateInMiliseconds());
@@ -750,8 +741,100 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonNowyUzytkownikDodajActionPerformed
 
     private void jButtonNoweStanowiskoDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNoweStanowiskoDodajActionPerformed
+        Stanowisko s = new Stanowisko();
+        if(jTextFieldNoweStanowiskoNazwa.getText().length() == 0){
+            jLabelNoweStanowiskoError.setVisible(true);
+        }else{
+            s.setNazwa(jTextFieldNoweStanowiskoNazwa.getText());
+            try {
+                if(km.addStanowisko(s) == 1){
+                    jLabelNoweStanowiskoDodano.setVisible(true);
+                    jLabelNoweStanowiskoError.setVisible(false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            
         
     }//GEN-LAST:event_jButtonNoweStanowiskoDodajActionPerformed
+
+    private void jButtonNowyPracownikDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNowyPracownikDodajActionPerformed
+        boolean error = false;
+        long dataUr = 0;
+        int student = 0;
+        if(jTextFieldNowyPracownikImie.getText().length() == 0){
+            jTextFieldNowyPracownikImie.setBackground(Color.red);
+            jLabelNowyPracownikkError.setVisible(true);
+            error = true;
+        }else{
+            jTextFieldNowyPracownikImie.setBackground(Color.white);
+        }
+        if(jTextFieldNowyPracownikNazwisko.getText().length() == 0){
+            jTextFieldNowyPracownikNazwisko.setBackground(Color.red);
+            jLabelNowyPracownikkError.setVisible(true);
+            error = true;
+        }else{
+            jTextFieldNowyPracownikNazwisko.setBackground(Color.white);
+        }
+        if(jTextFieldNowyPracownikDataUrodzenia.getText().length() == 0){
+            jTextFieldNowyPracownikDataUrodzenia.setBackground(Color.red);
+            jLabelNowyPracownikkError.setVisible(true);
+            error = true;
+        }else{
+            jTextFieldNowyPracownikDataUrodzenia.setBackground(Color.white);
+        }        
+        if(jTextFieldNowyPracownikPesel.getText().length() == 0){
+            jTextFieldNowyPracownikPesel.setBackground(Color.red);
+            jLabelNowyPracownikkError.setVisible(true);
+            error = true;
+        }else{
+            jTextFieldNowyPracownikPesel.setBackground(Color.white);
+        }
+        if(jTextFieldNowyPracownikPensja.getText().length() == 0){
+            jTextFieldNowyPracownikPensja.setBackground(Color.red);
+            jLabelNowyPracownikkError.setVisible(true);
+            error = true;
+        }else{
+            jTextFieldNowyPracownikPensja.setBackground(Color.white);
+        }
+        if(!error){
+            if(jCheckBoxNowyPracownikStudent.isSelected()){
+                student = 0;
+            }else{
+                student = 1;
+            }
+            try {
+                dataUr = getDateInMilisecFromString(jTextFieldNowyPracownikDataUrodzenia.getText());
+            } catch (ParseException ex) {
+                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+            Pracownik p = new Pracownik(
+                    0,
+                    getStanowiskoId(cmbPracownikStanowisko().getSelectedItem().toString()),
+                    jTextFieldNowyPracownikImie.getText(),
+                    jTextFieldNowyPracownikNazwisko.getText(),
+                    dataUr,
+                    cmbPracownikPlec().getSelectedItem().toString(),
+                    jTextFieldNowyPracownikTytul.getText(),
+                    jTextFieldNowyPracownikPesel.getText(),
+                    student,
+                    generateDateInMiliseconds(),
+                    Integer.valueOf(jTextFieldNowyPracownikPensja.getText())
+            );
+            if(km.addPracownik(p) == 1){
+                jTextFieldNowyPracownikImie.setBackground(Color.white);
+                jTextFieldNowyPracownikNazwisko.setBackground(Color.white);
+                jTextFieldNowyPracownikPensja.setBackground(Color.white);
+                jTextFieldNowyPracownikPesel.setBackground(Color.white);
+                jTextFieldNowyPracownikDataUrodzenia.setBackground(Color.white);
+                jLabelNowyPracownikDodano.setVisible(true);
+                jLabelNowyPracownikkError.setVisible(false);
+            }
+        }
+            
+    }//GEN-LAST:event_jButtonNowyPracownikDodajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -794,7 +877,6 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JButton jButtonLogowanie;
     private javax.swing.JButton jButtonNoweStanowiskoDodaj;
-    private javax.swing.JButton jButtonNoweStanowiskoPodlegleDodaj;
     private javax.swing.JButton jButtonNowy;
     private javax.swing.JButton jButtonNowyPracownikDodaj;
     private javax.swing.JButton jButtonNowyUzytkownikDodaj;
@@ -825,8 +907,6 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabelLoginError;
     private javax.swing.JLabel jLabelNoweStanowiskoDodano;
     private javax.swing.JLabel jLabelNoweStanowiskoError;
-    private javax.swing.JLabel jLabelNoweStanowiskoPodlegleDodano1;
-    private javax.swing.JLabel jLabelNoweStanowiskoPodlegleError2;
     private javax.swing.JLabel jLabelNowyPracownikDodano;
     private javax.swing.JLabel jLabelNowyPracownikkError;
     private javax.swing.JLabel jLabelNowyUzytkownikDodano;
@@ -837,12 +917,10 @@ public class Frame extends JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelLogowanie;
     private javax.swing.JPanel jPanelNoweStanowisko;
-    private javax.swing.JPanel jPanelNoweStanowiskoPodlegle;
     private javax.swing.JPanel jPanelNowyPracownik;
     private javax.swing.JPanel jPanelNowyUzytkownik;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
-    private javax.swing.JTextField jTextFieldNoweStanowiskoPodlegleNazwa1;
     private javax.swing.JTextField jTextFieldNowyPracownikDataUrodzenia;
     private javax.swing.JTextField jTextFieldNowyPracownikImie;
     private javax.swing.JTextField jTextFieldNowyPracownikNazwisko;

@@ -114,7 +114,6 @@ public class KadrManager {
     
     public int addUzytkownik(Uzytkownik u) throws SQLException{
         int dodano = 0;
-        
         try {
             getConnection();
             ps = con.prepareStatement("insert into uzytkownik(data_utworzenia,uprawnienia,login,haslo) values (?,?,?,?)");
@@ -131,6 +130,101 @@ public class KadrManager {
         }finally{
             ps.close();
             con.close();
+        }
+        return dodano;
+    }
+    
+    public int addStanowisko(Stanowisko s) throws SQLException{
+        int dodano = 0;
+        try {
+            getConnection();
+            ps = con.prepareStatement("insert into stanowisko(nazwa) values (?)");
+            ps.setString(1, s.getNazwa());
+            
+            dodano = ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println("error "+e);
+        }finally{
+            ps.close();
+            con.close();
+        }
+        return dodano;
+    }
+    
+    public List<Stanowisko> getAllStanowiskoList() {
+        List<Stanowisko> stanowiska = new ArrayList<>();
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from stanowisko");
+            while (rs.next()) {
+                Stanowisko s = new Stanowisko(
+                        rs.getInt("id_stanowisko"),
+                        rs.getString("nazwa")
+                );                        
+                stanowiska.add(s);
+            }
+
+        } catch (Exception e) {
+            System.out.println("bład: " + e);
+        }
+
+        return  stanowiska;
+    }
+    public int getStanowiskoIdByNazwa(String nazwa){
+        int id = 0;
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_stanowisko from stanowisko where nazwa='" + nazwa + "'");
+            while (rs.next()){
+               id = rs.getInt("id_stanowisko"); 
+            }
+            
+        } catch (Exception e) {
+            System.err.println("bladGetUserPrivilage "+e);
+        }
+        return id;
+    }
+    
+    public int addPracownik(Pracownik p) {
+        int dodano = 0;
+        try {
+            getConnection();
+            //insert into pracownik(stanowisko_id_stanowisko,imie,nazwisko,`płeć`,
+            //data_urodzenia,tytul,pesel,czy_studiuje,pensja)VALUES(0,'a','a','a',2002,'a',999,0,09);
+            ps = con.prepareStatement("insert into pracownik("
+                    + "stanowisko_id_stanowisko,"
+                    + "imie,"
+                    + "nazwisko,"
+                    + "plec,"
+                    + "data_urodzenia,"
+                    + "tytul,"
+                    + "pesel,"
+                    + "czy_studiuje,"
+                    + "pensja,"
+                    + "data_przyjecia"
+                    + ") values(?,?,?,?,?,?,?,?,?,?)");
+            ps.setInt(1, p.getStanowisko_id_stanowisko());
+            ps.setString(2, p.getImie());
+            ps.setString(3, p.getNazwisko());
+            ps.setString(4, p.getPlec());
+            ps.setLong(5, p.getData_urodzenia());
+            ps.setString(6, p.getTytul());
+            ps.setString(7, p.getPesel());
+            ps.setInt(8, p.getCzy_studiuje());
+            ps.setInt(9, p.getPensja());
+            ps.setLong(10, p.getData_przyjecia());
+            
+
+            dodano = ps.executeUpdate();
+
+            ps.close();
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println("błąd: " + e);
         }
         return dodano;
     }

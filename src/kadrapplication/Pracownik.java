@@ -10,42 +10,64 @@ package kadrapplication;
  * @author qqq
  */
 public class Pracownik {
-private int id_pracownik;
+    
 
+    private int id_pracownik;
+    private int stanowisko_id_stanowisko;
     private String imie;
     private String nazwisko;
-    private String data_urodzenia;
+    private long data_urodzenia;
+    private String plec;
     private String tytul;
     private String pesel;
-    private String id_stanowisko;
-    private boolean czy_studiuje;
-    private String data_przyjecia;
+    private int czy_studiuje;
+    private long data_przyjecia;
     private int pensja;
 
+    public long getData_urodzenia() {
+        return data_urodzenia;
+    }
+
+    public void setData_urodzenia(long data_urodzenia) {
+        this.data_urodzenia = data_urodzenia;
+    }
+
+    public String getPlec() {
+        return plec;
+    }
+
+    public void setPlec(String plec) {
+        this.plec = plec;
+    }
+
+    public int getStanowisko_id_stanowisko() {
+        return stanowisko_id_stanowisko;
+    }
+
+    public void setStanowisko_id_stanowisko(int stanowisko_id_stanowisko) {
+        this.stanowisko_id_stanowisko = stanowisko_id_stanowisko;
+    }
+
+    
     public Pracownik() {
     }
     
     
-    public Pracownik(int id_pracownik, String imie, String nazwisko, String data_urodzenia, String tytul, String pesel, String id_stanowisko, boolean czy_studiuje, String data_przyjecia, int pensja) {
+    public Pracownik(int id_pracownik, int stanowisko_id_stanowisko, String imie, String nazwisko, long data_urodzenia, String plec, String tytul, String pesel, int czy_studiuje, long data_przyjecia, int pensja) {
         this.id_pracownik = id_pracownik;
+        this.stanowisko_id_stanowisko = stanowisko_id_stanowisko;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.data_urodzenia = data_urodzenia;
+        this.plec = plec;
         this.tytul = tytul;
         this.pesel = pesel;
-        this.id_stanowisko = id_stanowisko;
         this.czy_studiuje = czy_studiuje;
         this.data_przyjecia = data_przyjecia;
         this.pensja = pensja;
+        
     }
 
-    public String getId_stanowisko() {
-        return id_stanowisko;
-    }
-
-    public void setId_stanowisko(String id_stanowisko) {
-        this.id_stanowisko = id_stanowisko;
-    }
 
     
     public int getId_pracownik() {
@@ -72,14 +94,6 @@ private int id_pracownik;
         this.nazwisko = nazwisko;
     }
 
-    public String getData_urodzenia() {
-        return data_urodzenia;
-    }
-
-    public void setData_urodzenia(String data_urodzenia) {
-        this.data_urodzenia = data_urodzenia;
-    }
-
     public String getTytul() {
         return tytul;
     }
@@ -97,19 +111,19 @@ private int id_pracownik;
     }
 
 
-    public boolean isCzy_studiuje() {
+    public int getCzy_studiuje() {
         return czy_studiuje;
     }
 
-    public void setCzy_studiuje(boolean czy_studiuje) {
+    public void setCzy_studiuje(int czy_studiuje) {
         this.czy_studiuje = czy_studiuje;
     }
 
-    public String getData_przyjecia() {
+    public long getData_przyjecia() {
         return data_przyjecia;
     }
 
-    public void setData_przyjecia(String data_przyjecia) {
+    public void setData_przyjecia(long data_przyjecia) {
         this.data_przyjecia = data_przyjecia;
     }
 
