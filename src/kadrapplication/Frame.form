@@ -859,11 +859,11 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="104" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldPrzPracownikSzukaj" min="-2" pref="104" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jComboBoxPracownikSzukaj" min="-2" pref="101" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButtonPrzPracownikSzukaj" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -966,9 +966,9 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButtonPrzPracownikSzukaj" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldPrzPracownikSzukaj" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jComboBoxPracownikSzukaj" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1109,9 +1109,9 @@
                     <Property name="text" type="java.lang.String" value="Tekst wyszukiwany"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="jTextFieldPrzPracownikSzukaj">
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldPrzPracownikSzukajActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel22">
@@ -1274,10 +1274,13 @@
                     <Property name="text" type="java.lang.String" value="Usu&#x144; pracownika"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton3">
+                <Component class="javax.swing.JButton" name="jButtonPrzPracownikSzukaj">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Szukaj"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzPracownikSzukajActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButtonPrzPracownikZatwierdz">
                   <Properties>

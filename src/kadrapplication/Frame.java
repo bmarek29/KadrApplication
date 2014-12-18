@@ -283,7 +283,7 @@ public class Frame extends JFrame {
         jTablePrzPracownik = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldPrzPracownikSzukaj = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jTextFieldPrzPracwonikImie = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -309,7 +309,7 @@ public class Frame extends JFrame {
         jCheckBoxPrzPracownikStudent = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonPrzPracownikSzukaj = new javax.swing.JButton();
         jButtonPrzPracownikZatwierdz = new javax.swing.JButton();
         jComboBoxPracownikSzukaj = new javax.swing.JComboBox();
         jPanelPrzegladanieStanowisk = new javax.swing.JPanel();
@@ -808,9 +808,9 @@ public class Frame extends JFrame {
 
         jLabel19.setText("Tekst wyszukiwany");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldPrzPracownikSzukaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldPrzPracownikSzukajActionPerformed(evt);
             }
         });
 
@@ -874,7 +874,12 @@ public class Frame extends JFrame {
 
         jButton2.setText("Usuń pracownika");
 
-        jButton3.setText("Szukaj");
+        jButtonPrzPracownikSzukaj.setText("Szukaj");
+        jButtonPrzPracownikSzukaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrzPracownikSzukajActionPerformed(evt);
+            }
+        });
 
         jButtonPrzPracownikZatwierdz.setText("Zatwierdź");
 
@@ -892,11 +897,11 @@ public class Frame extends JFrame {
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldPrzPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
+                                .addComponent(jButtonPrzPracownikSzukaj)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1))
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
@@ -973,9 +978,9 @@ public class Frame extends JFrame {
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jButton2)
-                            .addComponent(jButton3)
+                            .addComponent(jButtonPrzPracownikSzukaj)
                             .addComponent(jLabel19)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPrzPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1244,44 +1249,53 @@ public class Frame extends JFrame {
         jTablePrzPracownik.setModel(km.getPracownikDataTable());
     }//GEN-LAST:event_jButtonKartotekaActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldPrzPracownikSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrzPracownikSzukajActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldPrzPracownikSzukajActionPerformed
 
     private void jCheckBoxPrzPracownikStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPrzPracownikStudentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxPrzPracownikStudentActionPerformed
 
     private void jTablePrzPracownikMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzPracownikMouseClicked
-        int selectedRow = jTablePrzPracownik.getSelectedRow();
-        int selectedId = km.getPracownikDataList().get(selectedRow).getId_pracownik();
-        jTextFieldPrzPracwonikImie.setText(km.getPracownikDataList().get(selectedRow).getImie());
-        jTextFieldPrzPracownikNazwisko.setText(km.getPracownikDataList().get(selectedRow).getNazwisko());
-        if(km.getPracownikDataList().get(selectedRow).getPlec().equalsIgnoreCase("Mezczyzna")){
+        int selectedId = (int)jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+        Pracownik p;
+        p = km.getPracownikById(selectedId);
+        
+        jTextFieldPrzPracwonikImie.setText(p.getImie());
+        jTextFieldPrzPracownikNazwisko.setText(p.getNazwisko());
+        if(p.getPlec().equalsIgnoreCase("Mezczyzna")){
             jComboBoxPrzPracownikPlec.setSelectedIndex(0);
         }else{
             jComboBoxPrzPracownikPlec.setSelectedIndex(1);
         }
-        jTextFieldPrzPracownikPesel.setText(km.getPracownikDataList().get(selectedRow).getPesel());
-        jTextFieldPrzPracownikPensja.setText(Integer.toString(km.getPracownikDataList().get(selectedRow).getPensja()));
-        jTextFieldPrzPracownikTytul.setText(km.getPracownikDataList().get(selectedRow).getTytul());
-        jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(km.getPracownikDataList().get(selectedRow).getData_przyjecia()));
-        jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(km.getPracownikDataList().get(selectedRow).getData_urodzenia()));
-        if(km.getPracownikDataList().get(selectedRow).getCzy_studiuje() == 0){
+        jTextFieldPrzPracownikPesel.setText(p.getPesel());
+        jTextFieldPrzPracownikPensja.setText(Integer.toString(p.getPensja()));
+        jTextFieldPrzPracownikTytul.setText(p.getTytul());
+        jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(p.getData_przyjecia()));
+        jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
+        if(p.getCzy_studiuje() == 0){
             jCheckBoxPrzPracownikStudent.setSelected(true);
         }else{
             jCheckBoxPrzPracownikStudent.setSelected(false);
         }
         
-        int stanowiskoPracownika = km.getPracownikDataList().get(selectedRow).getStanowisko_id_stanowisko();
+        int stanowiskoPracownika = p.getStanowisko_id_stanowisko();
         String nazwaStanowiska = km.getStanowiskoNazwaById(stanowiskoPracownika);
         int index = getIndexOfCmbStanowisko(nazwaStanowiska);
         jComboBoxPrzPracownikStanowisko.setSelectedIndex(index);
         
-        Pracownik p = new Pracownik();
-        p.setId_pracownik(selectedId);
+        
         //listSweterAddons.setModel(sm.getSweterAddonData(s));
     }//GEN-LAST:event_jTablePrzPracownikMouseClicked
+
+    private void jButtonPrzPracownikSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikSzukajActionPerformed
+        if(jTextFieldPrzPracownikSzukaj.getText().length() == 0){
+            jTablePrzPracownik.setModel(km.getPracownikDataTable());
+        }else{
+            jTablePrzPracownik.setModel(km.getPracownikDataTableWithQuery(jTextFieldPrzPracownikSzukaj.getText(),jComboBoxPracownikSzukaj.getSelectedItem().toString()));
+        }
+    }//GEN-LAST:event_jButtonPrzPracownikSzukajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1321,7 +1335,6 @@ public class Frame extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonDrukowanie;
     private javax.swing.JButton jButtonKartoteka;
     private javax.swing.JButton jButtonLogin;
@@ -1330,6 +1343,7 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonNowy;
     private javax.swing.JButton jButtonNowyPracownikDodaj;
     private javax.swing.JButton jButtonNowyUzytkownikDodaj;
+    private javax.swing.JButton jButtonPrzPracownikSzukaj;
     private javax.swing.JButton jButtonPrzPracownikZatwierdz;
     private javax.swing.JButton jButtonUsuwanie;
     private javax.swing.JButton jButtonZarzadzanie;
@@ -1399,7 +1413,6 @@ public class Frame extends JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTable jTablePrzPracownik;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
     private javax.swing.JTextField jTextFieldNowyPracownikDataKoncaUmowy;
     private javax.swing.JTextField jTextFieldNowyPracownikDataUrodzenia;
@@ -1415,6 +1428,7 @@ public class Frame extends JFrame {
     private javax.swing.JTextField jTextFieldPrzPracownikNazwisko;
     private javax.swing.JTextField jTextFieldPrzPracownikPensja;
     private javax.swing.JTextField jTextFieldPrzPracownikPesel;
+    private javax.swing.JTextField jTextFieldPrzPracownikSzukaj;
     private javax.swing.JTextField jTextFieldPrzPracownikTytul;
     private javax.swing.JTextField jTextFieldPrzPracwonikImie;
     private javax.swing.JPasswordField jTextHaslo;

@@ -44,10 +44,61 @@ public class KadrManager {
         }
     }
 
+    public Pracownik getPracownikById(int id){
+        Pracownik p = null;
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from pracownik where id_pracownik='"+id+"'");
+            while(rs.next()){
+                p = new Pracownik(
+                        rs.getInt("id_pracownik"),
+                        rs.getInt("stanowisko_id_stanowisko"),
+                        rs.getString("imie"),
+                        rs.getString("nazwisko"),
+                        rs.getString("plec"),
+                        rs.getLong("data_urodzenia"),
+                        rs.getString("tytul"),
+                        rs.getString("pesel"),
+                        rs.getInt("czy_studiuje"),
+                        rs.getInt("pensja"),
+                        rs.getLong("data_przyjecia"),
+                        rs.getLong("data_konca_umowy")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return p;
+    }
     public FillTable getPracownikDataTable() {
         try {
             getConnection();
             rs = st.executeQuery("select id_pracownik,imie,nazwisko,pesel from pracownik");
+            
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+    public FillTable getPracownikDataTableWithQuery(String nazwa, String cmb){
+        String query = "";
+        if(cmb.equals("Stanowisko")){
+            query = "select id_pracownik,imie,nazwisko,pesel from pracownik where stanowisko_id_stanowisko="+getStanowiskoIdByNazwa(nazwa);
+        }
+        if(cmb.equals("Nazwisko")){
+            query = "select id_pracownik,imie,nazwisko,pesel from pracownik where nazwisko='"+nazwa+"'";
+        }
+        if(cmb.equals("Pesel")){
+            query = "select id_pracownik,imie,nazwisko,pesel from pracownik where pesel='"+nazwa+"'"; 
+        }
+        if(cmb.equals("")){
+            query = "select id_pracownik,imie,nazwisko,pesel from pracownik";
+        }
+        try {
+            getConnection();
+            rs = st.executeQuery(query);
             
             this.model = new FillTable(rs);
 
