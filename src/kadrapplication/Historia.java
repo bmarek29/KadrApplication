@@ -12,20 +12,19 @@ package kadrapplication;
 public class Historia {
     private int id_historia;
     private int id_pracownik;
-    private String data_rozpoczęcia;
-    private String data_zakończenia;
-    private String nazwa_stanowiska;
+    private long data_rozpoczęcia;
+    private long data_zakończenia;
+    private String nazwa;
 
     public Historia() {
     }
 
-    
-    public Historia(int id_historia, int id_pracownik, String data_rozpoczęcia, String data_zakończenia, String nazwa_stanowiska) {
+    public Historia(int id_historia, int id_pracownik, long data_rozpoczęcia, long data_zakończenia, String nazwa) {
         this.id_historia = id_historia;
         this.id_pracownik = id_pracownik;
         this.data_rozpoczęcia = data_rozpoczęcia;
         this.data_zakończenia = data_zakończenia;
-        this.nazwa_stanowiska = nazwa_stanowiska;
+        this.nazwa = nazwa;
     }
 
     public int getId_historia() {
@@ -44,29 +43,28 @@ public class Historia {
         this.id_pracownik = id_pracownik;
     }
 
-    public String getData_rozpoczęcia() {
+    public long getData_rozpoczęcia() {
         return data_rozpoczęcia;
     }
 
-    public void setData_rozpoczęcia(String data_rozpoczęcia) {
+    public void setData_rozpoczęcia(long data_rozpoczęcia) {
         this.data_rozpoczęcia = data_rozpoczęcia;
     }
 
-    public String getData_zakończenia() {
+    public long getData_zakończenia() {
         return data_zakończenia;
     }
 
-    public void setData_zakończenia(String data_zakończenia) {
+    public void setData_zakończenia(long data_zakończenia) {
         this.data_zakończenia = data_zakończenia;
     }
 
-    public String getNazwa_stanowiska() {
-        return nazwa_stanowiska;
+    public String getNazwa() {
+        return nazwa;
     }
 
-    public void setNazwa_stanowiska(String nazwa_stanowiska) {
-        this.nazwa_stanowiska = nazwa_stanowiska;
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
     }
-    
-    
+
 }

@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 
 /**
@@ -37,10 +38,8 @@ public class KadrManager {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, "root", "");
             st = con.createStatement();
-
-            System.out.println("połączono");
         } catch (Exception e) {
-            System.out.println("sql error: " + e);
+            System.out.println("sql connection error: " + e);
         }
     }
 
@@ -71,7 +70,7 @@ public class KadrManager {
         return p;
     }
     
-    public Uzytkownik getUzytkownikById(long id){
+    public Uzytkownik getUzytkownikById(int id){
         Uzytkownik p = null;
         try {
             getConnection();
@@ -89,6 +88,55 @@ public class KadrManager {
             System.out.println("bład " + e);
         }
         return p;
+    }
+    
+    public Historia getHistoriaStanowiskaByIdPracownika(int id_pracownik){
+        Historia h = null;
+        try{
+            getConnection();
+            rs = st.executeQuery("select nazwa from stanowisko_podlegle where id_stanowisko_podlegle=" + id_pracownik);
+            while (rs.next()) {
+                h = new Historia(rs.getInt("id_historia_stanowiska"), id_pracownik, rs.getLong("data_rozpoczecia"), rs.getLong("data_zakonczenia"), rs.getString("nazwa"));
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }        
+        return h;
+    }
+    
+    
+    
+    public DefaultListModel getStanowiskoHisStanowiskoPodlegle(int stanowisko_id){        
+        DefaultListModel model = new DefaultListModel();  
+        
+        try {
+            getConnection();
+            rs = st.executeQuery("select stanowisko_podlegle_id_stanowisko_podlegle from "
+                    + "stanowisko_has_stanowisko_podlegle"
+                    + " where stanowisko_id_stanowisko=" + stanowisko_id);
+            while (rs.next()) {
+                int podlegle_id = rs.getInt("stanowisko_podlegle_id_stanowisko_podlegle");
+                model.addElement(getStanowiskoPodlegleById(podlegle_id).getNazwa());
+            }
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+    
+    public Stanowisko_podlegle getStanowiskoPodlegleById(int id){
+        Stanowisko_podlegle sp = null;
+        try{
+            getConnection();
+            rs = st.executeQuery("select nazwa from stanowisko_podlegle where id_stanowisko_podlegle=" + id);
+            while (rs.next()) {
+                sp = new Stanowisko_podlegle(id, rs.getString("nazwa"));
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }        
+        return sp;
     }
     
     public FillTable getPracownikDataTable() {
@@ -187,6 +235,18 @@ public class KadrManager {
         try {
             getConnection();
             rs = st.executeQuery("select id_uzytkownik,uprawnienia,login from uzytkownik");
+            
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+    public FillTable getStanowiskoDataTable() {
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from stanowisko");
             
             this.model = new FillTable(rs);
 
