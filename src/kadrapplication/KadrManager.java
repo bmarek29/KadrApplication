@@ -56,6 +56,37 @@ public class KadrManager {
         }
         return model;
     }
+    
+    public List<Pracownik> getPracownikDataList() {
+        List<Pracownik> pracownicy = new ArrayList<>();
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from pracownik");
+            while (rs.next()) {
+                Pracownik pracownik = new Pracownik(
+                        rs.getInt("id_pracownik"),
+                        rs.getInt("stanowisko_id_stanowisko"),
+                        rs.getString("imie"),
+                        rs.getString("nazwisko"),
+                        rs.getString("plec"),
+                        rs.getLong("data_urodzenia"),
+                        rs.getString("tytul"),
+                        rs.getString("pesel"),
+                        rs.getInt("czy_studiuje"),
+                        rs.getInt("pensja"),
+                        rs.getLong("data_przyjecia"),
+                        rs.getLong("data_konca_umowy")
+                );
+                        
+                pracownicy.add(pracownik);
+            }
+
+        } catch (Exception e) {
+            System.out.println("bład: " + e);
+        }
+
+        return pracownicy;
+    }
 
     public List<Uzytkownik> getUzytkownikData(){
         ArrayList<Uzytkownik> uzytkownicy = new ArrayList<Uzytkownik>();
@@ -186,6 +217,21 @@ public class KadrManager {
         }
         return id;
     }
+    public String getStanowiskoNazwaById(int id){
+        String nazwa = "";
+        try {
+            getConnection();
+            rs = st.executeQuery("select nazwa from stanowisko where id_stanowisko='" + id + "'");
+            while (rs.next()){
+               nazwa = rs.getString("nazwa"); 
+            }
+            
+        } catch (Exception e) {
+            System.err.println("bladGetUserPrivilage "+e);
+        }
+        return nazwa;
+    }
+    
     
     public int addPracownik(Pracownik p) {
         int dodano = 0;
@@ -203,8 +249,9 @@ public class KadrManager {
                     + "pesel,"
                     + "czy_studiuje,"
                     + "pensja,"
-                    + "data_przyjecia"
-                    + ") values(?,?,?,?,?,?,?,?,?,?)");
+                    + "data_przyjecia,"
+                    + "data_konca_umowy"
+                    + ") values(?,?,?,?,?,?,?,?,?,?,?)");
             ps.setInt(1, p.getStanowisko_id_stanowisko());
             ps.setString(2, p.getImie());
             ps.setString(3, p.getNazwisko());
@@ -215,6 +262,8 @@ public class KadrManager {
             ps.setInt(8, p.getCzy_studiuje());
             ps.setInt(9, p.getPensja());
             ps.setLong(10, p.getData_przyjecia());
+            ps.setLong(11, p.getData_konca_umowy());
+            
             
 
             dodano = ps.executeUpdate();

@@ -120,7 +120,7 @@ public class Frame extends JFrame {
 
     public DefaultComboBoxModel cmbPracownikPlec() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        model.addElement("Mężczyzna");
+        model.addElement("Mezczyzna");
         model.addElement("Kobieta");
         return model;
     }
@@ -132,10 +132,22 @@ public class Frame extends JFrame {
             for (Stanowisko s : stanowiska) {
                 model.addElement(s.getNazwa());
             }
-
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {        }
         return model;
+    }
+    
+    public int getIndexOfCmbStanowisko(String nazwa){
+        List<Stanowisko> stanowiska = new ArrayList<>(km.getAllStanowiskoList());
+        int j = 0;      
+        for (int i=0; i<stanowiska.size(); i++){
+            if(nazwa.equalsIgnoreCase(stanowiska.get(i).getNazwa())){
+                j = i;
+                break;
+            }else{
+                j = 0;
+            }
+        }
+        return j;
     }
 
     public DefaultComboBoxModel cmbPracownikSzukaj() {
@@ -154,6 +166,12 @@ public class Frame extends JFrame {
 
     public Date changeLongToDate(long milliseconds) {
         return new Date(milliseconds);
+    }
+    public String dateLongToString(long mili){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date(mili);
+        String s = formatter.format(date);
+        return s;
     }
 
     public long getDateInMilisecFromString(String s) throws ParseException {
@@ -179,10 +197,11 @@ public class Frame extends JFrame {
         jComboBoxPrzPracownikStanowisko.setEnabled(false);
         jCheckBoxPrzPracownikStudent.setEnabled(false);
         jButtonPrzPracownikZatwierdz.setVisible(false);
+        jTextFieldPrzPracownikPensja.setEditable(false);
     }
 
     public void jListPrzPracownikPodlegleListFill(int id_stanowisko) {
-        
+        //TODO: ssqqq
     }
 
     /**
@@ -245,7 +264,7 @@ public class Frame extends JFrame {
         jTextFieldNowyPracownikTytul = new javax.swing.JTextField();
         jTextFieldNowyPracownikPesel = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBoxNowyPracownikStanowisko = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
         jComboBoxNowyPracownikPlec = new javax.swing.JComboBox();
         jCheckBoxNowyPracownikStudent = new javax.swing.JCheckBox();
@@ -253,12 +272,15 @@ public class Frame extends JFrame {
         jLabelNowyPracownikDodano = new javax.swing.JLabel();
         jButtonNowyPracownikDodaj = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jTextFieldNowyPracownikDataKoncaUmowy = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
         jPanelPrzegladanieUzytkownikow = new javax.swing.JPanel();
         jPanelPrzegladaniePracownikow = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTablePrzPracownik = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -590,7 +612,7 @@ public class Frame extends JFrame {
 
         jLabel14.setText("Stanowisko");
 
-        jComboBox1.setModel(cmbPracownikStanowisko());
+        jComboBoxNowyPracownikStanowisko.setModel(cmbPracownikStanowisko());
 
         jLabel15.setText("Płeć");
 
@@ -616,6 +638,11 @@ public class Frame extends JFrame {
         jLabel17.setForeground(new java.awt.Color(153, 153, 153));
         jLabel17.setText("format: dd/mm/rrrr");
 
+        jLabel20.setText("Koniec umowy");
+
+        jLabel21.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel21.setText("format: dd/mm/rrrr");
+
         javax.swing.GroupLayout jPanelNowyPracownikLayout = new javax.swing.GroupLayout(jPanelNowyPracownik);
         jPanelNowyPracownik.setLayout(jPanelNowyPracownikLayout);
         jPanelNowyPracownikLayout.setHorizontalGroup(
@@ -624,37 +651,42 @@ public class Frame extends JFrame {
                 .addContainerGap()
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldNowyPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldNowyPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldNowyPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(67, 67, 67)
-                        .addComponent(jTextFieldNowyPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldNowyPracownikNazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(jComboBoxNowyPracownikPlec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNowyPracownikLayout.createSequentialGroup()
-                        .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBoxNowyPracownikStudent)
-                            .addComponent(jTextFieldNowyPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel20)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldNowyPracownikDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                            .addComponent(jLabel12)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNowyPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNowyPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNowyPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(67, 67, 67)
+                            .addComponent(jTextFieldNowyPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNowyPracownikLayout.createSequentialGroup()
+                            .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel15))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldNowyPracownikNazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                .addComponent(jComboBoxNowyPracownikPlec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNowyPracownikLayout.createSequentialGroup()
+                            .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel13))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jCheckBoxNowyPracownikStudent)
+                                .addComponent(jTextFieldNowyPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
@@ -662,7 +694,7 @@ public class Frame extends JFrame {
                             .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(43, 43, 43)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBoxNowyPracownikStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabelNowyPracownikkError)
                             .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                                 .addComponent(jButtonNowyPracownikDodaj)
@@ -670,7 +702,10 @@ public class Frame extends JFrame {
                                 .addComponent(jLabelNowyPracownikDodano))))
                     .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)))
+                        .addComponent(jLabel17))
+                    .addGroup(jPanelNowyPracownikLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel21)))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanelNowyPracownikLayout.setVerticalGroup(
@@ -681,7 +716,7 @@ public class Frame extends JFrame {
                     .addComponent(jTextFieldNowyPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel14)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxNowyPracownikStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -714,7 +749,12 @@ public class Frame extends JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jButtonNowyPracownikDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNowyPracownikDodano))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelNowyPracownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldNowyPracownikDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Nowy pracownik", jPanelNowyPracownik);
@@ -738,8 +778,13 @@ public class Frame extends JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 366));
 
-        jTable2.setModel(km.getPracownikDataTable());
-        jScrollPane2.setViewportView(jTable2);
+        jTablePrzPracownik.setModel(km.getPracownikDataTable());
+        jTablePrzPracownik.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePrzPracownikMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTablePrzPracownik);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1102,7 +1147,7 @@ public class Frame extends JFrame {
                 if (km.addStanowisko(s) == 1) {
                     jLabelNoweStanowiskoDodano.setVisible(true);
                     jLabelNoweStanowiskoError.setVisible(false);
-                    jComboBox1.setModel(cmbPracownikStanowisko());
+                    jComboBoxNowyPracownikStanowisko.setModel(cmbPracownikStanowisko());
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1115,7 +1160,9 @@ public class Frame extends JFrame {
     private void jButtonNowyPracownikDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNowyPracownikDodajActionPerformed
         boolean error = false;
         long dataUr = 0;
+        long dataKonca = 0;
         int student = 0;
+        //System.out.println(jComboBoxNowyPracownikPlec.getSelectedItem());
         if (jTextFieldNowyPracownikImie.getText().length() == 0) {
             jTextFieldNowyPracownikImie.setBackground(Color.red);
             jLabelNowyPracownikkError.setVisible(true);
@@ -1159,22 +1206,24 @@ public class Frame extends JFrame {
             }
             try {
                 dataUr = getDateInMilisecFromString(jTextFieldNowyPracownikDataUrodzenia.getText());
+                dataKonca = getDateInMilisecFromString(jTextFieldNowyPracownikDataKoncaUmowy.getText());
             } catch (ParseException ex) {
                 Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             Pracownik p = new Pracownik(
                     0,
-                    getStanowiskoId(cmbPracownikStanowisko().getSelectedItem().toString()),
+                    getStanowiskoId(jComboBoxNowyPracownikStanowisko.getSelectedItem().toString()),
                     jTextFieldNowyPracownikImie.getText(),
-                    jTextFieldNowyPracownikNazwisko.getText(),
+                    jTextFieldNowyPracownikNazwisko.getText(),                    
+                    jComboBoxNowyPracownikPlec.getSelectedItem().toString(),
                     dataUr,
-                    cmbPracownikPlec().getSelectedItem().toString(),
                     jTextFieldNowyPracownikTytul.getText(),
                     jTextFieldNowyPracownikPesel.getText(),
                     student,
+                    Integer.valueOf(jTextFieldNowyPracownikPensja.getText()),
                     generateDateInMiliseconds(),
-                    Integer.valueOf(jTextFieldNowyPracownikPensja.getText())
+                    dataKonca
             );
             if (km.addPracownik(p) == 1) {
                 jTextFieldNowyPracownikImie.setBackground(Color.white);
@@ -1192,6 +1241,7 @@ public class Frame extends JFrame {
     private void jButtonKartotekaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKartotekaActionPerformed
         tabActionKartoteka();
         disablePracownikTextFields();
+        jTablePrzPracownik.setModel(km.getPracownikDataTable());
     }//GEN-LAST:event_jButtonKartotekaActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1201,6 +1251,37 @@ public class Frame extends JFrame {
     private void jCheckBoxPrzPracownikStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPrzPracownikStudentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxPrzPracownikStudentActionPerformed
+
+    private void jTablePrzPracownikMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzPracownikMouseClicked
+        int selectedRow = jTablePrzPracownik.getSelectedRow();
+        int selectedId = km.getPracownikDataList().get(selectedRow).getId_pracownik();
+        jTextFieldPrzPracwonikImie.setText(km.getPracownikDataList().get(selectedRow).getImie());
+        jTextFieldPrzPracownikNazwisko.setText(km.getPracownikDataList().get(selectedRow).getNazwisko());
+        if(km.getPracownikDataList().get(selectedRow).getPlec().equalsIgnoreCase("Mezczyzna")){
+            jComboBoxPrzPracownikPlec.setSelectedIndex(0);
+        }else{
+            jComboBoxPrzPracownikPlec.setSelectedIndex(1);
+        }
+        jTextFieldPrzPracownikPesel.setText(km.getPracownikDataList().get(selectedRow).getPesel());
+        jTextFieldPrzPracownikPensja.setText(Integer.toString(km.getPracownikDataList().get(selectedRow).getPensja()));
+        jTextFieldPrzPracownikTytul.setText(km.getPracownikDataList().get(selectedRow).getTytul());
+        jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(km.getPracownikDataList().get(selectedRow).getData_przyjecia()));
+        jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(km.getPracownikDataList().get(selectedRow).getData_urodzenia()));
+        if(km.getPracownikDataList().get(selectedRow).getCzy_studiuje() == 0){
+            jCheckBoxPrzPracownikStudent.setSelected(true);
+        }else{
+            jCheckBoxPrzPracownikStudent.setSelected(false);
+        }
+        
+        int stanowiskoPracownika = km.getPracownikDataList().get(selectedRow).getStanowisko_id_stanowisko();
+        String nazwaStanowiska = km.getStanowiskoNazwaById(stanowiskoPracownika);
+        int index = getIndexOfCmbStanowisko(nazwaStanowiska);
+        jComboBoxPrzPracownikStanowisko.setSelectedIndex(index);
+        
+        Pracownik p = new Pracownik();
+        p.setId_pracownik(selectedId);
+        //listSweterAddons.setModel(sm.getSweterAddonData(s));
+    }//GEN-LAST:event_jTablePrzPracownikMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1255,8 +1336,8 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonZatwierdzanie;
     private javax.swing.JCheckBox jCheckBoxNowyPracownikStudent;
     private javax.swing.JCheckBox jCheckBoxPrzPracownikStudent;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBoxNowyPracownikPlec;
+    private javax.swing.JComboBox jComboBoxNowyPracownikStanowisko;
     private javax.swing.JComboBox jComboBoxPracownikSzukaj;
     private javax.swing.JComboBox jComboBoxPrzPracownikPlec;
     private javax.swing.JComboBox jComboBoxPrzPracownikStanowisko;
@@ -1273,6 +1354,8 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1315,9 +1398,10 @@ public class Frame extends JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPaneMain;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTablePrzPracownik;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
+    private javax.swing.JTextField jTextFieldNowyPracownikDataKoncaUmowy;
     private javax.swing.JTextField jTextFieldNowyPracownikDataUrodzenia;
     private javax.swing.JTextField jTextFieldNowyPracownikImie;
     private javax.swing.JTextField jTextFieldNowyPracownikNazwisko;

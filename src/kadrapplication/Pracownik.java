@@ -21,8 +21,19 @@ public class Pracownik {
     private String tytul;
     private String pesel;
     private int czy_studiuje;
-    private long data_przyjecia;
     private int pensja;
+    private long data_przyjecia;
+    private long data_konca_umowy;
+
+    public long getData_konca_umowy() {
+        return data_konca_umowy;
+    }
+
+    public void setData_konca_umowy(long data_konca_umowy) {
+        this.data_konca_umowy = data_konca_umowy;
+    }
+    
+    
 
     public long getData_urodzenia() {
         return data_urodzenia;
@@ -53,18 +64,20 @@ public class Pracownik {
     }
     
     
-    public Pracownik(int id_pracownik, int stanowisko_id_stanowisko, String imie, String nazwisko, long data_urodzenia, String plec, String tytul, String pesel, int czy_studiuje, long data_przyjecia, int pensja) {
+    public Pracownik(int id_pracownik, int stanowisko_id_stanowisko, String imie, String nazwisko, String plec, long data_urodzenia,  String tytul, String pesel, int czy_studiuje, int pensja, long data_przyjecia, long data_konca_umowy) {
         this.id_pracownik = id_pracownik;
         this.stanowisko_id_stanowisko = stanowisko_id_stanowisko;
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.data_urodzenia = data_urodzenia;
         this.plec = plec;
+        this.data_urodzenia = data_urodzenia;        
         this.tytul = tytul;
         this.pesel = pesel;
         this.czy_studiuje = czy_studiuje;
-        this.data_przyjecia = data_przyjecia;
         this.pensja = pensja;
+        this.data_przyjecia = data_przyjecia;
+        this.data_konca_umowy = data_konca_umowy;
+        
         
     }
 
