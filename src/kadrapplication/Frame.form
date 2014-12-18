@@ -1611,21 +1611,21 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jButton3" alignment="1" max="32767" attributes="0"/>
+                                                  <Component id="jComboBoxEdStPodlNazwa" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="jTextFieldEdStPodlNazwa" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="jButtonEdStPodlDodaj" alignment="1" max="32767" attributes="0"/>
                                                   <Component id="jLabel41" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jButton4" alignment="1" max="32767" attributes="0"/>
+                                                  <Component id="jButtonEdStPodlUsun" alignment="1" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" attributes="0">
                                                   <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                                  <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabelEdStPodlErrorUsun" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                          <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabelEdStPodlErrorDodaj" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1667,19 +1667,19 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldEdStPodlNazwa" min="-2" pref="29" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxEdStPodlNazwa" min="-2" pref="33" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton3" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="jButtonEdStPodlDodaj" min="-2" pref="40" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelEdStPodlErrorDodaj" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="41" max="32767" attributes="0"/>
                                   <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton4" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="jButtonEdStPodlUsun" min="-2" pref="40" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelEdStPodlErrorUsun" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1717,6 +1717,9 @@
                           <StringArray count="0"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jListEdStPodleglychStanowiskaMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1730,17 +1733,20 @@
                     <Property name="text" type="java.lang.String" value="Stanowiska podleg&#x142;e"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton3">
+                <Component class="javax.swing.JButton" name="jButtonEdStPodlDodaj">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Dodaj do stanowisk podleg&#x142;ych"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEdStPodlDodajActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton4">
+                <Component class="javax.swing.JButton" name="jButtonEdStPodlUsun">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Usu&#x144; ze stanowisk podleg&#x142;ych"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel39">
+                <Component class="javax.swing.JLabel" name="jLabelEdStPodlErrorDodaj">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="10" style="1"/>
@@ -1751,7 +1757,7 @@
                     <Property name="text" type="java.lang.String" value="Nie zaznaczono stanowiska!"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel40">
+                <Component class="javax.swing.JLabel" name="jLabelEdStPodlErrorUsun">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="10" style="1"/>
@@ -1772,12 +1778,15 @@
                     <Property name="text" type="java.lang.String" value="Wpisz now&#x105; nazw&#x119; lub wybierz element z listy"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="jTextFieldEdStPodlNazwa">
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                <Component class="javax.swing.JComboBox" name="jComboBoxEdStPodlNazwa">
                   <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="0"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="cmbStanowiskoPodlegle()" type="code"/>
                     </Property>
                   </Properties>
                 </Component>

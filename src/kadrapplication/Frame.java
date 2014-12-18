@@ -80,10 +80,13 @@ public class Frame extends JFrame {
         showTabAtIndex(jPanelPrzegladanieUzytkownikow, 1);
         showTabAtIndex(jPanelPrzegladanieStanowisk, 2);
     }
-    
-    private void tabActionZarzadzanie(){
+
+    private void tabActionZarzadzanie() {
         hideTabs();
         showTabAtIndex(jPanelEdycjaStanowiskPodleglych, 0);
+
+        jLabelEdStPodlErrorDodaj.setVisible(false);
+        jLabelEdStPodlErrorUsun.setVisible(false);
     }
 
     private void initTabbedPaneList() {
@@ -143,18 +146,31 @@ public class Frame extends JFrame {
             for (Stanowisko s : stanowiska) {
                 model.addElement(s.getNazwa());
             }
-        } catch (Exception e) {        }
+        } catch (Exception e) {
+        }
         return model;
     }
-    
-    public int getIndexOfCmbStanowisko(String nazwa){
+
+    public DefaultComboBoxModel cmbStanowiskoPodlegle() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        try {
+            List<Stanowisko_podlegle> stanowiska = new ArrayList<>(km.getAllStanowiskoPodlegleList());
+            for (Stanowisko_podlegle s : stanowiska) {
+                model.addElement(s.getNazwa());
+            }
+        } catch (Exception e) {
+        }
+        return model;
+    }
+
+    public int getIndexOfCmbStanowisko(String nazwa) {
         List<Stanowisko> stanowiska = new ArrayList<>(km.getAllStanowiskoList());
-        int j = 0;      
-        for (int i=0; i<stanowiska.size(); i++){
-            if(nazwa.equalsIgnoreCase(stanowiska.get(i).getNazwa())){
+        int j = 0;
+        for (int i = 0; i < stanowiska.size(); i++) {
+            if (nazwa.equalsIgnoreCase(stanowiska.get(i).getNazwa())) {
                 j = i;
                 break;
-            }else{
+            } else {
                 j = 0;
             }
         }
@@ -178,7 +194,8 @@ public class Frame extends JFrame {
     public Date changeLongToDate(long milliseconds) {
         return new Date(milliseconds);
     }
-    public String dateLongToString(long mili){
+
+    public String dateLongToString(long mili) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date(mili);
         String s = formatter.format(date);
@@ -209,7 +226,6 @@ public class Frame extends JFrame {
         jButtonPrzPracownikZatwierdz.setVisible(false);
         jTextFieldPrzPracownikPensja.setEditable(false);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -344,14 +360,14 @@ public class Frame extends JFrame {
         jListEdStPodleglychStanowiska = new javax.swing.JList();
         jLabel35 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
+        jButtonEdStPodlDodaj = new javax.swing.JButton();
+        jButtonEdStPodlUsun = new javax.swing.JButton();
+        jLabelEdStPodlErrorDodaj = new javax.swing.JLabel();
+        jLabelEdStPodlErrorUsun = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        jTextFieldEdStPodlNazwa = new javax.swing.JTextField();
+        jComboBoxEdStPodlNazwa = new javax.swing.JComboBox();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -1244,27 +1260,40 @@ public class Frame extends JFrame {
 
         jScrollPane9.setViewportView(jListEdStPodlegStanowiskaPodlegle);
 
+        jListEdStPodleglychStanowiska.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListEdStPodleglychStanowiskaMouseClicked(evt);
+            }
+        });
         jScrollPane10.setViewportView(jListEdStPodleglychStanowiska);
 
         jLabel35.setText("Stanowiska");
 
         jLabel38.setText("Stanowiska podległe");
 
-        jButton3.setText("Dodaj do stanowisk podległych");
+        jButtonEdStPodlDodaj.setText("Dodaj do stanowisk podległych");
+        jButtonEdStPodlDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEdStPodlDodajActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Usuń ze stanowisk podległych");
+        jButtonEdStPodlUsun.setText("Usuń ze stanowisk podległych");
 
-        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel39.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel39.setText("Nie zaznaczono stanowiska!");
+        jLabelEdStPodlErrorDodaj.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabelEdStPodlErrorDodaj.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelEdStPodlErrorDodaj.setText("Nie zaznaczono stanowiska!");
 
-        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel40.setText("Nie zaznaczono stanowiska podległego!");
+        jLabelEdStPodlErrorUsun.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabelEdStPodlErrorUsun.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelEdStPodlErrorUsun.setText("Nie zaznaczono stanowiska podległego!");
 
         jLabel41.setText("Zaznacz element z listy stanowisk podległych");
 
         jLabel42.setText("Wpisz nową nazwę lub wybierz element z listy");
+
+        jComboBoxEdStPodlNazwa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jComboBoxEdStPodlNazwa.setModel(cmbStanowiskoPodlegle());
 
         javax.swing.GroupLayout jPanelEdycjaStanowiskPodleglychLayout = new javax.swing.GroupLayout(jPanelEdycjaStanowiskPodleglych);
         jPanelEdycjaStanowiskPodleglych.setLayout(jPanelEdycjaStanowiskPodleglychLayout);
@@ -1281,17 +1310,17 @@ public class Frame extends JFrame {
                                 .addGroup(jPanelEdycjaStanowiskPodleglychLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel42)
                                     .addGroup(jPanelEdycjaStanowiskPodleglychLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBoxEdStPodlNazwa, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldEdStPodlNazwa, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButtonEdStPodlDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jButtonEdStPodlUsun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanelEdycjaStanowiskPodleglychLayout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jLabel40))))
+                                        .addComponent(jLabelEdStPodlErrorUsun))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEdycjaStanowiskPodleglychLayout.createSequentialGroup()
                                 .addGap(59, 59, 59)
-                                .addComponent(jLabel39)
+                                .addComponent(jLabelEdStPodlErrorDodaj)
                                 .addGap(42, 42, 42))))
                     .addGroup(jPanelEdycjaStanowiskPodleglychLayout.createSequentialGroup()
                         .addGap(56, 56, 56)
@@ -1321,19 +1350,19 @@ public class Frame extends JFrame {
                     .addGroup(jPanelEdycjaStanowiskPodleglychLayout.createSequentialGroup()
                         .addComponent(jLabel42)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldEdStPodlNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxEdStPodlNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEdStPodlDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel39)
+                        .addComponent(jLabelEdStPodlErrorDodaj)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(jLabel41)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEdStPodlUsun, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel40)
+                        .addComponent(jLabelEdStPodlErrorUsun)
                         .addGap(58, 58, 58))))
         );
 
@@ -1474,7 +1503,7 @@ public class Frame extends JFrame {
                 jLabelLoginError.setVisible(true);
             }
         }
-        
+
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jTextFieldNowyPracownikImieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNowyPracownikImieActionPerformed
@@ -1596,7 +1625,7 @@ public class Frame extends JFrame {
                     0,
                     getStanowiskoId(jComboBoxNowyPracownikStanowisko.getSelectedItem().toString()),
                     jTextFieldNowyPracownikImie.getText(),
-                    jTextFieldNowyPracownikNazwisko.getText(),                    
+                    jTextFieldNowyPracownikNazwisko.getText(),
                     jComboBoxNowyPracownikPlec.getSelectedItem().toString(),
                     dataUr,
                     jTextFieldNowyPracownikTytul.getText(),
@@ -1634,15 +1663,15 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jCheckBoxPrzPracownikStudentActionPerformed
 
     private void jTablePrzPracownikMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzPracownikMouseClicked
-        int selectedId = (int)jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+        int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
-        
+
         jTextFieldPrzPracwonikImie.setText(p.getImie());
         jTextFieldPrzPracownikNazwisko.setText(p.getNazwisko());
-        if(p.getPlec().equalsIgnoreCase("Mezczyzna")){
+        if (p.getPlec().equalsIgnoreCase("Mezczyzna")) {
             jComboBoxPrzPracownikPlec.setSelectedIndex(0);
-        }else{
+        } else {
             jComboBoxPrzPracownikPlec.setSelectedIndex(1);
         }
         jTextFieldPrzPracownikPesel.setText(p.getPesel());
@@ -1650,25 +1679,25 @@ public class Frame extends JFrame {
         jTextFieldPrzPracownikTytul.setText(p.getTytul());
         jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(p.getData_przyjecia()));
         jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
-        if(p.getCzy_studiuje() == 0){
+        if (p.getCzy_studiuje() == 0) {
             jCheckBoxPrzPracownikStudent.setSelected(true);
-        }else{
+        } else {
             jCheckBoxPrzPracownikStudent.setSelected(false);
         }
-        
+
         int stanowiskoPracownika = p.getStanowisko_id_stanowisko();
         String nazwaStanowiska = km.getStanowiskoNazwaById(stanowiskoPracownika);
         int index = getIndexOfCmbStanowisko(nazwaStanowiska);
         jComboBoxPrzPracownikStanowisko.setSelectedIndex(index);
-        
+
         jListPrzPracownikPodlegleList.setModel(km.getStanowiskoHisStanowiskoPodlegle(stanowiskoPracownika));
     }//GEN-LAST:event_jTablePrzPracownikMouseClicked
 
     private void jButtonPrzPracownikSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikSzukajActionPerformed
-        if(jTextFieldPrzPracownikSzukaj.getText().length() == 0){
+        if (jTextFieldPrzPracownikSzukaj.getText().length() == 0) {
             jTablePrzPracownik.setModel(km.getPracownikDataTable());
-        }else{
-            jTablePrzPracownik.setModel(km.getPracownikDataTableWithQuery(jTextFieldPrzPracownikSzukaj.getText(),jComboBoxPracownikSzukaj.getSelectedItem().toString()));
+        } else {
+            jTablePrzPracownik.setModel(km.getPracownikDataTableWithQuery(jTextFieldPrzPracownikSzukaj.getText(), jComboBoxPracownikSzukaj.getSelectedItem().toString()));
         }
     }//GEN-LAST:event_jButtonPrzPracownikSzukajActionPerformed
 
@@ -1677,28 +1706,75 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jTextFieldPrzUzytHasloActionPerformed
 
     private void jTablePrzUzytkownikowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzUzytkownikowMouseClicked
-        int selectedId = (int)jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
+        int selectedId = (int) jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
         Uzytkownik u;
         u = km.getUzytkownikById(selectedId);
-        
+
         jTextFieldPrzUzytkLogin.setText(u.getLogin());
         jTextFieldPrzUzytkUprawnienia.setText(u.getUprawnienia());
         jTextFieldPrzUzytDataUtworzenia.setText(dateLongToString(u.getData_utworzenia()));
         jTextFieldPrzUzytHaslo.setText(u.getHaslo());
-        
-                
+
+
     }//GEN-LAST:event_jTablePrzUzytkownikowMouseClicked
 
     private void jTablePrzStanowiskoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzStanowiskoMouseClicked
         //wypelnienie listy podleglych
-        int id = (int)jTablePrzStanowisko.getModel().getValueAt(jTablePrzStanowisko.getSelectedRow(), 0);
+        int id = (int) jTablePrzStanowisko.getModel().getValueAt(jTablePrzStanowisko.getSelectedRow(), 0);
         jListPrzStanowiskStanowiskaPodlegle.setModel(km.getStanowiskoHisStanowiskoPodlegle(id));
     }//GEN-LAST:event_jTablePrzStanowiskoMouseClicked
 
     private void jButtonZarzadzanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZarzadzanieActionPerformed
         tabActionZarzadzanie();
-        
+        jListEdStPodleglychStanowiska.setModel(km.getAllStanowiskoListModel());
     }//GEN-LAST:event_jButtonZarzadzanieActionPerformed
+
+    private void jListEdStPodleglychStanowiskaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListEdStPodleglychStanowiskaMouseClicked
+        String selectedName = jListEdStPodleglychStanowiska.getModel().getElementAt(jListEdStPodleglychStanowiska.getSelectedIndex()).toString();
+        int id_stanowisko = km.getStanowiskoIdByNazwa(selectedName);
+        jListEdStPodlegStanowiskaPodlegle.setModel(km.getStanowiskoHisStanowiskoPodlegle(id_stanowisko));
+    }//GEN-LAST:event_jListEdStPodleglychStanowiskaMouseClicked
+
+    private void jButtonEdStPodlDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdStPodlDodajActionPerformed
+        String nowaNazwa = "";
+        int id_stanowisko = 0;
+        int id_stanowisko_podlegle = 0;
+        if (jListEdStPodleglychStanowiska.getSelectedIndex() == -1) {
+            jLabelEdStPodlErrorDodaj.setVisible(true);
+        } else {
+            id_stanowisko = km.getStanowiskoIdByNazwa(jListEdStPodleglychStanowiska.getModel().getElementAt(jListEdStPodleglychStanowiska.getSelectedIndex()).toString());
+            jLabelEdStPodlErrorDodaj.setVisible(false);
+        }
+        if (jTextFieldEdStPodlNazwa.getText().length() == 0) {
+            //wybrane z comboboxa 
+            nowaNazwa = jComboBoxEdStPodlNazwa.getModel().getElementAt(jComboBoxEdStPodlNazwa.getSelectedIndex()).toString();
+            id_stanowisko_podlegle = km.getStanowiskoPodlegleIdByNazwa(nowaNazwa);
+
+        } else if (id_stanowisko > 0) {
+            nowaNazwa = jTextFieldEdStPodlNazwa.getText();
+            try {
+                km.addStanowiskoPodlegle(nowaNazwa);
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            id_stanowisko_podlegle = km.getStanowiskoPodlegleIdByNazwa(nowaNazwa);
+            //dodaj nowa nazwe do bazy
+            //i dodaj tą nazwe dla tego stanowiska do bazy
+        }
+        System.out.println(id_stanowisko + " " + id_stanowisko_podlegle);
+        if (id_stanowisko != 0 && id_stanowisko_podlegle != 0) {
+            try {
+                if (km.addStanowiskoPodlegleToStanowisko(id_stanowisko, id_stanowisko_podlegle) == 1) {
+                    jListEdStPodlegStanowiskaPodlegle.setModel(km.getStanowiskoHisStanowiskoPodlegle(id_stanowisko));
+                    jComboBoxEdStPodlNazwa.setModel(cmbStanowiskoPodlegle());
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+    }//GEN-LAST:event_jButtonEdStPodlDodajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1738,9 +1814,9 @@ public class Frame extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonDrukowanie;
+    private javax.swing.JButton jButtonEdStPodlDodaj;
+    private javax.swing.JButton jButtonEdStPodlUsun;
     private javax.swing.JButton jButtonKartoteka;
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JButton jButtonLogowanie;
@@ -1755,7 +1831,7 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonZatwierdzanie;
     private javax.swing.JCheckBox jCheckBoxNowyPracownikStudent;
     private javax.swing.JCheckBox jCheckBoxPrzPracownikStudent;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBoxEdStPodlNazwa;
     private javax.swing.JComboBox jComboBoxNowyPracownikPlec;
     private javax.swing.JComboBox jComboBoxNowyPracownikStanowisko;
     private javax.swing.JComboBox jComboBoxPracownikSzukaj;
@@ -1794,9 +1870,7 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
@@ -1804,6 +1878,8 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelEdStPodlErrorDodaj;
+    private javax.swing.JLabel jLabelEdStPodlErrorUsun;
     private javax.swing.JLabel jLabelLoginError;
     private javax.swing.JLabel jLabelNoweStanowiskoDodano;
     private javax.swing.JLabel jLabelNoweStanowiskoError;
@@ -1850,7 +1926,7 @@ public class Frame extends JFrame {
     private javax.swing.JTable jTablePrzPracownik;
     private javax.swing.JTable jTablePrzStanowisko;
     private javax.swing.JTable jTablePrzUzytkownikow;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldEdStPodlNazwa;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
     private javax.swing.JTextField jTextFieldNowyPracownikDataKoncaUmowy;
     private javax.swing.JTextField jTextFieldNowyPracownikDataUrodzenia;
