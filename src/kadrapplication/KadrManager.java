@@ -45,11 +45,9 @@ public class KadrManager {
     }
 
     public FillTable getPracownikDataTable() {
-        ArrayList<Pracownik> pracowniks = new ArrayList<>();
-
         try {
             getConnection();
-            rs = st.executeQuery("select * from pracownik");
+            rs = st.executeQuery("select id_pracownik,imie,nazwisko,pesel from pracownik");
             
             this.model = new FillTable(rs);
 
