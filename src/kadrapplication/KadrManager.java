@@ -104,7 +104,7 @@ public class KadrManager {
         return h;
     }
     
-    
+
     
     public DefaultListModel getStanowiskoHisStanowiskoPodlegle(int stanowisko_id){        
         DefaultListModel model = new DefaultListModel();  
@@ -181,6 +181,18 @@ public class KadrManager {
             con.close();
         }        
         return dodano;
+    }
+    public FillTable getPracownikHistoriaStanowiskDataTable(Pracownik p) {
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_pracownik,imie,nazwisko,pesel from pracownik");
+            
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
     }
     
     public FillTable getPracownikDataTable() {
@@ -467,8 +479,6 @@ public class KadrManager {
         }
         return nazwa;
     }
-    
-    
     public int addPracownik(Pracownik p) {
         int dodano = 0;
         try {
@@ -499,9 +509,6 @@ public class KadrManager {
             ps.setInt(9, p.getPensja());
             ps.setLong(10, p.getData_przyjecia());
             ps.setLong(11, p.getData_konca_umowy());
-            
-            
-
             dodano = ps.executeUpdate();
 
             ps.close();
@@ -511,5 +518,47 @@ public class KadrManager {
             System.out.println("błąd: " + e);
         }
         return dodano;
+    }
+    
+    public void deleteStanowiskoPodlegleFromStanowisko(int id_pod, int id_st){
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from stanowisko_has_stanowisko_podlegle where "
+                    + "stanowisko_id_stanowisko=? and "
+                    + "stanowisko_podlegle_id_stanowisko_podlegle=?");
+            ps.setInt(1, id_st);
+            ps.setInt(2, id_pod);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+        }
+    }
+    public void deleteFromStanowiskoHasPodlegle(int id){
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from stanowisko_has_stanowisko_podlegle where "
+                    + "stanowisko_id_stanowisko=?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    public void deleteStanowiskoById(int id){
+        deleteFromStanowiskoHasPodlegle(id);
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from stanowisko where "
+                    + "id_stanowisko=?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }
