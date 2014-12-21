@@ -43,6 +43,8 @@ public class KadrManager {
         }
     }
 
+    
+    
     public Pracownik getPracownikById(int id){
         Pracownik p = null;
         try {
@@ -553,6 +555,35 @@ public class KadrManager {
             getConnection();
             ps = con.prepareStatement("delete from stanowisko where "
                     + "id_stanowisko=?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    
+    public void deleteFromHistoriaStanowiska(int id){
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from historia_stanowiska where "
+                    + "pracownik_id_pracownik=?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    
+    public void deleteFromPracownikById(int id){
+        deleteFromHistoriaStanowiska(id);
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from pracownik where "
+                    + "id_pracownik=?");
             ps.setInt(1, id);
             ps.executeUpdate();
             ps.close();

@@ -1107,6 +1107,11 @@ public class Frame extends JFrame {
         });
 
         jButtonPrzPracownikUsun.setText("Usuń pracownika");
+        jButtonPrzPracownikUsun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrzPracownikUsunActionPerformed(evt);
+            }
+        });
 
         jTextFieldPrzPracoKoniecUmowy.setEditable(false);
 
@@ -2236,6 +2241,12 @@ public class Frame extends JFrame {
         printCard();
         //printComponenet();
     }//GEN-LAST:event_jButtonRaportDrukujActionPerformed
+
+    private void jButtonPrzPracownikUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikUsunActionPerformed
+        int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+        km.deleteFromPracownikById(selectedId);
+        jTablePrzPracownik.setModel(km.getPracownikDataTable());
+    }//GEN-LAST:event_jButtonPrzPracownikUsunActionPerformed
 
     /**
      * @param args the command line arguments
