@@ -96,6 +96,7 @@ public class Frame extends JFrame {
         showTabAtIndex(jPanelPrzegladanieUzytkownikow, 1);
         showTabAtIndex(jPanelPrzegladanieStanowisk, 2);
         jLabelPrzegladanieStanowiskError.setVisible(false);
+        jButtonRaporty.setVisible(false);
     }
 
     private void tabActionZarzadzanie() {
@@ -129,7 +130,7 @@ public class Frame extends JFrame {
         tabList.add(jPanelPrzegladanieStanowisk);
         tabList.add(jPanelEdycjaStanowiskPodleglych);
         tabList.add(jPanelEdycjahistoriiStanowiskPracownika);
-        tabList.add(jPanel11);
+        tabList.add(jPanelRaporty);
         tabList.add(jPanel12);
         tabList.add(jPanel13);
         tabList.add(jPanel14);
@@ -147,6 +148,19 @@ public class Frame extends JFrame {
         model.addElement("administrator");
         model.addElement("pracownik_kadr");
         model.addElement(("kierownik_kadr"));
+        return model;
+    }
+    
+    public DefaultComboBoxModel cmbRaportListType() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        if(!privilage.equals("pracownik_kadr")){
+            model.addElement("Raport - dane pracownika");
+            model.addElement("Raport - historia stanowisk");
+            model.addElement("Raport - zaświadczenie o zarobkach");
+        }else{
+            model.addElement("Raport - historia stanowisk");
+            model.addElement("Raport - zaświadczenie o zarobkach");
+        }
         return model;
     }
 
@@ -231,18 +245,18 @@ public class Frame extends JFrame {
         return km.getStanowiskoIdByNazwa(nazwa);
     }
 
-    public void disablePracownikTextFields() {
-        jTextFieldPrzPracwonikImie.setEditable(false);
-        jTextFieldPrzPracownikNazwisko.setEditable(false);
-        jTextFieldPrzPracownikDataPrzyjecia.setEditable(false);
-        jTextFieldPrzPracownikDataUrodzenia.setEditable(false);
-        jTextFieldPrzPracownikPesel.setEditable(false);
-        jTextFieldPrzPracownikTytul.setEditable(false);
-        jComboBoxPrzPracownikPlec.setEnabled(false);
-        jComboBoxPrzPracownikStanowisko.setEnabled(false);
-        jCheckBoxPrzPracownikStudent.setEnabled(false);
-        jButtonPrzPracownikZatwierdz.setVisible(false);
-        jTextFieldPrzPracownikPensja.setEditable(false);
+    public void disablePracownikTextFields(boolean b) {
+        jTextFieldPrzPracwonikImie.setEditable(b);
+        jTextFieldPrzPracownikNazwisko.setEditable(b);
+        jTextFieldPrzPracownikDataPrzyjecia.setEditable(b);
+        jTextFieldPrzPracownikDataUrodzenia.setEditable(b);
+        jTextFieldPrzPracownikPesel.setEditable(b);
+        jTextFieldPrzPracownikTytul.setEditable(b);
+        jComboBoxPrzPracownikPlec.setEnabled(b);
+        jComboBoxPrzPracownikStanowisko.setEnabled(b);
+        jCheckBoxPrzPracownikStudent.setEnabled(b);
+        jButtonPrzPracownikZatwierdz.setVisible(b);
+        jTextFieldPrzPracownikPensja.setEditable(b);
     }
 
     /**
@@ -259,7 +273,6 @@ public class Frame extends JFrame {
         jButtonUsuwanie = new javax.swing.JButton();
         jButtonKartoteka = new javax.swing.JButton();
         jButtonZarzadzanie = new javax.swing.JButton();
-        jButtonDrukowanie = new javax.swing.JButton();
         jButtonLogowanie = new javax.swing.JButton();
         tlo = new javax.swing.JPanel();
         jTabbedPaneMain = new javax.swing.JTabbedPane();
@@ -358,11 +371,13 @@ public class Frame extends JFrame {
         jComboBoxPrzPracownikPlec = new javax.swing.JComboBox();
         jComboBoxPrzPracownikStanowisko = new javax.swing.JComboBox();
         jCheckBoxPrzPracownikStudent = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButtonPrzPracownikSzukaj = new javax.swing.JButton();
-        jButtonPrzPracownikZatwierdz = new javax.swing.JButton();
         jComboBoxPracownikSzukaj = new javax.swing.JComboBox();
+        jButtonRaporty = new javax.swing.JButton();
+        jLabel44 = new javax.swing.JLabel();
+        jButtonPrzPracownikEdytuj = new javax.swing.JButton();
+        jButtonPrzPracownikUsun = new javax.swing.JButton();
+        jTextFieldPrzPracoKoniecUmowy = new javax.swing.JTextField();
         jPanelPrzegladanieStanowisk = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
@@ -395,15 +410,34 @@ public class Frame extends JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel39 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
+        jPanelRaporty = new javax.swing.JPanel();
+        jComboBoxRaportType = new javax.swing.JComboBox();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jTextFieldRaportImieINazwisko = new javax.swing.JTextField();
+        jLabel45 = new javax.swing.JLabel();
+        jTextFieldRaportImie1 = new javax.swing.JTextField();
+        jLabel46 = new javax.swing.JLabel();
+        jTextFieldRaportImie2 = new javax.swing.JTextField();
+        jLabel47 = new javax.swing.JLabel();
+        jTextFieldRaportImie3 = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        jTextFieldRaportImie4 = new javax.swing.JTextField();
+        jLabel49 = new javax.swing.JLabel();
+        jTextFieldRaportImie5 = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        jTextFieldRaportImie6 = new javax.swing.JTextField();
+        jLabel51 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelZalogowanoJako = new javax.swing.JLabel();
+        jButtonPrzPracownikZatwierdz = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Zakład podukujący wędliny \"Podlasie\" - Aplikacja kadrowa");
         setMaximumSize(new java.awt.Dimension(800, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -441,9 +475,6 @@ public class Frame extends JFrame {
             }
         });
         getContentPane().add(jButtonZarzadzanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 127, 110, 25));
-
-        jButtonDrukowanie.setText("Drukowanie");
-        getContentPane().add(jButtonDrukowanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 156, 110, 25));
 
         jButtonLogowanie.setText("Logowanie");
         jButtonLogowanie.addActionListener(new java.awt.event.ActionListener() {
@@ -938,6 +969,8 @@ public class Frame extends JFrame {
 
         jPanelPrzegladaniePracownikow.setName("Przeglądanie pracowników"); // NOI18N
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 366));
 
         jTablePrzPracownik.setModel(km.getPracownikDataTable());
@@ -958,9 +991,7 @@ public class Frame extends JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 139, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -1036,10 +1067,6 @@ public class Frame extends JFrame {
             }
         });
 
-        jButton1.setText("Edytuj pracownika");
-
-        jButton2.setText("Usuń pracownika");
-
         jButtonPrzPracownikSzukaj.setText("Szukaj");
         jButtonPrzPracownikSzukaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1047,9 +1074,27 @@ public class Frame extends JFrame {
             }
         });
 
-        jButtonPrzPracownikZatwierdz.setText("Zatwierdź");
-
         jComboBoxPracownikSzukaj.setModel(cmbPracownikSzukaj());
+
+        jButtonRaporty.setText("Raporty");
+        jButtonRaporty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRaportyActionPerformed(evt);
+            }
+        });
+
+        jLabel44.setText("Koniec umowy");
+
+        jButtonPrzPracownikEdytuj.setText("Edytuj pracownika");
+        jButtonPrzPracownikEdytuj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrzPracownikEdytujActionPerformed(evt);
+            }
+        });
+
+        jButtonPrzPracownikUsun.setText("Usuń pracownika");
+
+        jTextFieldPrzPracoKoniecUmowy.setEditable(false);
 
         javax.swing.GroupLayout jPanelPrzegladaniePracownikowLayout = new javax.swing.GroupLayout(jPanelPrzegladaniePracownikow);
         jPanelPrzegladaniePracownikow.setLayout(jPanelPrzegladaniePracownikowLayout);
@@ -1057,36 +1102,26 @@ public class Frame extends JFrame {
             jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldPrzPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonPrzPracownikSzukaj)
+                                .addComponent(jButtonPrzPracownikSzukaj))
+                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jButton2))
-                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(jButtonPrzPracownikZatwierdz))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
+                                .addComponent(jButtonRaporty, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                 .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1119,7 +1154,7 @@ public class Frame extends JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                        .addComponent(jLabel25)
+                                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextFieldPrzPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
@@ -1131,10 +1166,25 @@ public class Frame extends JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                         .addComponent(jLabel27)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addComponent(jLabel44)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldPrzPracoKoniecUmowy)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelPrzPracownikPodlegleLabel)
-                        .addGap(44, 44, 44))))
+                        .addGap(44, 44, 44))
+                    .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                                .addComponent(jButtonPrzPracownikEdytuj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonPrzPracownikUsun)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanelPrzegladaniePracownikowLayout.setVerticalGroup(
             jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1144,64 +1194,75 @@ public class Frame extends JFrame {
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel18)
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButtonPrzPracownikSzukaj)
-                            .addComponent(jLabel19)
-                            .addComponent(jTextFieldPrzPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addComponent(jLabelPrzPracownikPodlegleLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
+                                .addComponent(jLabel18)
+                                .addGap(20, 20, 20))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                 .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel22))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel23)
-                                    .addComponent(jTextFieldPrzPracownikNazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel24)
-                                    .addComponent(jComboBoxPrzPracownikPlec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jTextFieldPrzPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel26)
-                                    .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel27)
-                                    .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(11, 11, 11)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel28)
-                                    .addComponent(jCheckBoxPrzPracownikStudent))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel29)
-                                    .addComponent(jTextFieldPrzPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel30)
-                                    .addComponent(jTextFieldPrzPracownikDataPrzyjecia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(8, 8, 8)
+                                    .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonRaporty, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonPrzPracownikSzukaj)
+                            .addComponent(jLabel19)
+                            .addComponent(jTextFieldPrzPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel23)
+                            .addComponent(jTextFieldPrzPracownikNazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(jComboBoxPrzPracownikPlec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel25)
+                            .addComponent(jTextFieldPrzPracownikDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel26)
+                            .addComponent(jTextFieldPrzPracownikTytul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel27)
+                            .addComponent(jTextFieldPrzPracownikPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel28)
+                            .addComponent(jCheckBoxPrzPracownikStudent))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel29)
+                            .addComponent(jTextFieldPrzPracownikPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel30)
+                            .addComponent(jTextFieldPrzPracownikDataPrzyjecia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel31)
-                            .addComponent(jComboBoxPrzPracownikStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonPrzPracownikZatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jComboBoxPrzPracownikStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel44)
+                            .addComponent(jTextFieldPrzPracoKoniecUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonPrzPracownikEdytuj)
+                            .addComponent(jButtonPrzPracownikUsun)))
+                    .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                        .addComponent(jLabelPrzPracownikPodlegleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jTabbedPaneMain.addTab("Przeglądanie pracowników", jPanelPrzegladaniePracownikow);
@@ -1254,11 +1315,11 @@ public class Frame extends JFrame {
         jPanelPrzegladanieStanowiskLayout.setHorizontalGroup(
             jPanelPrzegladanieStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieStanowiskLayout.createSequentialGroup()
-                .addContainerGap(345, Short.MAX_VALUE)
+                .addGap(345, 345, 345)
                 .addGroup(jPanelPrzegladanieStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPrzegladanieStanowiskError)
-                    .addComponent(jButtonPrzegladanieStanowiskUsun))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButtonPrzegladanieStanowiskUsun, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelPrzegladanieStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel32)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1467,21 +1528,6 @@ public class Frame extends JFrame {
 
         jTabbedPaneMain.addTab("Edycja historii stanowisk pracownika", jPanelEdycjahistoriiStanowiskPracownika);
 
-        jPanel11.setName("..."); // NOI18N
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneMain.addTab("...", jPanel11);
-
         jPanel12.setName("..."); // NOI18N
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
@@ -1542,6 +1588,128 @@ public class Frame extends JFrame {
 
         jTabbedPaneMain.addTab("...", jPanel15);
 
+        jPanelRaporty.setName("Raport pracownika"); // NOI18N
+
+        jComboBoxRaportType.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jComboBoxRaportType.setModel(cmbRaportListType());
+
+        jLabel40.setText("Typ raportu");
+
+        jLabel43.setText("Imie i nazwisko");
+
+        jTextFieldRaportImieINazwisko.setEditable(false);
+
+        jLabel45.setText("Data urodzenia");
+
+        jTextFieldRaportImie1.setEditable(false);
+
+        jLabel46.setText("Pesel");
+
+        jTextFieldRaportImie2.setEditable(false);
+
+        jLabel47.setText("Student");
+
+        jTextFieldRaportImie3.setEditable(false);
+
+        jLabel48.setText("Data zatrudnienia");
+
+        jTextFieldRaportImie4.setEditable(false);
+
+        jLabel49.setText("Data końca umowy");
+
+        jTextFieldRaportImie5.setEditable(false);
+
+        jLabel50.setText("Pensja");
+
+        jTextFieldRaportImie6.setEditable(false);
+
+        javax.swing.GroupLayout jPanelRaportyLayout = new javax.swing.GroupLayout(jPanelRaporty);
+        jPanelRaporty.setLayout(jPanelRaportyLayout);
+        jPanelRaportyLayout.setHorizontalGroup(
+            jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportImie6))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportImie5))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportImie4))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportImie3))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportImie2))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportImie1))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                .addComponent(jLabel40)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(405, 405, 405))
+        );
+        jPanelRaportyLayout.setVerticalGroup(
+            jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel45)
+                    .addComponent(jTextFieldRaportImie1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel46)
+                    .addComponent(jTextFieldRaportImie2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel47)
+                    .addComponent(jTextFieldRaportImie3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel48)
+                    .addComponent(jTextFieldRaportImie4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(jTextFieldRaportImie5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel50)
+                    .addComponent(jTextFieldRaportImie6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel51)
+                .addGap(0, 133, Short.MAX_VALUE))
+        );
+
+        jTabbedPaneMain.addTab("Raport pracownika", jPanelRaporty);
+
         tlo.add(jTabbedPaneMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 690, 390));
 
         getContentPane().add(tlo, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 1, 700, 390));
@@ -1552,6 +1720,9 @@ public class Frame extends JFrame {
         jLabelZalogowanoJako.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabelZalogowanoJako.setText("nie zalogowano");
         getContentPane().add(jLabelZalogowanoJako, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
+
+        jButtonPrzPracownikZatwierdz.setText("Zatwierdź");
+        getContentPane().add(jButtonPrzPracownikZatwierdz, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, 34));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1734,7 +1905,7 @@ public class Frame extends JFrame {
 
     private void jButtonKartotekaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKartotekaActionPerformed
         tabActionKartoteka();
-        disablePracownikTextFields();
+        disablePracownikTextFields(false);
         jTablePrzPracownik.setModel(km.getPracownikDataTable());
     }//GEN-LAST:event_jButtonKartotekaActionPerformed
 
@@ -1747,6 +1918,9 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jCheckBoxPrzPracownikStudentActionPerformed
 
     private void jTablePrzPracownikMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzPracownikMouseClicked
+        //pokaz przycisk raportu
+        jButtonRaporty.setVisible(true);
+        
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
@@ -1763,6 +1937,7 @@ public class Frame extends JFrame {
         jTextFieldPrzPracownikTytul.setText(p.getTytul());
         jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(p.getData_przyjecia()));
         jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
+        jTextFieldPrzPracoKoniecUmowy.setText(dateLongToString(p.getData_konca_umowy()));
         if (p.getCzy_studiuje() == 0) {
             jCheckBoxPrzPracownikStudent.setSelected(true);
         } else {
@@ -1889,6 +2064,35 @@ public class Frame extends JFrame {
         
     }//GEN-LAST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
 
+    private void jButtonPrzPracownikEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikEdytujActionPerformed
+        disablePracownikTextFields(true);
+    }//GEN-LAST:event_jButtonPrzPracownikEdytujActionPerformed
+
+    private void jButtonRaportyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportyActionPerformed
+        jComboBoxRaportType.setModel(cmbRaportListType());
+        showTabAtIndex(jPanelRaporty, 3);
+        jTabbedPaneMain.setSelectedIndex(3);
+        int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+        Pracownik p;
+        p = km.getPracownikById(selectedId);
+
+        jTextFieldRaportImieINazwisko.setText(p.getImie()+" "+p.getNazwisko());
+        jTextFieldRaportPesel.setText(p.getPesel());
+        jTextFieldPrzPracownikPensja.setText(Integer.toString(p.getPensja()));
+        jTextFieldPrzPracownikTytul.setText(p.getTytul());
+        jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(p.getData_przyjecia()));
+        jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
+        jTextFieldPrzPracoKoniecUmowy.setText(dateLongToString(p.getData_konca_umowy()));
+        if (p.getCzy_studiuje() == 0) {
+            jCheckBoxPrzPracownikStudent.setSelected(true);
+        } else {
+            jCheckBoxPrzPracownikStudent.setSelected(false);
+        }
+
+        int stanowiskoPracownika = p.getStanowisko_id_stanowisko();
+        String nazwaStanowiska = km.getStanowiskoNazwaById(stanowiskoPracownika);
+    }//GEN-LAST:event_jButtonRaportyActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1925,9 +2129,6 @@ public class Frame extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonDrukowanie;
     private javax.swing.JButton jButtonEdStPodlDodaj;
     private javax.swing.JButton jButtonEdStPodlUsun;
     private javax.swing.JButton jButtonKartoteka;
@@ -1937,9 +2138,12 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonNowy;
     private javax.swing.JButton jButtonNowyPracownikDodaj;
     private javax.swing.JButton jButtonNowyUzytkownikDodaj;
+    private javax.swing.JButton jButtonPrzPracownikEdytuj;
     private javax.swing.JButton jButtonPrzPracownikSzukaj;
+    private javax.swing.JButton jButtonPrzPracownikUsun;
     private javax.swing.JButton jButtonPrzPracownikZatwierdz;
     private javax.swing.JButton jButtonPrzegladanieStanowiskUsun;
+    private javax.swing.JButton jButtonRaporty;
     private javax.swing.JButton jButtonUsuwanie;
     private javax.swing.JButton jButtonZarzadzanie;
     private javax.swing.JButton jButtonZatwierdzanie;
@@ -1951,6 +2155,7 @@ public class Frame extends JFrame {
     private javax.swing.JComboBox jComboBoxPracownikSzukaj;
     private javax.swing.JComboBox jComboBoxPrzPracownikPlec;
     private javax.swing.JComboBox jComboBoxPrzPracownikStanowisko;
+    private javax.swing.JComboBox jComboBoxRaportType;
     private javax.swing.JComboBox jComboBoxUprawnieniaAdd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1986,9 +2191,19 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2012,7 +2227,6 @@ public class Frame extends JFrame {
     private javax.swing.JList jListPrzPracownikPodlegleList;
     private javax.swing.JList jListPrzStanowiskStanowiskaPodlegle;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -2029,6 +2243,7 @@ public class Frame extends JFrame {
     private javax.swing.JPanel jPanelPrzegladaniePracownikow;
     private javax.swing.JPanel jPanelPrzegladanieStanowisk;
     private javax.swing.JPanel jPanelPrzegladanieUzytkownikow;
+    private javax.swing.JPanel jPanelRaporty;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
@@ -2058,6 +2273,7 @@ public class Frame extends JFrame {
     private javax.swing.JTextField jTextFieldNowyPracownikTytul;
     private javax.swing.JTextField jTextFieldNowyUzytkownikHasloAdd;
     private javax.swing.JTextField jTextFieldNowyUzytkownikLoginAdd;
+    private javax.swing.JTextField jTextFieldPrzPracoKoniecUmowy;
     private javax.swing.JTextField jTextFieldPrzPracownikDataPrzyjecia;
     private javax.swing.JTextField jTextFieldPrzPracownikDataUrodzenia;
     private javax.swing.JTextField jTextFieldPrzPracownikNazwisko;
@@ -2070,6 +2286,13 @@ public class Frame extends JFrame {
     private javax.swing.JTextField jTextFieldPrzUzytHaslo;
     private javax.swing.JTextField jTextFieldPrzUzytkLogin;
     private javax.swing.JTextField jTextFieldPrzUzytkUprawnienia;
+    private javax.swing.JTextField jTextFieldRaportImie1;
+    private javax.swing.JTextField jTextFieldRaportImie2;
+    private javax.swing.JTextField jTextFieldRaportImie3;
+    private javax.swing.JTextField jTextFieldRaportImie4;
+    private javax.swing.JTextField jTextFieldRaportImie5;
+    private javax.swing.JTextField jTextFieldRaportImie6;
+    private javax.swing.JTextField jTextFieldRaportImieINazwisko;
     private javax.swing.JPasswordField jTextHaslo;
     private javax.swing.JTextField jTextLogin;
     private javax.swing.JPanel tlo;
