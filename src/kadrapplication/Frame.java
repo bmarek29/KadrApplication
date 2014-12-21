@@ -5,23 +5,31 @@
  */
 
 /*
-TODO:
-[ ] edycja uzytkownikow
-[ ] edycja historii uzytkownikow
-[ ] dodawanie historii uzytkownikow
-[ ] usuwanie historii uzytkownikow
-[ ] przegladanie stanowisk -> usuwanie
-[ ] 
-[ ] 
-[ ] 
-[ ] 
-[ ] usuwanie
-[ ] zatwierdzanie
-[ ] drukowanie
-*/
+ TODO:
+ [ ] edycja uzytkownikow
+ [ ] edycja historii uzytkownikow
+ [ ] dodawanie historii uzytkownikow
+ [ ] usuwanie historii uzytkownikow
+ [ ] przegladanie stanowisk -> usuwanie
+ [ ] 
+ [ ] 
+ [ ] 
+ [ ] 
+ [ ] usuwanie
+ [ ] zatwierdzanie
+ [ ] drukowanie
+ */
 package kadrapplication;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +38,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import java.util.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -150,14 +156,14 @@ public class Frame extends JFrame {
         model.addElement(("kierownik_kadr"));
         return model;
     }
-    
+
     public DefaultComboBoxModel cmbRaportListType() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        if(!privilage.equals("pracownik_kadr")){
+        if (!privilage.equals("pracownik_kadr")) {
             model.addElement("Raport - dane pracownika");
             model.addElement("Raport - historia stanowisk");
             model.addElement("Raport - zaświadczenie o zarobkach");
-        }else{
+        } else {
             model.addElement("Raport - historia stanowisk");
             model.addElement("Raport - zaświadczenie o zarobkach");
         }
@@ -420,18 +426,26 @@ public class Frame extends JFrame {
         jLabel43 = new javax.swing.JLabel();
         jTextFieldRaportImieINazwisko = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
-        jTextFieldRaportImie1 = new javax.swing.JTextField();
+        jTextFieldRaportDataUrodzenia = new javax.swing.JTextField();
         jLabel46 = new javax.swing.JLabel();
-        jTextFieldRaportImie2 = new javax.swing.JTextField();
+        jTextFieldRaportPesel = new javax.swing.JTextField();
         jLabel47 = new javax.swing.JLabel();
-        jTextFieldRaportImie3 = new javax.swing.JTextField();
+        jTextFieldRaportStudent = new javax.swing.JTextField();
         jLabel48 = new javax.swing.JLabel();
-        jTextFieldRaportImie4 = new javax.swing.JTextField();
+        jTextFieldRaportDataZatrudnienia = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
-        jTextFieldRaportImie5 = new javax.swing.JTextField();
+        jTextFieldRaportDataKoncaUmowy = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
-        jTextFieldRaportImie6 = new javax.swing.JTextField();
+        jTextFieldRaportPensja = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jTextFieldRaportStanowisko = new javax.swing.JTextField();
+        jLabel54 = new javax.swing.JLabel();
+        jTextFieldRaportPensja1 = new javax.swing.JTextField();
+        jButtonRaportDrukuj = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabelZalogowanoJako = new javax.swing.JLabel();
         jButtonPrzPracownikZatwierdz = new javax.swing.JButton();
@@ -1601,27 +1615,57 @@ public class Frame extends JFrame {
 
         jLabel45.setText("Data urodzenia");
 
-        jTextFieldRaportImie1.setEditable(false);
+        jTextFieldRaportDataUrodzenia.setEditable(false);
 
         jLabel46.setText("Pesel");
 
-        jTextFieldRaportImie2.setEditable(false);
+        jTextFieldRaportPesel.setEditable(false);
 
         jLabel47.setText("Student");
 
-        jTextFieldRaportImie3.setEditable(false);
+        jTextFieldRaportStudent.setEditable(false);
 
         jLabel48.setText("Data zatrudnienia");
 
-        jTextFieldRaportImie4.setEditable(false);
+        jTextFieldRaportDataZatrudnienia.setEditable(false);
 
         jLabel49.setText("Data końca umowy");
 
-        jTextFieldRaportImie5.setEditable(false);
+        jTextFieldRaportDataKoncaUmowy.setEditable(false);
 
         jLabel50.setText("Pensja");
 
-        jTextFieldRaportImie6.setEditable(false);
+        jTextFieldRaportPensja.setEditable(false);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane13.setViewportView(jTable2);
+
+        jLabel52.setText("Historia zajmowanych stanowisk");
+
+        jLabel53.setText("Stanowisko");
+
+        jTextFieldRaportStanowisko.setEditable(false);
+
+        jLabel54.setText("Średnie wynagrodzenie z 3 ost. mies.");
+
+        jTextFieldRaportPensja1.setEditable(false);
+
+        jButtonRaportDrukuj.setText("Drukuj");
+        jButtonRaportDrukuj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRaportDrukujActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelRaportyLayout = new javax.swing.GroupLayout(jPanelRaporty);
         jPanelRaporty.setLayout(jPanelRaportyLayout);
@@ -1630,82 +1674,116 @@ public class Frame extends JFrame {
             .addGroup(jPanelRaportyLayout.createSequentialGroup()
                 .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRaportImie6))
+                        .addComponent(jTextFieldRaportPensja))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRaportImie5))
+                        .addComponent(jTextFieldRaportDataKoncaUmowy))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRaportImie4))
+                        .addComponent(jTextFieldRaportDataZatrudnienia))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRaportImie3))
+                        .addComponent(jTextFieldRaportStudent))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRaportImie2))
+                        .addComponent(jTextFieldRaportPesel))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRaportImie1))
+                        .addComponent(jTextFieldRaportDataUrodzenia))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRaportStanowisko))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                                .addComponent(jLabel40)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(405, 405, 405))
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                        .addComponent(jLabel40)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportyLayout.createSequentialGroup()
+                                    .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextFieldRaportPensja1)))
+                            .addComponent(jButtonRaportDrukuj))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel52)))
+                .addGap(67, 67, 67))
         );
         jPanelRaportyLayout.setVerticalGroup(
             jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel40))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel43)
-                    .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel40))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel52)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel45)
-                    .addComponent(jTextFieldRaportImie1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel46)
-                    .addComponent(jTextFieldRaportImie2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel47)
-                    .addComponent(jTextFieldRaportImie3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel48)
-                    .addComponent(jTextFieldRaportImie4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel49)
-                    .addComponent(jTextFieldRaportImie5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel50)
-                    .addComponent(jTextFieldRaportImie6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel51)
-                .addGap(0, 133, Short.MAX_VALUE))
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel43)
+                            .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel45)
+                            .addComponent(jTextFieldRaportDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel46)
+                            .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel47)
+                            .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel48)
+                            .addComponent(jTextFieldRaportDataZatrudnienia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel49)
+                            .addComponent(jTextFieldRaportDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel53)
+                            .addComponent(jTextFieldRaportStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel51)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel50)
+                            .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel54)
+                            .addComponent(jTextFieldRaportPensja1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jButtonRaportDrukuj))
+                    .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62))
         );
 
         jTabbedPaneMain.addTab("Raport pracownika", jPanelRaporty);
@@ -1920,7 +1998,7 @@ public class Frame extends JFrame {
     private void jTablePrzPracownikMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzPracownikMouseClicked
         //pokaz przycisk raportu
         jButtonRaporty.setVisible(true);
-        
+
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
@@ -2039,29 +2117,29 @@ public class Frame extends JFrame {
         jLabelEdStPodlErrorDodaj.setVisible(false);
         int id_podl = 0;
         int id_st = 0;
-        if(jListEdStPodlegStanowiskaPodlegle.getSelectedIndex() == -1){
+        if (jListEdStPodlegStanowiskaPodlegle.getSelectedIndex() == -1) {
             jLabelEdStPodlErrorUsun.setVisible(true);
-        }else{
+        } else {
             jLabelEdStPodlErrorUsun.setVisible(false);
             id_podl = km.getStanowiskoPodlegleIdByNazwa((String) jListEdStPodlegStanowiskaPodlegle.getModel().getElementAt(jListEdStPodlegStanowiskaPodlegle.getSelectedIndex()));
             id_st = km.getStanowiskoIdByNazwa((String) jListEdStPodleglychStanowiska.getModel().getElementAt(jListEdStPodleglychStanowiska.getSelectedIndex()));
         }
-        if(id_podl != 0 && id_st != 0){
+        if (id_podl != 0 && id_st != 0) {
             km.deleteStanowiskoPodlegleFromStanowisko(id_podl, id_st);
             jListEdStPodlegStanowiskaPodlegle.setModel(km.getStanowiskoHisStanowiskoPodlegle(id_st));
         }
-        
+
     }//GEN-LAST:event_jButtonEdStPodlUsunActionPerformed
 
     private void jButtonPrzegladanieStanowiskUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
-        if(jTablePrzStanowisko.getSelectedRow() == -1){
+        if (jTablePrzStanowisko.getSelectedRow() == -1) {
             jLabelPrzegladanieStanowiskError.setVisible(true);
-        }else{
+        } else {
             jLabelPrzegladanieStanowiskError.setVisible(false);
             km.deleteStanowiskoById((int) jTablePrzStanowisko.getModel().getValueAt(jTablePrzStanowisko.getSelectedRow(), 0));
             jTablePrzStanowisko.setModel(km.getStanowiskoDataTable());
         }
-        
+
     }//GEN-LAST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
 
     private void jButtonPrzPracownikEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikEdytujActionPerformed
@@ -2076,22 +2154,88 @@ public class Frame extends JFrame {
         Pracownik p;
         p = km.getPracownikById(selectedId);
 
-        jTextFieldRaportImieINazwisko.setText(p.getImie()+" "+p.getNazwisko());
+        jTextFieldRaportImieINazwisko.setText(p.getImie() + " " + p.getNazwisko());
         jTextFieldRaportPesel.setText(p.getPesel());
-        jTextFieldPrzPracownikPensja.setText(Integer.toString(p.getPensja()));
-        jTextFieldPrzPracownikTytul.setText(p.getTytul());
-        jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(p.getData_przyjecia()));
-        jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
-        jTextFieldPrzPracoKoniecUmowy.setText(dateLongToString(p.getData_konca_umowy()));
+        jTextFieldRaportPensja.setText(Integer.toString(p.getPensja()));
+        jTextFieldRaportDataZatrudnienia.setText(dateLongToString(p.getData_przyjecia()));
+        jTextFieldRaportDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
+        jTextFieldRaportDataKoncaUmowy.setText(dateLongToString(p.getData_konca_umowy()));
         if (p.getCzy_studiuje() == 0) {
-            jCheckBoxPrzPracownikStudent.setSelected(true);
+            jTextFieldRaportStudent.setText("Tak");
         } else {
-            jCheckBoxPrzPracownikStudent.setSelected(false);
+            jTextFieldRaportStudent.setText("Nie");
         }
-
         int stanowiskoPracownika = p.getStanowisko_id_stanowisko();
         String nazwaStanowiska = km.getStanowiskoNazwaById(stanowiskoPracownika);
+        jTextFieldRaportStanowisko.setText(nazwaStanowiska);
+
     }//GEN-LAST:event_jButtonRaportyActionPerformed
+
+    private void printCard() {
+
+        PrinterJob printjob = PrinterJob.getPrinterJob();
+        printjob.setJobName(" personal card ");
+
+        printjob.setPrintable(new Printable() {
+            public int print(Graphics pg, PageFormat pf, int pageNum) {
+
+                pf.setOrientation(PageFormat.LANDSCAPE);
+
+                if (pageNum > 0) {
+                    return Printable.NO_SUCH_PAGE;
+                }
+
+                Graphics2D g2 = (Graphics2D) pg;
+                g2.translate(pf.getImageableX(), pf.getImageableY());
+                g2.translate(0f, 0f);
+                jPanelRaporty.paint(g2);
+
+                return Printable.PAGE_EXISTS;
+            }
+        });
+
+        if (printjob.printDialog() == false) {
+            return;
+        }
+
+        try {
+            printjob.print();
+        } catch (PrinterException ex) {
+            System.out.println("NO PAGE FOUND." + ex);
+        }
+    }
+
+    public void printComponenet() {
+
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        pj.setJobName(" Print Component ");
+
+        pj.setPrintable(new Printable() {
+            public int print(Graphics pg, PageFormat pf, int pageNum) {
+                if (pageNum > 0) {
+                    return Printable.NO_SUCH_PAGE;
+                }
+
+                Graphics2D g2 = (Graphics2D) pg;
+                g2.translate(pf.getImageableX(), pf.getImageableY());
+                jPanelRaporty.paint(g2);
+                return Printable.PAGE_EXISTS;
+            }
+        });
+        if (pj.printDialog() == false) {
+            return;
+        }
+
+        try {
+            pj.print();
+        } catch (PrinterException ex) {
+            // handle exception
+        }
+    }
+    private void jButtonRaportDrukujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportDrukujActionPerformed
+        printCard();
+        //printComponenet();
+    }//GEN-LAST:event_jButtonRaportDrukujActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2107,16 +2251,21 @@ public class Frame extends JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -2143,6 +2292,7 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonPrzPracownikUsun;
     private javax.swing.JButton jButtonPrzPracownikZatwierdz;
     private javax.swing.JButton jButtonPrzegladanieStanowiskUsun;
+    private javax.swing.JButton jButtonRaportDrukuj;
     private javax.swing.JButton jButtonRaporty;
     private javax.swing.JButton jButtonUsuwanie;
     private javax.swing.JButton jButtonZarzadzanie;
@@ -2204,6 +2354,9 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2248,6 +2401,7 @@ public class Frame extends JFrame {
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2258,6 +2412,7 @@ public class Frame extends JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTablePrzPracownik;
     private javax.swing.JTable jTablePrzStanowisko;
     private javax.swing.JTable jTablePrzUzytkownikow;
@@ -2286,15 +2441,18 @@ public class Frame extends JFrame {
     private javax.swing.JTextField jTextFieldPrzUzytHaslo;
     private javax.swing.JTextField jTextFieldPrzUzytkLogin;
     private javax.swing.JTextField jTextFieldPrzUzytkUprawnienia;
-    private javax.swing.JTextField jTextFieldRaportImie1;
-    private javax.swing.JTextField jTextFieldRaportImie2;
-    private javax.swing.JTextField jTextFieldRaportImie3;
-    private javax.swing.JTextField jTextFieldRaportImie4;
-    private javax.swing.JTextField jTextFieldRaportImie5;
-    private javax.swing.JTextField jTextFieldRaportImie6;
+    private javax.swing.JTextField jTextFieldRaportDataKoncaUmowy;
+    private javax.swing.JTextField jTextFieldRaportDataUrodzenia;
+    private javax.swing.JTextField jTextFieldRaportDataZatrudnienia;
     private javax.swing.JTextField jTextFieldRaportImieINazwisko;
+    private javax.swing.JTextField jTextFieldRaportPensja;
+    private javax.swing.JTextField jTextFieldRaportPensja1;
+    private javax.swing.JTextField jTextFieldRaportPesel;
+    private javax.swing.JTextField jTextFieldRaportStanowisko;
+    private javax.swing.JTextField jTextFieldRaportStudent;
     private javax.swing.JPasswordField jTextHaslo;
     private javax.swing.JTextField jTextLogin;
     private javax.swing.JPanel tlo;
     // End of variables declaration//GEN-END:variables
+
 }
