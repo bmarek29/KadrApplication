@@ -111,9 +111,10 @@ public class Frame extends JFrame {
         hideTabs();
         showTabAtIndex(jPanelEdycjaStanowiskPodleglych, 0);
         showTabAtIndex(jPanelEdycjahistoriiStanowiskPracownika, 1);
-
+        showTabAtIndex(jPanelDodawanieHistoriiStanowisk, 2);
         jLabelEdStPodlErrorDodaj.setVisible(false);
         jLabelEdStPodlErrorUsun.setVisible(false);
+        jLabelDodawanieHistStanDodano.setVisible(false);
     }
 
     private void initTabbedPaneList() {
@@ -141,7 +142,7 @@ public class Frame extends JFrame {
         tabList.add(jPanelRaporty);
         tabList.add(jPanelZatwierdzanie);
         tabList.add(jPanelHistoriaZatwierdzonychZmian);
-        tabList.add(jPanel14);
+        tabList.add(jPanelDodawanieHistoriiStanowisk);
         tabList.add(jPanel15);
     }
 
@@ -429,7 +430,18 @@ public class Frame extends JFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane17 = new javax.swing.JScrollPane();
         jTableHistoriaZatwierdzonychZmian = new javax.swing.JTable();
-        jPanel14 = new javax.swing.JPanel();
+        jPanelDodawanieHistoriiStanowisk = new javax.swing.JPanel();
+        jLabel60 = new javax.swing.JLabel();
+        jTextFieldDodawanieHistStanNazwa = new javax.swing.JTextField();
+        jLabel61 = new javax.swing.JLabel();
+        jTextFieldDodawanieHistStanDataRozpoczecia = new javax.swing.JTextField();
+        jLabel62 = new javax.swing.JLabel();
+        jTextFieldDodawanieHistStanDataZakonczenia = new javax.swing.JTextField();
+        jButtonDodawanieHistStanDodaj = new javax.swing.JButton();
+        jLabelDodawanieHistStanDodano = new javax.swing.JLabel();
+        jTextFieldDodawanieHistStanImieINazw = new javax.swing.JTextField();
+        jLabel63 = new javax.swing.JLabel();
+        jButtonDodawanieHistStanWybierzPrac = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         jPanelRaporty = new javax.swing.JPanel();
         jComboBoxRaportType = new javax.swing.JComboBox();
@@ -514,6 +526,11 @@ public class Frame extends JFrame {
 
         jTabbedPaneMain.setMaximumSize(new java.awt.Dimension(700, 380));
         jTabbedPaneMain.setPreferredSize(new java.awt.Dimension(600, 382));
+        jTabbedPaneMain.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPaneMainMouseClicked(evt);
+            }
+        });
 
         jPanelLogowanie.setName("Logowanie"); // NOI18N
 
@@ -1673,20 +1690,93 @@ public class Frame extends JFrame {
 
         jTabbedPaneMain.addTab("Historia zatwierdzonych zmian", jPanelHistoriaZatwierdzonychZmian);
 
-        jPanel14.setName("..."); // NOI18N
+        jPanelDodawanieHistoriiStanowisk.setName("Dodawanie historii stanowisk pracownika"); // NOI18N
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
+        jLabel60.setText("Nazwa");
+
+        jLabel61.setText("Data rozpoczęcia");
+
+        jLabel62.setText("Data zakończenia");
+
+        jButtonDodawanieHistStanDodaj.setText("Dodaj");
+
+        jLabelDodawanieHistStanDodano.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelDodawanieHistStanDodano.setForeground(new java.awt.Color(0, 104, 0));
+        jLabelDodawanieHistStanDodano.setText("Dodano pomyślnie");
+
+        jTextFieldDodawanieHistStanImieINazw.setEditable(false);
+        jTextFieldDodawanieHistStanImieINazw.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldDodawanieHistStanImieINazw.setForeground(new java.awt.Color(51, 51, 51));
+        jTextFieldDodawanieHistStanImieINazw.setText("Jan Kowalski");
+
+        jLabel63.setText("Historia stanowisk pracownika");
+
+        jButtonDodawanieHistStanWybierzPrac.setText("Wybierz pracownika");
+        jButtonDodawanieHistStanWybierzPrac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDodawanieHistStanWybierzPracActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelDodawanieHistoriiStanowiskLayout = new javax.swing.GroupLayout(jPanelDodawanieHistoriiStanowisk);
+        jPanelDodawanieHistoriiStanowisk.setLayout(jPanelDodawanieHistoriiStanowiskLayout);
+        jPanelDodawanieHistoriiStanowiskLayout.setHorizontalGroup(
+            jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createSequentialGroup()
+                        .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldDodawanieHistStanNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createSequentialGroup()
+                        .addComponent(jLabel61, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldDodawanieHistStanDataRozpoczecia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createSequentialGroup()
+                        .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonDodawanieHistStanDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDodawanieHistStanDataZakonczenia, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelDodawanieHistStanDodano))
+                    .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createSequentialGroup()
+                        .addComponent(jLabel63)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldDodawanieHistStanImieINazw, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDodawanieHistStanWybierzPrac)))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+        jPanelDodawanieHistoriiStanowiskLayout.setVerticalGroup(
+            jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel63)
+                    .addComponent(jTextFieldDodawanieHistStanImieINazw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonDodawanieHistStanWybierzPrac))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel60)
+                    .addComponent(jTextFieldDodawanieHistStanNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel61)
+                    .addComponent(jTextFieldDodawanieHistStanDataRozpoczecia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel62)
+                    .addComponent(jTextFieldDodawanieHistStanDataZakonczenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanelDodawanieHistoriiStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDodawanieHistStanDodaj)
+                    .addComponent(jLabelDodawanieHistStanDodano))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
-        jTabbedPaneMain.addTab("...", jPanel14);
+        jTabbedPaneMain.addTab("Dodawanie historii stanowisk pracownika", jPanelDodawanieHistoriiStanowisk);
 
         jPanel15.setName("..."); // NOI18N
 
@@ -2195,6 +2285,14 @@ public class Frame extends JFrame {
     private void jButtonZarzadzanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZarzadzanieActionPerformed
         tabActionZarzadzanie();
         jListEdStPodleglychStanowiska.setModel(km.getAllStanowiskoListModel());
+        if(jTablePrzPracownik.getSelectedRow() == -1){
+            jTextFieldDodawanieHistStanImieINazw.setText("nie wybrano");
+        }else{
+            int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+            Pracownik p;
+            p = km.getPracownikById(selectedId);
+            jTextFieldDodawanieHistStanImieINazw.setText(p.getImie()+" "+p.getNazwisko());
+        }
     }//GEN-LAST:event_jButtonZarzadzanieActionPerformed
 
     private void jListEdStPodleglychStanowiskaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListEdStPodleglychStanowiskaMouseClicked
@@ -2406,6 +2504,22 @@ public class Frame extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxRaportTypeActionPerformed
 
+    private void jButtonDodawanieHistStanWybierzPracActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDodawanieHistStanWybierzPracActionPerformed
+        showTabAtIndex(jPanelPrzegladaniePracownikow, 3);
+        jTabbedPaneMain.setSelectedIndex(3);
+    }//GEN-LAST:event_jButtonDodawanieHistStanWybierzPracActionPerformed
+
+    private void jTabbedPaneMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPaneMainMouseClicked
+        if(jTablePrzPracownik.getSelectedRow() == -1){
+            jTextFieldDodawanieHistStanImieINazw.setText("nie wybrano");
+        }else{
+            int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+            Pracownik p;
+            p = km.getPracownikById(selectedId);
+            jTextFieldDodawanieHistStanImieINazw.setText(p.getImie()+" "+p.getNazwisko());
+        }
+    }//GEN-LAST:event_jTabbedPaneMainMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2448,6 +2562,8 @@ public class Frame extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonDodawanieHistStanDodaj;
+    private javax.swing.JButton jButtonDodawanieHistStanWybierzPrac;
     private javax.swing.JButton jButtonEdStPodlDodaj;
     private javax.swing.JButton jButtonEdStPodlUsun;
     private javax.swing.JButton jButtonKartoteka;
@@ -2533,9 +2649,14 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelDodawanieHistStanDodano;
     private javax.swing.JLabel jLabelEdStPodlErrorDodaj;
     private javax.swing.JLabel jLabelEdStPodlErrorUsun;
     private javax.swing.JLabel jLabelLoginError;
@@ -2556,13 +2677,13 @@ public class Frame extends JFrame {
     private javax.swing.JList jListPrzPracownikPodlegleList;
     private javax.swing.JList jListPrzStanowiskStanowiskaPodlegle;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelDodawanieHistoriiStanowisk;
     private javax.swing.JPanel jPanelEdycjaStanowiskPodleglych;
     private javax.swing.JPanel jPanelEdycjahistoriiStanowiskPracownika;
     private javax.swing.JPanel jPanelHistoriaZatwierdzonychZmian;
@@ -2599,6 +2720,10 @@ public class Frame extends JFrame {
     private javax.swing.JTable jTablePrzUzytkownikow;
     private javax.swing.JTable jTableZatwierdzanie;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldDodawanieHistStanDataRozpoczecia;
+    private javax.swing.JTextField jTextFieldDodawanieHistStanDataZakonczenia;
+    private javax.swing.JTextField jTextFieldDodawanieHistStanImieINazw;
+    private javax.swing.JTextField jTextFieldDodawanieHistStanNazwa;
     private javax.swing.JTextField jTextFieldEdStPodlNazwa;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;
     private javax.swing.JTextField jTextFieldNowyPracownikDataKoncaUmowy;
