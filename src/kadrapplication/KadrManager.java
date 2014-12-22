@@ -650,9 +650,110 @@ public class KadrManager {
             ps.executeUpdate();
             ps.close();
             con.close();
-        } catch (Exception e) {            
+        } catch (Exception e) {
             System.err.println(e);
         }
     }
+    /* int		stanowisko_id_stanowisko,czy_studiuje,pensja
+     * String	imie,nazwisko,plec,tytul,pesel
+     * Long		data_przyjecia,data_konca_umowy
+     */
 
+    public void updatePracownik(Do_zatwierdzenia dz) {
+        String nazwa = null;
+        switch (dz.getNazwa_pola_do_zmiany()) {
+            case "imie":
+                nazwa = "imie";
+                break;
+            case "nazwisko":
+                nazwa = "nazwisko";
+                break;
+            case "plec":
+                nazwa = "plec";
+                break;
+            case "data_urodzenia":
+                nazwa = "data_urodzenia";
+                break;
+            case "tytul":
+                nazwa = "tytul";
+                break;
+            case "pesel":
+                nazwa = "pesel";
+                break;
+            case "czy_studiuje":
+                nazwa = "czy_studiuje";
+                break;
+            case "pensja":
+                nazwa = "pensja";
+                break;
+            case "data_przyjecia":
+                nazwa = "data_przyjecia";
+                break;
+            case "data_konca_umowy":
+                nazwa = "data_konca_umowy";
+                break;
+            default:
+                nazwa = " ";
+        }
+        try {
+            getConnection();
+            ps = con.prepareStatement("update pracownik set " + nazwa + "='" + dz.getWartosc_do_zmiany() + "' where id_pracownik=" + dz.getId_pracownika());
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("684błąd:" + e);
+        }
+    }
+
+    public int getUzytkownikIdByLogin(String zalogowano_jako) {
+        int id = 0;
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_uzytkownik from uzytkownik where login='" + zalogowano_jako + "'");
+            while (rs.next()) {
+                id = rs.getInt("id_uzytkownik");
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return id;
+    }
+
+    public void updateDoZatwierdzenia(int id_uzytkownik, Do_zatwierdzenia dz) {
+
+        try {
+            getConnection();
+            ps = con.prepareStatement("update do_zatwierdzenia set id_uzytkownik_kierownik='" + id_uzytkownik + "' ,"
+                    + "zatwierdzone = 0 where id_do_zatwierdzenia=" + dz.getId_do_zatwierdzenia());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+
+    }
+    
+    public FillTable getHistoriaZmianZatwierdzaniaTable(){
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_do_zatwierdzenia as id, "
+                    + "u.login as 'kto zatwierdzil', "
+                    + "CONCAT(p.imie, ' ', p.nazwisko) as 'dane pracownia',  "
+                    + "nazwa_pola_do_zmiany as pole, "
+                    + "wartosc_do_zmiany as wartosc  "
+                    + "from do_zatwierdzenia d, pracownik p, uzytkownik u "
+                    + "where d.id_pracownika = p.id_pracownik "
+                    + "and d.uzytkownik_id_uzytkownik = u.id_uzytkownik  "
+                    + "and d.zatwierdzone like 0");
+
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
 }
