@@ -11,25 +11,39 @@ package kadrapplication;
  */
 public class Do_zatwierdzenia {
     private int id_do_zatwierdzenia;
+    private int uzytkownik_id_uzytkownik;
     private int id_pracownika;
-    private int id_pola_do_zmiany;
+    private String nazwa_pola_do_zmiany;
     private String wartosc_do_zmiany;
     private int id_uzytkownik_kierownik;
     private int id_uzytkownik_pracownik;
-    private boolean zatwierdzone;
+    private int zatwierdzone;
 
     public Do_zatwierdzenia() {
     }
 
-    public Do_zatwierdzenia(int id_do_zatwierdzenia, int id_pracownika, int id_pola_do_zmiany, String wartosc_do_zmiany, int id_uzytkownik_kierownik, int id_uzytkownik_pracownik, boolean zatwierdzone) {
+    public Do_zatwierdzenia(int id_do_zatwierdzenia, int uzytkownik_id_uzytkownik, int id_pracownika, String nazwa_pola_do_zmiany, String wartosc_do_zmiany, int id_uzytkownik_kierownik, int id_uzytkownik_pracownik, int zatwierdzone) {
         this.id_do_zatwierdzenia = id_do_zatwierdzenia;
+        this.uzytkownik_id_uzytkownik = uzytkownik_id_uzytkownik;
         this.id_pracownika = id_pracownika;
-        this.id_pola_do_zmiany = id_pola_do_zmiany;
+        this.nazwa_pola_do_zmiany = nazwa_pola_do_zmiany;
         this.wartosc_do_zmiany = wartosc_do_zmiany;
         this.id_uzytkownik_kierownik = id_uzytkownik_kierownik;
         this.id_uzytkownik_pracownik = id_uzytkownik_pracownik;
         this.zatwierdzone = zatwierdzone;
     }
+
+    
+
+    public int getUzytkownik_id_uzytkownik() {
+        return uzytkownik_id_uzytkownik;
+    }
+
+    public void setUzytkownik_id_uzytkownik(int uzytkownik_id_uzytkownik) {
+        this.uzytkownik_id_uzytkownik = uzytkownik_id_uzytkownik;
+    }
+
+    
 
     public int getId_do_zatwierdzenia() {
         return id_do_zatwierdzenia;
@@ -47,12 +61,12 @@ public class Do_zatwierdzenia {
         this.id_pracownika = id_pracownika;
     }
 
-    public int getId_pola_do_zmiany() {
-        return id_pola_do_zmiany;
+    public String getNazwa_pola_do_zmiany() {
+        return nazwa_pola_do_zmiany;
     }
 
-    public void setId_pola_do_zmiany(int id_pola_do_zmiany) {
-        this.id_pola_do_zmiany = id_pola_do_zmiany;
+    public void setNazwa_pola_do_zmiany(String nazwa_pola_do_zmiany) {
+        this.nazwa_pola_do_zmiany = nazwa_pola_do_zmiany;
     }
 
     public String getWartosc_do_zmiany() {
@@ -79,12 +93,14 @@ public class Do_zatwierdzenia {
         this.id_uzytkownik_pracownik = id_uzytkownik_pracownik;
     }
 
-    public boolean isZatwierdzone() {
+    public int getZatwierdzone() {
         return zatwierdzone;
     }
 
-    public void setZatwierdzone(boolean zatwierdzone) {
+    public void setZatwierdzone(int zatwierdzone) {
         this.zatwierdzone = zatwierdzone;
     }
-    
+
+
 }
+    

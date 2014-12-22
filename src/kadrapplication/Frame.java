@@ -52,6 +52,7 @@ public class Frame extends JFrame {
     private ArrayList<JPanel> tabList = new ArrayList<>();
     KadrManager km = new KadrManager();
     private String privilage = "niezalogowany";
+    private String zalogowano_jako = null;
 
     public Frame() {
         super("Start");
@@ -69,14 +70,19 @@ public class Frame extends JFrame {
 
         //km.getPracownikData();
     }
-
+    private void tabActionZatwierdzanie(){
+        hideTabs();
+        showTabAtIndex(jPanelZatwierdzanie, 0);
+        jButtonZatwierdzanieZmianZatwierdz.setEnabled(false);
+        jButtonZatwierdzanieZmianOdrzuc.setEnabled(false);
+    }
     private void tabActionLogowanie() {
         hideTabs();
         showTabAtIndex(jPanelLogowanie, 0);
         jLabelWarningLogin.setVisible(false);
         jLabelWarningHaslo.setVisible(false);
         jLabelLoginError.setVisible(false);
-        jLabelZalogowanoJako.setText(privilage);
+        jLabelZalogowanoJako.setText(this.privilage);
     }
 
     private void tabActionNowy() {
@@ -103,6 +109,8 @@ public class Frame extends JFrame {
         showTabAtIndex(jPanelPrzegladanieStanowisk, 2);
         jLabelPrzegladanieStanowiskError.setVisible(false);
         jButtonRaporty.setVisible(false);
+        jButtonPrzPracownikUsun.setEnabled(false);
+        jButtonPrzPracownikEdytujZatwierdz.setEnabled(false);
     }
 
     private void tabActionZarzadzanie() {
@@ -137,7 +145,7 @@ public class Frame extends JFrame {
         tabList.add(jPanelEdycjaStanowiskPodleglych);
         tabList.add(jPanelEdycjahistoriiStanowiskPracownika);
         tabList.add(jPanelRaporty);
-        tabList.add(jPanel12);
+        tabList.add(jPanelZatwierdzanie);
         tabList.add(jPanel13);
         tabList.add(jPanel14);
         tabList.add(jPanel15);
@@ -159,7 +167,7 @@ public class Frame extends JFrame {
 
     public DefaultComboBoxModel cmbRaportListType() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        if (!privilage.equals("pracownik_kadr")) {
+        if (!this.privilage.equals("pracownik_kadr")) {
             model.addElement("Raport - dane pracownika");
             model.addElement("Raport - historia stanowisk");
             model.addElement("Raport - zaświadczenie o zarobkach");
@@ -261,7 +269,6 @@ public class Frame extends JFrame {
         jComboBoxPrzPracownikPlec.setEnabled(b);
         jComboBoxPrzPracownikStanowisko.setEnabled(b);
         jCheckBoxPrzPracownikStudent.setEnabled(b);
-        jButtonPrzPracownikZatwierdz.setVisible(b);
         jTextFieldPrzPracownikPensja.setEditable(b);
     }
 
@@ -276,7 +283,6 @@ public class Frame extends JFrame {
 
         jButtonNowy = new javax.swing.JButton();
         jButtonZatwierdzanie = new javax.swing.JButton();
-        jButtonUsuwanie = new javax.swing.JButton();
         jButtonKartoteka = new javax.swing.JButton();
         jButtonZarzadzanie = new javax.swing.JButton();
         jButtonLogowanie = new javax.swing.JButton();
@@ -346,6 +352,7 @@ public class Frame extends JFrame {
         jTextFieldPrzUzytHaslo = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanelPrzegladaniePracownikow = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -381,7 +388,7 @@ public class Frame extends JFrame {
         jComboBoxPracownikSzukaj = new javax.swing.JComboBox();
         jButtonRaporty = new javax.swing.JButton();
         jLabel44 = new javax.swing.JLabel();
-        jButtonPrzPracownikEdytuj = new javax.swing.JButton();
+        jButtonPrzPracownikEdytujZatwierdz = new javax.swing.JButton();
         jButtonPrzPracownikUsun = new javax.swing.JButton();
         jTextFieldPrzPracoKoniecUmowy = new javax.swing.JTextField();
         jPanelPrzegladanieStanowisk = new javax.swing.JPanel();
@@ -416,7 +423,14 @@ public class Frame extends JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel39 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jPanel12 = new javax.swing.JPanel();
+        jPanelZatwierdzanie = new javax.swing.JPanel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        jTableZatwierdzanie = new javax.swing.JTable();
+        jLabel55 = new javax.swing.JLabel();
+        jButtonZatwierdzanieZmianZatwierdz = new javax.swing.JButton();
+        jButtonZatwierdzanieZmianOdrzuc = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -448,7 +462,6 @@ public class Frame extends JFrame {
         jButtonRaportDrukuj = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabelZalogowanoJako = new javax.swing.JLabel();
-        jButtonPrzPracownikZatwierdz = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zakład podukujący wędliny \"Podlasie\" - Aplikacja kadrowa");
@@ -471,16 +484,13 @@ public class Frame extends JFrame {
         });
         getContentPane().add(jButtonZatwierdzanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 110, 25));
 
-        jButtonUsuwanie.setText("Usuwanie");
-        getContentPane().add(jButtonUsuwanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 69, 110, 25));
-
         jButtonKartoteka.setText("Kartoteka");
         jButtonKartoteka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonKartotekaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonKartoteka, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 98, 110, 25));
+        getContentPane().add(jButtonKartoteka, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 110, 25));
 
         jButtonZarzadzanie.setText("Zarządzanie");
         jButtonZarzadzanie.addActionListener(new java.awt.event.ActionListener() {
@@ -488,7 +498,7 @@ public class Frame extends JFrame {
                 jButtonZarzadzanieActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonZarzadzanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 127, 110, 25));
+        getContentPane().add(jButtonZarzadzanie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 110, 25));
 
         jButtonLogowanie.setText("Logowanie");
         jButtonLogowanie.addActionListener(new java.awt.event.ActionListener() {
@@ -533,7 +543,7 @@ public class Frame extends JFrame {
         jPanelLogowanieLayout.setHorizontalGroup(
             jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLogowanieLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(32, 32, 32)
                 .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
@@ -549,12 +559,12 @@ public class Frame extends JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabelWarningHaslo))
                     .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
         jPanelLogowanieLayout.setVerticalGroup(
             jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLogowanieLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(43, 43, 43)
                 .addGroup(jPanelLogowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
@@ -569,7 +579,7 @@ public class Frame extends JFrame {
                 .addComponent(jButtonLogin)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelLoginError)
-                .addGap(170, 170, 170))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Logowanie", jPanelLogowanie);
@@ -611,10 +621,10 @@ public class Frame extends JFrame {
                     .addComponent(jLabel4))
                 .addGap(50, 50, 50)
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonNowyUzytkownikDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(jButtonNowyUzytkownikDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextFieldNowyUzytkownikLoginAdd)
                     .addComponent(jTextFieldNowyUzytkownikHasloAdd)
-                    .addComponent(jComboBoxUprawnieniaAdd, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBoxUprawnieniaAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelNowyUzytkownikLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
@@ -627,7 +637,7 @@ public class Frame extends JFrame {
         jPanelNowyUzytkownikLayout.setVerticalGroup(
             jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelNowyUzytkownikLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboBoxUprawnieniaAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -644,7 +654,7 @@ public class Frame extends JFrame {
                 .addGroup(jPanelNowyUzytkownikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNowyUzytkownikDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNowyUzytkownikDodano))
-                .addGap(186, 186, 186))
+                .addGap(175, 175, 175))
         );
 
         jTabbedPaneMain.addTab("Nowy użytkownik", jPanelNowyUzytkownik);
@@ -705,7 +715,7 @@ public class Frame extends JFrame {
                 .addGroup(jPanelNoweStanowiskoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNoweStanowiskoDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNoweStanowiskoDodano))
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Nowe stanowisko", jPanelNoweStanowisko);
@@ -876,12 +886,14 @@ public class Frame extends JFrame {
                     .addComponent(jTextFieldNowyPracownikDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
                     .addComponent(jLabel21))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Nowy pracownik", jPanelNowyPracownik);
 
         jPanelPrzegladanieUzytkownikow.setName("Przeglądanie użytkowników"); // NOI18N
+
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
         jTablePrzUzytkownikow.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -929,17 +941,21 @@ public class Frame extends JFrame {
 
         jLabel37.setText("Hasło");
 
+        jButton1.setText("edytuj - TODO");
+
         javax.swing.GroupLayout jPanelPrzegladanieUzytkownikowLayout = new javax.swing.GroupLayout(jPanelPrzegladanieUzytkownikow);
         jPanelPrzegladanieUzytkownikow.setLayout(jPanelPrzegladanieUzytkownikowLayout);
         jPanelPrzegladanieUzytkownikowLayout.setHorizontalGroup(
             jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
-                .addContainerGap(465, Short.MAX_VALUE)
-                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel33)
-                    .addComponent(jLabel36)
-                    .addComponent(jLabel37))
+                .addContainerGap(441, Short.MAX_VALUE)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel34)
+                        .addComponent(jLabel33)
+                        .addComponent(jLabel36)
+                        .addComponent(jLabel37)))
                 .addGap(23, 23, 23)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldPrzUzytkUprawnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -972,10 +988,12 @@ public class Frame extends JFrame {
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPrzUzytHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel37))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jButton1)
+                .addContainerGap(140, Short.MAX_VALUE))
             .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -1099,10 +1117,10 @@ public class Frame extends JFrame {
 
         jLabel44.setText("Koniec umowy");
 
-        jButtonPrzPracownikEdytuj.setText("Edytuj pracownika");
-        jButtonPrzPracownikEdytuj.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPrzPracownikEdytujZatwierdz.setText("Edytuj pracownika");
+        jButtonPrzPracownikEdytujZatwierdz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrzPracownikEdytujActionPerformed(evt);
+                jButtonPrzPracownikEdytujZatwierdzActionPerformed(evt);
             }
         });
 
@@ -1199,7 +1217,7 @@ public class Frame extends JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addComponent(jButtonPrzPracownikEdytuj)
+                                .addComponent(jButtonPrzPracownikEdytujZatwierdz)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonPrzPracownikUsun)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -1274,7 +1292,7 @@ public class Frame extends JFrame {
                             .addComponent(jTextFieldPrzPracoKoniecUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonPrzPracownikEdytuj)
+                            .addComponent(jButtonPrzPracownikEdytujZatwierdz)
                             .addComponent(jButtonPrzPracownikUsun)))
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addComponent(jLabelPrzPracownikPodlegleLabel)
@@ -1287,6 +1305,8 @@ public class Frame extends JFrame {
         jTabbedPaneMain.addTab("Przeglądanie pracowników", jPanelPrzegladaniePracownikow);
 
         jPanelPrzegladanieStanowisk.setName("Przeglądanie stanowisk"); // NOI18N
+
+        jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTablePrzStanowisko.setModel(km.getStanowiskoDataTable());
         jTablePrzStanowisko.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1358,14 +1378,14 @@ public class Frame extends JFrame {
                 .addComponent(jScrollPane8)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieStanowiskLayout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
+                .addContainerGap(138, Short.MAX_VALUE)
                 .addComponent(jButtonPrzegladanieStanowiskUsun, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelPrzegladanieStanowiskError)
                 .addGap(132, 132, 132))
             .addGroup(jPanelPrzegladanieStanowiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelPrzegladanieStanowiskLayout.createSequentialGroup()
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -1449,7 +1469,7 @@ public class Frame extends JFrame {
         jPanelEdycjaStanowiskPodleglychLayout.setVerticalGroup(
             jPanelEdycjaStanowiskPodleglychLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEdycjaStanowiskPodleglychLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelEdycjaStanowiskPodleglychLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
                     .addComponent(jLabel35))
@@ -1482,6 +1502,8 @@ public class Frame extends JFrame {
         jTabbedPaneMain.addTab("Edycja stanowisk podległych", jPanelEdycjaStanowiskPodleglych);
 
         jPanelEdycjahistoriiStanowiskPracownika.setName("Edycja historii stanowisk pracownika"); // NOI18N
+
+        jScrollPane11.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1542,25 +1564,89 @@ public class Frame extends JFrame {
                     .addComponent(jLabel39)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE))
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Edycja historii stanowisk pracownika", jPanelEdycjahistoriiStanowiskPracownika);
 
-        jPanel12.setName("..."); // NOI18N
+        jPanelZatwierdzanie.setName("Zatwierdzanie zmian"); // NOI18N
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
+        jScrollPane14.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());
+        jTableZatwierdzanie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableZatwierdzanieMouseClicked(evt);
+            }
+        });
+        jScrollPane15.setViewportView(jTableZatwierdzanie);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
         );
 
-        jTabbedPaneMain.addTab("...", jPanel12);
+        jScrollPane14.setViewportView(jPanel5);
+
+        jLabel55.setText("Zmiany do zatwierdzenia");
+
+        jButtonZatwierdzanieZmianZatwierdz.setText("Zatwierdź TODO");
+        jButtonZatwierdzanieZmianZatwierdz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonZatwierdzanieZmianZatwierdzActionPerformed(evt);
+            }
+        });
+
+        jButtonZatwierdzanieZmianOdrzuc.setText("Odrzuć");
+        jButtonZatwierdzanieZmianOdrzuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonZatwierdzanieZmianOdrzucActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelZatwierdzanieLayout = new javax.swing.GroupLayout(jPanelZatwierdzanie);
+        jPanelZatwierdzanie.setLayout(jPanelZatwierdzanieLayout);
+        jPanelZatwierdzanieLayout.setHorizontalGroup(
+            jPanelZatwierdzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelZatwierdzanieLayout.createSequentialGroup()
+                .addGroup(jPanelZatwierdzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+                    .addGroup(jPanelZatwierdzanieLayout.createSequentialGroup()
+                        .addGroup(jPanelZatwierdzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelZatwierdzanieLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel55))
+                            .addGroup(jPanelZatwierdzanieLayout.createSequentialGroup()
+                                .addGap(126, 126, 126)
+                                .addComponent(jButtonZatwierdzanieZmianZatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonZatwierdzanieZmianOdrzuc, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanelZatwierdzanieLayout.setVerticalGroup(
+            jPanelZatwierdzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelZatwierdzanieLayout.createSequentialGroup()
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addComponent(jLabel55)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGroup(jPanelZatwierdzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonZatwierdzanieZmianZatwierdz)
+                    .addComponent(jButtonZatwierdzanieZmianOdrzuc))
+                .addGap(35, 35, 35))
+        );
+
+        jTabbedPaneMain.addTab("Zatwierdzanie zmian", jPanelZatwierdzanie);
 
         jPanel13.setName("..."); // NOI18N
 
@@ -1572,7 +1658,7 @@ public class Frame extends JFrame {
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("...", jPanel13);
@@ -1587,7 +1673,7 @@ public class Frame extends JFrame {
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("...", jPanel14);
@@ -1602,7 +1688,7 @@ public class Frame extends JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("...", jPanel15);
@@ -1804,9 +1890,6 @@ public class Frame extends JFrame {
         jLabelZalogowanoJako.setText("nie zalogowano");
         getContentPane().add(jLabelZalogowanoJako, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
 
-        jButtonPrzPracownikZatwierdz.setText("Zatwierdź");
-        getContentPane().add(jButtonPrzPracownikZatwierdz, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, 34));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1815,7 +1898,9 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonNowyActionPerformed
 
     private void jButtonZatwierdzanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieActionPerformed
-
+        tabActionZatwierdzanie();
+        jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());
+        
     }//GEN-LAST:event_jButtonZatwierdzanieActionPerformed
 
     private void jButtonLogowanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogowanieActionPerformed
@@ -1837,6 +1922,7 @@ public class Frame extends JFrame {
                 jLabelWarningHaslo.setVisible(false);
                 jLabelWarningLogin.setVisible(false);
                 jButtonLogowanie.setText("Wyloguj");
+                this.zalogowano_jako = jTextLogin.getText();
             } else {
                 jLabelLoginError.setVisible(true);
             }
@@ -2003,7 +2089,9 @@ public class Frame extends JFrame {
     private void jTablePrzPracownikMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrzPracownikMouseClicked
         //pokaz przycisk raportu
         jButtonRaporty.setVisible(true);
-
+        jButtonPrzPracownikUsun.setEnabled(true);
+        jButtonPrzPracownikEdytujZatwierdz.setEnabled(true);
+        
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
@@ -2147,14 +2235,15 @@ public class Frame extends JFrame {
 
     }//GEN-LAST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
 
-    private void jButtonPrzPracownikEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikEdytujActionPerformed
+    private void jButtonPrzPracownikEdytujZatwierdzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikEdytujZatwierdzActionPerformed
         disablePracownikTextFields(true);
-    }//GEN-LAST:event_jButtonPrzPracownikEdytujActionPerformed
+    }//GEN-LAST:event_jButtonPrzPracownikEdytujZatwierdzActionPerformed
 
     private void jButtonRaportyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportyActionPerformed
         jComboBoxRaportType.setModel(cmbRaportListType());
         showTabAtIndex(jPanelRaporty, 3);
         jTabbedPaneMain.setSelectedIndex(3);
+        
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
@@ -2248,6 +2337,26 @@ public class Frame extends JFrame {
         jTablePrzPracownik.setModel(km.getPracownikDataTable());
     }//GEN-LAST:event_jButtonPrzPracownikUsunActionPerformed
 
+    private void jTableZatwierdzanieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableZatwierdzanieMouseClicked
+        jButtonZatwierdzanieZmianZatwierdz.setEnabled(true);
+        jButtonZatwierdzanieZmianOdrzuc.setEnabled(true);
+        
+        int selectedId = (int) jTableZatwierdzanie.getModel().getValueAt(jTableZatwierdzanie.getSelectedRow(), 0);
+        Do_zatwierdzenia dz;
+        dz = km.getDoZatwierdzeniaById(selectedId);
+        Pracownik p;
+        p = km.getPracownikById(dz.getId_pracownika());
+        
+    }//GEN-LAST:event_jTableZatwierdzanieMouseClicked
+
+    private void jButtonZatwierdzanieZmianOdrzucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieZmianOdrzucActionPerformed
+        km.deleteFromDoZatwierdzenia((int) jTableZatwierdzanie.getModel().getValueAt(jTableZatwierdzanie.getSelectedRow(), 0));
+    }//GEN-LAST:event_jButtonZatwierdzanieZmianOdrzucActionPerformed
+
+    private void jButtonZatwierdzanieZmianZatwierdzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieZmianZatwierdzActionPerformed
+        
+    }//GEN-LAST:event_jButtonZatwierdzanieZmianZatwierdzActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2289,6 +2398,7 @@ public class Frame extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonEdStPodlDodaj;
     private javax.swing.JButton jButtonEdStPodlUsun;
     private javax.swing.JButton jButtonKartoteka;
@@ -2298,16 +2408,16 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonNowy;
     private javax.swing.JButton jButtonNowyPracownikDodaj;
     private javax.swing.JButton jButtonNowyUzytkownikDodaj;
-    private javax.swing.JButton jButtonPrzPracownikEdytuj;
+    private javax.swing.JButton jButtonPrzPracownikEdytujZatwierdz;
     private javax.swing.JButton jButtonPrzPracownikSzukaj;
     private javax.swing.JButton jButtonPrzPracownikUsun;
-    private javax.swing.JButton jButtonPrzPracownikZatwierdz;
     private javax.swing.JButton jButtonPrzegladanieStanowiskUsun;
     private javax.swing.JButton jButtonRaportDrukuj;
     private javax.swing.JButton jButtonRaporty;
-    private javax.swing.JButton jButtonUsuwanie;
     private javax.swing.JButton jButtonZarzadzanie;
     private javax.swing.JButton jButtonZatwierdzanie;
+    private javax.swing.JButton jButtonZatwierdzanieZmianOdrzuc;
+    private javax.swing.JButton jButtonZatwierdzanieZmianZatwierdz;
     private javax.swing.JCheckBox jCheckBoxNowyPracownikStudent;
     private javax.swing.JCheckBox jCheckBoxPrzPracownikStudent;
     private javax.swing.JComboBox jComboBoxEdStPodlNazwa;
@@ -2368,6 +2478,7 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2391,13 +2502,13 @@ public class Frame extends JFrame {
     private javax.swing.JList jListPrzPracownikPodlegleList;
     private javax.swing.JList jListPrzStanowiskStanowiskaPodlegle;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelEdycjaStanowiskPodleglych;
     private javax.swing.JPanel jPanelEdycjahistoriiStanowiskPracownika;
     private javax.swing.JPanel jPanelLogowanie;
@@ -2408,11 +2519,14 @@ public class Frame extends JFrame {
     private javax.swing.JPanel jPanelPrzegladanieStanowisk;
     private javax.swing.JPanel jPanelPrzegladanieUzytkownikow;
     private javax.swing.JPanel jPanelRaporty;
+    private javax.swing.JPanel jPanelZatwierdzanie;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2427,6 +2541,7 @@ public class Frame extends JFrame {
     private javax.swing.JTable jTablePrzPracownik;
     private javax.swing.JTable jTablePrzStanowisko;
     private javax.swing.JTable jTablePrzUzytkownikow;
+    private javax.swing.JTable jTableZatwierdzanie;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldEdStPodlNazwa;
     private javax.swing.JTextField jTextFieldNoweStanowiskoNazwa;

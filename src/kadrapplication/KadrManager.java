@@ -18,7 +18,6 @@ import javax.swing.JTabbedPane;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
-
 /**
  *
  * @author qqq
@@ -43,14 +42,12 @@ public class KadrManager {
         }
     }
 
-    
-    
-    public Pracownik getPracownikById(int id){
+    public Pracownik getPracownikById(int id) {
         Pracownik p = null;
         try {
             getConnection();
-            rs = st.executeQuery("select * from pracownik where id_pracownik='"+id+"'");
-            while(rs.next()){
+            rs = st.executeQuery("select * from pracownik where id_pracownik='" + id + "'");
+            while (rs.next()) {
                 p = new Pracownik(
                         rs.getInt("id_pracownik"),
                         rs.getInt("stanowisko_id_stanowisko"),
@@ -71,13 +68,13 @@ public class KadrManager {
         }
         return p;
     }
-    
-    public Uzytkownik getUzytkownikById(int id){
+
+    public Uzytkownik getUzytkownikById(int id) {
         Uzytkownik p = null;
         try {
             getConnection();
-            rs = st.executeQuery("select * from uzytkownik where id_uzytkownik='"+id+"'");
-            while(rs.next()){
+            rs = st.executeQuery("select * from uzytkownik where id_uzytkownik='" + id + "'");
+            while (rs.next()) {
                 p = new Uzytkownik(
                         rs.getInt("id_uzytkownik"),
                         rs.getLong("data_utworzenia"),
@@ -91,10 +88,10 @@ public class KadrManager {
         }
         return p;
     }
-    
-    public Historia getHistoriaStanowiskaByIdPracownika(int id_pracownik){
+
+    public Historia getHistoriaStanowiskaByIdPracownika(int id_pracownik) {
         Historia h = null;
-        try{
+        try {
             getConnection();
             rs = st.executeQuery("select nazwa from stanowisko_podlegle where id_stanowisko_podlegle=" + id_pracownik);
             while (rs.next()) {
@@ -102,15 +99,13 @@ public class KadrManager {
             }
         } catch (Exception e) {
             System.out.println("bład " + e);
-        }        
+        }
         return h;
     }
-    
 
-    
-    public DefaultListModel getStanowiskoHisStanowiskoPodlegle(int stanowisko_id){        
-        DefaultListModel model = new DefaultListModel();  
-        int podlegle_id = 0; 
+    public DefaultListModel getStanowiskoHisStanowiskoPodlegle(int stanowisko_id) {
+        DefaultListModel model = new DefaultListModel();
+        int podlegle_id = 0;
         ArrayList<Stanowisko_podlegle> id_list = new ArrayList<>();
         Stanowisko_podlegle sp;
         try {
@@ -124,20 +119,19 @@ public class KadrManager {
                 sp.setId_stanowisko_podlegle(podlegle_id);
                 id_list.add(sp);
             }
-            for(Stanowisko_podlegle id : id_list){
+            for (Stanowisko_podlegle id : id_list) {
                 model.addElement(getStanowiskoPodlegleById(id.getId_stanowisko_podlegle()).getNazwa());
             }
-                
 
         } catch (Exception e) {
             System.out.println("bład " + e);
         }
         return model;
     }
-    
-    public Stanowisko_podlegle getStanowiskoPodlegleById(int id){
+
+    public Stanowisko_podlegle getStanowiskoPodlegleById(int id) {
         Stanowisko_podlegle sp = null;
-        try{
+        try {
             getConnection();
             rs = st.executeQuery("select nazwa from stanowisko_podlegle where id_stanowisko_podlegle=" + id);
             while (rs.next()) {
@@ -145,24 +139,25 @@ public class KadrManager {
             }
         } catch (Exception e) {
             System.out.println("bład " + e);
-        }        
+        }
         return sp;
     }
-    public int getStanowiskoPodlegleIdByNazwa(String nazwa){
+
+    public int getStanowiskoPodlegleIdByNazwa(String nazwa) {
         int sp = 0;
-        try{
+        try {
             getConnection();
-            rs = st.executeQuery("select id_stanowisko_podlegle from stanowisko_podlegle where nazwa='" + nazwa+"'");
+            rs = st.executeQuery("select id_stanowisko_podlegle from stanowisko_podlegle where nazwa='" + nazwa + "'");
             while (rs.next()) {
                 sp = rs.getInt("id_stanowisko_podlegle");
             }
         } catch (Exception e) {
             System.out.println("bład " + e);
-        }        
+        }
         return sp;
     }
-    
-    public int addStanowiskoPodlegleToStanowisko(int id_st, int id_pdl) throws SQLException{
+
+    public int addStanowiskoPodlegleToStanowisko(int id_st, int id_pdl) throws SQLException {
         int dodano = 0;
         try {
             getConnection();
@@ -172,23 +167,24 @@ public class KadrManager {
                     + "stanowisko_podlegle_id_stanowisko_podlegle) "
                     + "values (?,?)");
             ps.setInt(1, id_st);
-            ps.setInt(2, id_pdl);            
+            ps.setInt(2, id_pdl);
             dodano = ps.executeUpdate();
             ps.close();
             con.close();
         } catch (Exception e) {
-            System.err.println("error "+e);
-        }finally{
+            System.err.println("error " + e);
+        } finally {
             ps.close();
             con.close();
-        }        
+        }
         return dodano;
     }
+
     public FillTable getPracownikHistoriaStanowiskDataTable(Pracownik p) {
         try {
             getConnection();
-            rs = st.executeQuery("select id_pracownik,imie,nazwisko,pesel from pracownik");
-            
+            rs = st.executeQuery("select id_pracownik as id,imie,nazwisko,pesel from pracownik");
+
             this.model = new FillTable(rs);
 
         } catch (Exception e) {
@@ -196,12 +192,12 @@ public class KadrManager {
         }
         return model;
     }
-    
+
     public FillTable getPracownikDataTable() {
         try {
             getConnection();
-            rs = st.executeQuery("select id_pracownik,imie,nazwisko,pesel from pracownik");
-            
+            rs = st.executeQuery("select id_pracownik as id,imie,nazwisko,pesel from pracownik");
+
             this.model = new FillTable(rs);
 
         } catch (Exception e) {
@@ -209,24 +205,67 @@ public class KadrManager {
         }
         return model;
     }
-    public FillTable getPracownikDataTableWithQuery(String nazwa, String cmb){
+
+    public FillTable getZatwierdzanieDataTable() {
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_do_zatwierdzenia as id, "
+                    + "u.login as uzytkownik, "
+                    + "CONCAT(p.imie, ' ', p.nazwisko) as pracownik, "
+                    + "nazwa_pola_do_zmiany as pole, "
+                    + "wartosc_do_zmiany as wartosc "
+                    + "from do_zatwierdzenia d, pracownik p, uzytkownik u "
+                    + "where d.id_pracownika = p.id_pracownik "
+                    + "and d.uzytkownik_id_uzytkownik = u.id_uzytkownik "
+                    + "and d.zatwierdzone like 1");
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+
+    public Do_zatwierdzenia getDoZatwierdzeniaById(int id) {
+        Do_zatwierdzenia dz = null;
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from do_zatwierdzenia where id_do_zatwierdzenia='" + id + "'");
+            while (rs.next()) {
+                dz = new Do_zatwierdzenia(id,
+                        rs.getInt("uzytkownik_id_uzytkownik"),
+                        rs.getInt("id_pracownika"),
+                        rs.getString("nazwa_pola_do_zmiany"),
+                        rs.getString("wartosc_do_zmiany"),
+                        rs.getInt("id_uzytkownik_pracownik"),
+                        rs.getInt("id_uzytkownik_kierownik"),
+                        rs.getInt("zatwierdzone")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return dz;
+    }
+
+    public FillTable getPracownikDataTableWithQuery(String nazwa, String cmb) {
         String query = "";
-        if(cmb.equals("Stanowisko")){
-            query = "select id_pracownik,imie,nazwisko,pesel from pracownik where stanowisko_id_stanowisko="+getStanowiskoIdByNazwa(nazwa);
+        if (cmb.equals("Stanowisko")) {
+            query = "select id_pracownik as id,imie,nazwisko,pesel from pracownik where stanowisko_id_stanowisko=" + getStanowiskoIdByNazwa(nazwa);
         }
-        if(cmb.equals("Nazwisko")){
-            query = "select id_pracownik,imie,nazwisko,pesel from pracownik where nazwisko='"+nazwa+"'";
+        if (cmb.equals("Nazwisko")) {
+            query = "select id_pracownik as id,imie,nazwisko,pesel from pracownik where nazwisko='" + nazwa + "'";
         }
-        if(cmb.equals("Pesel")){
-            query = "select id_pracownik,imie,nazwisko,pesel from pracownik where pesel='"+nazwa+"'"; 
+        if (cmb.equals("Pesel")) {
+            query = "select id_pracownik as id,imie,nazwisko,pesel from pracownik where pesel='" + nazwa + "'";
         }
-        if(cmb.equals("")){
-            query = "select id_pracownik,imie,nazwisko,pesel from pracownik";
+        if (cmb.equals("")) {
+            query = "select id_pracownik as id,imie,nazwisko,pesel from pracownik";
         }
         try {
             getConnection();
             rs = st.executeQuery(query);
-            
+
             this.model = new FillTable(rs);
 
         } catch (Exception e) {
@@ -234,7 +273,7 @@ public class KadrManager {
         }
         return model;
     }
-    
+
     public List<Pracownik> getPracownikDataList() {
         List<Pracownik> pracownicy = new ArrayList<>();
         try {
@@ -255,7 +294,7 @@ public class KadrManager {
                         rs.getLong("data_przyjecia"),
                         rs.getLong("data_konca_umowy")
                 );
-                        
+
                 pracownicy.add(pracownik);
             }
 
@@ -266,7 +305,7 @@ public class KadrManager {
         return pracownicy;
     }
 
-    public List<Uzytkownik> getUzytkownikData(){
+    public List<Uzytkownik> getUzytkownikData() {
         ArrayList<Uzytkownik> uzytkownicy = new ArrayList<Uzytkownik>();
         try {
             getConnection();
@@ -274,7 +313,7 @@ public class KadrManager {
             uzytkownicy.clear();
             while (rs.next()) {
                 Uzytkownik uzytkownik = new Uzytkownik(
-                        rs.getInt("id_uzytkownik"),                        
+                        rs.getInt("id_uzytkownik"),
                         rs.getLong("data_utworzenia"),
                         rs.getString("uprawnienia"),
                         rs.getString("login"),
@@ -285,15 +324,15 @@ public class KadrManager {
 
         } catch (Exception e) {
             System.out.println("bład " + e);
-        }    
+        }
         return uzytkownicy;
     }
-    
+
     public FillTable getUzytkownikDataTable() {
         try {
             getConnection();
-            rs = st.executeQuery("select id_uzytkownik,uprawnienia,login from uzytkownik");
-            
+            rs = st.executeQuery("select id_uzytkownik as id,uprawnienia,login from uzytkownik");
+
             this.model = new FillTable(rs);
 
         } catch (Exception e) {
@@ -301,11 +340,12 @@ public class KadrManager {
         }
         return model;
     }
+
     public FillTable getStanowiskoDataTable() {
         try {
             getConnection();
-            rs = st.executeQuery("select * from stanowisko");
-            
+            rs = st.executeQuery("select id_stanowisko as id,nazwa from stanowisko");
+
             this.model = new FillTable(rs);
 
         } catch (Exception e) {
@@ -313,8 +353,9 @@ public class KadrManager {
         }
         return model;
     }
-    public DefaultListModel getAllStanowiskoListModel(){
-        DefaultListModel model = new DefaultListModel();  
+
+    public DefaultListModel getAllStanowiskoListModel() {
+        DefaultListModel model = new DefaultListModel();
         try {
             getConnection();
             rs = st.executeQuery("select * from stanowisko");
@@ -326,39 +367,40 @@ public class KadrManager {
         }
         return model;
     }
-    
-    public boolean checkUserInDB(String login, String haslo){
+
+    public boolean checkUserInDB(String login, String haslo) {
         String pass = "";
         try {
             getConnection();
             rs = st.executeQuery("select haslo from uzytkownik where login='" + login + "'");
-            while(rs.next()){
-               pass = rs.getString("haslo"); 
+            while (rs.next()) {
+                pass = rs.getString("haslo");
             }
-            if (pass.equals(haslo))
+            if (pass.equals(haslo)) {
                 return true;
+            }
         } catch (Exception e) {
-            System.err.println("bladcheckUserInDB "+e);
+            System.err.println("bladcheckUserInDB " + e);
         }
         return false;
     }
-    
-    public String getUserPrivilage(String login){
+
+    public String getUserPrivilage(String login) {
         String privilage = "";
         try {
             getConnection();
             rs = st.executeQuery("select uprawnienia from uzytkownik where login='" + login + "'");
-            while (rs.next()){
-               privilage = rs.getString("uprawnienia"); 
+            while (rs.next()) {
+                privilage = rs.getString("uprawnienia");
             }
-            
+
         } catch (Exception e) {
-            System.err.println("bladGetUserPrivilage "+e);
+            System.err.println("bladGetUserPrivilage " + e);
         }
         return privilage;
     }
-    
-    public int addUzytkownik(Uzytkownik u) throws SQLException{
+
+    public int addUzytkownik(Uzytkownik u) throws SQLException {
         int dodano = 0;
         try {
             getConnection();
@@ -372,15 +414,15 @@ public class KadrManager {
             ps.close();
             con.close();
         } catch (Exception e) {
-            System.err.println("error "+e);
-        }finally{
+            System.err.println("error " + e);
+        } finally {
             ps.close();
             con.close();
         }
         return dodano;
     }
-    
-    public int addStanowisko(Stanowisko s) throws SQLException{
+
+    public int addStanowisko(Stanowisko s) throws SQLException {
         int dodano = 0;
         try {
             getConnection();
@@ -390,14 +432,15 @@ public class KadrManager {
             ps.close();
             con.close();
         } catch (Exception e) {
-            System.err.println("error "+e);
-        }finally{
+            System.err.println("error " + e);
+        } finally {
             ps.close();
             con.close();
         }
         return dodano;
     }
-        public int addStanowiskoPodlegle(String nazwa) throws SQLException{
+
+    public int addStanowiskoPodlegle(String nazwa) throws SQLException {
         int dodano = 0;
         try {
             getConnection();
@@ -407,14 +450,14 @@ public class KadrManager {
             ps.close();
             con.close();
         } catch (Exception e) {
-            System.err.println("error "+e);
-        }finally{
+            System.err.println("error " + e);
+        } finally {
             ps.close();
             con.close();
         }
         return dodano;
     }
-    
+
     public List<Stanowisko> getAllStanowiskoList() {
         List<Stanowisko> stanowiska = new ArrayList<>();
         try {
@@ -424,7 +467,7 @@ public class KadrManager {
                 Stanowisko s = new Stanowisko(
                         rs.getInt("id_stanowisko"),
                         rs.getString("nazwa")
-                );                        
+                );
                 stanowiska.add(s);
             }
 
@@ -432,8 +475,9 @@ public class KadrManager {
             System.out.println("bład: " + e);
         }
 
-        return  stanowiska;
+        return stanowiska;
     }
+
     public List<Stanowisko_podlegle> getAllStanowiskoPodlegleList() {
         List<Stanowisko_podlegle> stanowiska = new ArrayList<>();
         try {
@@ -443,7 +487,7 @@ public class KadrManager {
                 Stanowisko_podlegle s = new Stanowisko_podlegle(
                         rs.getInt("id_stanowisko_podlegle"),
                         rs.getString("nazwa")
-                );                        
+                );
                 stanowiska.add(s);
             }
 
@@ -451,36 +495,39 @@ public class KadrManager {
             System.out.println("bład: " + e);
         }
 
-        return  stanowiska;
+        return stanowiska;
     }
-    public int getStanowiskoIdByNazwa(String nazwa){
+
+    public int getStanowiskoIdByNazwa(String nazwa) {
         int id = 0;
         try {
             getConnection();
             rs = st.executeQuery("select id_stanowisko from stanowisko where nazwa='" + nazwa + "'");
-            while (rs.next()){
-               id = rs.getInt("id_stanowisko"); 
+            while (rs.next()) {
+                id = rs.getInt("id_stanowisko");
             }
-            
+
         } catch (Exception e) {
-            System.err.println("bladGetUserPrivilage "+e);
+            System.err.println("bladGetUserPrivilage " + e);
         }
         return id;
     }
-    public String getStanowiskoNazwaById(int id){
+
+    public String getStanowiskoNazwaById(int id) {
         String nazwa = "";
         try {
             getConnection();
             rs = st.executeQuery("select nazwa from stanowisko where id_stanowisko='" + id + "'");
-            while (rs.next()){
-               nazwa = rs.getString("nazwa"); 
+            while (rs.next()) {
+                nazwa = rs.getString("nazwa");
             }
-            
+
         } catch (Exception e) {
-            System.err.println("bladGetUserPrivilage "+e);
+            System.err.println("bladGetUserPrivilage " + e);
         }
         return nazwa;
     }
+
     public int addPracownik(Pracownik p) {
         int dodano = 0;
         try {
@@ -521,8 +568,8 @@ public class KadrManager {
         }
         return dodano;
     }
-    
-    public void deleteStanowiskoPodlegleFromStanowisko(int id_pod, int id_st){
+
+    public void deleteStanowiskoPodlegleFromStanowisko(int id_pod, int id_st) {
         try {
             getConnection();
             ps = con.prepareStatement("delete from stanowisko_has_stanowisko_podlegle where "
@@ -536,7 +583,8 @@ public class KadrManager {
         } catch (Exception e) {
         }
     }
-    public void deleteFromStanowiskoHasPodlegle(int id){
+
+    public void deleteFromStanowiskoHasPodlegle(int id) {
         try {
             getConnection();
             ps = con.prepareStatement("delete from stanowisko_has_stanowisko_podlegle where "
@@ -549,7 +597,8 @@ public class KadrManager {
             System.err.println(e);
         }
     }
-    public void deleteStanowiskoById(int id){
+
+    public void deleteStanowiskoById(int id) {
         deleteFromStanowiskoHasPodlegle(id);
         try {
             getConnection();
@@ -563,8 +612,8 @@ public class KadrManager {
             System.err.println(e);
         }
     }
-    
-    public void deleteFromHistoriaStanowiska(int id){
+
+    public void deleteFromHistoriaStanowiska(int id) {
         try {
             getConnection();
             ps = con.prepareStatement("delete from historia_stanowiska where "
@@ -577,8 +626,8 @@ public class KadrManager {
             System.err.println(e);
         }
     }
-    
-    public void deleteFromPracownikById(int id){
+
+    public void deleteFromPracownikById(int id) {
         deleteFromHistoriaStanowiska(id);
         try {
             getConnection();
@@ -592,4 +641,18 @@ public class KadrManager {
             System.err.println(e);
         }
     }
+
+    void deleteFromDoZatwierdzenia(int id) {
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from do_zatwierdzenia where id_do_zatwierdzenia=?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {            
+            System.err.println(e);
+        }
+    }
+
 }
