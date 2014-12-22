@@ -10,14 +10,7 @@
  [ ] edycja historii uzytkownikow
  [ ] dodawanie historii uzytkownikow
  [ ] usuwanie historii uzytkownikow
- [ ] przegladanie stanowisk -> usuwanie
- [ ] 
- [ ] 
- [ ] 
- [ ] 
- [ ] usuwanie
- [ ] zatwierdzanie
- [ ] drukowanie
+ [ ] edycja pracownikow
  */
 package kadrapplication;
 
@@ -1715,6 +1708,11 @@ public class Frame extends JFrame {
 
         jComboBoxRaportType.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jComboBoxRaportType.setModel(cmbRaportListType());
+        jComboBoxRaportType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxRaportTypeActionPerformed(evt);
+            }
+        });
 
         jLabel40.setText("Typ raportu");
 
@@ -1784,50 +1782,33 @@ public class Frame extends JFrame {
         jPanelRaportyLayout.setHorizontalGroup(
             jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel40)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(189, 189, 189)
-                .addComponent(jLabel59)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelRaportData)
-                .addGap(102, 102, 102))
-            .addGroup(jPanelRaportyLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel52)
+                    .addComponent(jLabel55)
+                    .addComponent(jLabel56)
+                    .addComponent(jLabel57)
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldRaportPensjaSrednia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonRaportDrukuj)
-                        .addGap(211, 211, 211))
-                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel52)
-                            .addComponent(jLabel55)
-                            .addComponent(jLabel56)
-                            .addComponent(jLabel57)
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldRaportPensjaSrednia)
+                                .addGap(150, 150, 150)
+                                .addComponent(jButtonRaportDrukuj))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportyLayout.createSequentialGroup()
+                                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel50, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel47, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel46, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                                        .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldRaportPensja))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportyLayout.createSequentialGroup()
-                                        .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldRaportStudent))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportyLayout.createSequentialGroup()
-                                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldRaportPesel))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportyLayout.createSequentialGroup()
-                                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(61, 61, 61)
+                                    .addComponent(jTextFieldRaportPensja)
+                                    .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                                         .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1845,12 +1826,23 @@ public class Frame extends JFrame {
                                         .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextFieldRaportDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(137, 137, 137)
+                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRaportyLayout.createSequentialGroup()
+                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel59)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelRaportData))
+                    .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(247, 247, 247))
         );
         jPanelRaportyLayout.setVerticalGroup(
             jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1873,30 +1865,34 @@ public class Frame extends JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
-                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel43)
-                            .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel46)
-                            .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel51)
                             .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel51)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel43))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel46))
                                 .addGap(11, 11, 11)
                                 .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel47)
-                                    .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel50)
-                            .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel54)
-                            .addComponent(jTextFieldRaportPensjaSrednia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel47))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel50))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel54)
+                                .addComponent(jTextFieldRaportPensjaSrednia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButtonRaportDrukuj))
-                        .addContainerGap(18, Short.MAX_VALUE))
+                        .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(jPanelRaportyLayout.createSequentialGroup()
                         .addGroup(jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelRaportyLayout.createSequentialGroup()
@@ -2304,7 +2300,14 @@ public class Frame extends JFrame {
         int stanowiskoPracownika = p.getStanowisko_id_stanowisko();
         String nazwaStanowiska = km.getStanowiskoNazwaById(stanowiskoPracownika);
         jTextFieldRaportStanowisko.setText(nazwaStanowiska);
-
+        //ktory dzis jest?
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String s = formatter.format(date);
+        jLabelRaportData.setText(s);
+        //
+        int sredniaPensja = 3*p.getPensja();
+        jTextFieldRaportPensjaSrednia.setText(Integer.toString(sredniaPensja));
     }//GEN-LAST:event_jButtonRaportyActionPerformed
 
     private void printCard() {
@@ -2315,7 +2318,7 @@ public class Frame extends JFrame {
         printjob.setPrintable(new Printable() {
             public int print(Graphics pg, PageFormat pf, int pageNum) {
 
-                pf.setOrientation(PageFormat.PORTRAIT);
+                pf.setOrientation(PageFormat.LANDSCAPE);
 
                 if (pageNum > 0) {
                     return Printable.NO_SUCH_PAGE;
@@ -2398,6 +2401,10 @@ public class Frame extends JFrame {
         km.updateDoZatwierdzenia(id_uzytkownik, dz);
         jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());
     }//GEN-LAST:event_jButtonZatwierdzanieZmianZatwierdzActionPerformed
+
+    private void jComboBoxRaportTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxRaportTypeActionPerformed
 
     /**
      * @param args the command line arguments
