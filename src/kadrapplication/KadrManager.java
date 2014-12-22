@@ -756,4 +756,26 @@ public class KadrManager {
         }
         return model;
     }
+
+    int addHistoriaStanowiska(Historia h) {
+        int dodano = 0;
+        try {
+            getConnection();
+            ps = con.prepareStatement("insert into historia_stanowiska("
+                    + "pracownik_id_pracownik,"
+                    + "data_rozpoczecia,"
+                    + "data_zakonczenia,"
+                    + "nazwa) values(?,?,?,?)");
+            ps.setInt(1, h.getId_pracownik());
+            ps.setLong(2, h.getData_rozpoczęcia());
+            ps.setLong(3, h.getData_zakończenia());
+            ps.setString(4, h.getNazwa());
+            dodano = ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("błądDodawanie histSrano: " + e);
+        }
+        return dodano;
+    }
 }
