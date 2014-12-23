@@ -119,6 +119,7 @@ public class Frame extends JFrame {
         jLabelEdStPodlErrorUsun.setVisible(false);
         jLabelDodawanieHistStanDodano.setVisible(false);
         jLabelDodawanieHistStanError.setVisible(false);
+        jLabelEdycjaHistStanError.setVisible(false);
     }
 
     private void initTabbedPaneList() {
@@ -433,6 +434,7 @@ public class Frame extends JFrame {
         jTextFieldEdycjaHistStanDataZakonczenia = new javax.swing.JTextField();
         jButtonEdycjaHistStanEdytuj = new javax.swing.JButton();
         jButtonEdycjaHistStanUsun = new javax.swing.JButton();
+        jLabelEdycjaHistStanError = new javax.swing.JLabel();
         jPanelZatwierdzanie = new javax.swing.JPanel();
         jScrollPane14 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
@@ -1600,12 +1602,23 @@ public class Frame extends JFrame {
 
         jLabel39.setText("Nazwa");
 
+        jTextFieldEdycjaHistStanNazwa.setEditable(false);
+
         jLabel68.setText("Data rozpoczęcia");
+
+        jTextFieldEdycjaHistStanDataRozpoczecia.setEditable(false);
 
         jLabel69.setText("Data zakończenia");
 
+        jTextFieldEdycjaHistStanDataZakonczenia.setEditable(false);
+
         jButtonEdycjaHistStanEdytuj.setText("Edytuj");
         jButtonEdycjaHistStanEdytuj.setEnabled(false);
+        jButtonEdycjaHistStanEdytuj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEdycjaHistStanEdytujActionPerformed(evt);
+            }
+        });
 
         jButtonEdycjaHistStanUsun.setText("Usuń");
         jButtonEdycjaHistStanUsun.setEnabled(false);
@@ -1614,6 +1627,10 @@ public class Frame extends JFrame {
                 jButtonEdycjaHistStanUsunActionPerformed(evt);
             }
         });
+
+        jLabelEdycjaHistStanError.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelEdycjaHistStanError.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelEdycjaHistStanError.setText("Pola nie mogą być puste!");
 
         javax.swing.GroupLayout jPanelEdycjahistoriiStanowiskPracownikaLayout = new javax.swing.GroupLayout(jPanelEdycjahistoriiStanowiskPracownika);
         jPanelEdycjahistoriiStanowiskPracownika.setLayout(jPanelEdycjahistoriiStanowiskPracownikaLayout);
@@ -1631,24 +1648,29 @@ public class Frame extends JFrame {
                         .addComponent(jTextFieldEdycjaHistStanSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonEdycjaHistStankSzukaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
                 .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createSequentialGroup()
-                        .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldEdycjaHistStanNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createSequentialGroup()
+                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldEdycjaHistStanNazwa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createSequentialGroup()
+                                .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldEdycjaHistStanDataRozpoczecia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createSequentialGroup()
+                                .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButtonEdycjaHistStanEdytuj, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel69, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldEdycjaHistStanDataZakonczenia, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                    .addComponent(jButtonEdycjaHistStanUsun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createSequentialGroup()
-                        .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldEdycjaHistStanDataRozpoczecia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createSequentialGroup()
-                        .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButtonEdycjaHistStanEdytuj, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel69, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldEdycjaHistStanDataZakonczenia, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(jButtonEdycjaHistStanUsun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabelEdycjaHistStanError)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanelEdycjahistoriiStanowiskPracownikaLayout.setVerticalGroup(
@@ -1679,6 +1701,8 @@ public class Frame extends JFrame {
                         .addGroup(jPanelEdycjahistoriiStanowiskPracownikaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonEdycjaHistStanEdytuj)
                             .addComponent(jButtonEdycjaHistStanUsun))
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabelEdycjaHistStanError)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -2695,7 +2719,7 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonEdycjaHistStankSzukajActionPerformed
 
     private void jTableEdycjaHistStanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEdycjaHistStanMouseClicked
-        //jButtonEdycjaHistStanEdytuj.setEnabled(true);
+        jButtonEdycjaHistStanEdytuj.setEnabled(true);
         jButtonEdycjaHistStanUsun.setEnabled(true);
         int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
         Historia h = km.getHistoriaStanowiskPracownikById(selectedId);
@@ -2718,6 +2742,47 @@ public class Frame extends JFrame {
     private void jPanelEdycjahistoriiStanowiskPracownikaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
         
     }//GEN-LAST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
+
+    private void jButtonEdycjaHistStanEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdycjaHistStanEdytujActionPerformed
+        int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
+        Historia h = km.getHistoriaStanowiskPracownikById(selectedId);
+        if(jButtonEdycjaHistStanEdytuj.getText().equals("Edytuj")){
+            jTextFieldEdycjaHistStanDataRozpoczecia.setEditable(true);
+            jTextFieldEdycjaHistStanNazwa.setEditable(true);
+            jTextFieldEdycjaHistStanDataZakonczenia.setEditable(true);
+            jButtonEdycjaHistStanEdytuj.setText("Zatwierdź");
+        }
+        if(jButtonEdycjaHistStanEdytuj.getText().equals("Zatwierdź")){
+            if(jTextFieldEdycjaHistStanDataRozpoczecia.getText().isEmpty() ||
+                    jTextFieldEdycjaHistStanDataZakonczenia.getText().isEmpty() ||
+                    jTextFieldEdycjaHistStanNazwa.getText().isEmpty()){
+                jLabelEdycjaHistStanError.setVisible(true);
+            }else{
+                jLabelEdycjaHistStanError.setVisible(false);
+                //sprawdz ktore pole zostalo zmienione i wyslij update
+                if(!jTextFieldEdycjaHistStanNazwa.getText().equals(h.getNazwa()))
+                km.updateHistoriaStanowiskNazwa(jTextFieldEdycjaHistStanNazwa.getText(), selectedId);
+                if(!jTextFieldEdycjaHistStanDataRozpoczecia.getText().equals(dateLongToString(h.getData_rozpoczęcia())))
+                try {
+                    km.updateHistoriaStanowiskData("data_rozpoczecia",getDateInMilisecFromString(jTextFieldEdycjaHistStanDataRozpoczecia.getText()), selectedId);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(!jTextFieldEdycjaHistStanDataZakonczenia.getText().equals(dateLongToString(h.getData_zakończenia())))
+                try {
+                    km.updateHistoriaStanowiskData("data_zakonczenia",getDateInMilisecFromString(jTextFieldEdycjaHistStanDataZakonczenia.getText()), selectedId);
+                    //
+                } catch (ParseException ex) {
+                    Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jTextFieldEdycjaHistStanDataRozpoczecia.setEditable(false);
+                jTextFieldEdycjaHistStanNazwa.setEditable(false);
+                jTextFieldEdycjaHistStanDataZakonczenia.setEditable(false);
+                jButtonEdycjaHistStanEdytuj.setText("Edytuj");
+            }
+        }
+
+    }//GEN-LAST:event_jButtonEdycjaHistStanEdytujActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2869,6 +2934,7 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabelDodawanieHistStanError;
     private javax.swing.JLabel jLabelEdStPodlErrorDodaj;
     private javax.swing.JLabel jLabelEdStPodlErrorUsun;
+    private javax.swing.JLabel jLabelEdycjaHistStanError;
     private javax.swing.JLabel jLabelLoginError;
     private javax.swing.JLabel jLabelNoweStanowiskoDodano;
     private javax.swing.JLabel jLabelNoweStanowiskoError;

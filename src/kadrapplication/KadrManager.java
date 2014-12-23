@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 /**
@@ -206,6 +207,7 @@ public class KadrManager {
         }
         return model;
     }
+
     public FillTable getPracownikHistStanoDataTable() {
         try {
             getConnection();
@@ -749,8 +751,8 @@ public class KadrManager {
         }
 
     }
-    
-    public FillTable getHistoriaZmianZatwierdzaniaTable(){
+
+    public FillTable getHistoriaZmianZatwierdzaniaTable() {
         try {
             getConnection();
             rs = st.executeQuery("select id_do_zatwierdzenia as id, "
@@ -799,7 +801,7 @@ public class KadrManager {
             rs = st.executeQuery("select h.id_historia_stanowiska as id, "
                     + "CONCAT(p.imie, ' ',p.nazwisko) as pracownik, "
                     + "h.nazwa as nazwa from historia_stanowiska h, pracownik p "
-                    + "where h.pracownik_id_pracownik = p.id_pracownik and p.nazwisko like '"+text+"'");
+                    + "where h.pracownik_id_pracownik = p.id_pracownik and p.nazwisko like '" + text + "'");
             this.model = new FillTable(rs);
         } catch (Exception e) {
             System.out.println("bład " + e);
@@ -841,4 +843,42 @@ public class KadrManager {
             System.err.println(e);
         }
     }
+
+    void updateHistoriaStanowiskNazwa(String text, int id) {
+        try {
+            getConnection();
+            ps = con.prepareStatement("update historia_stanowiska set nazwa='" + text + "' where id_historia_stanowiska=" + id);
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("updateHistoriaStanowiskN błąd:" + e);
+        }
+    }
+
+    void updateHistoriaStanowiskData(String nazwaPola, long data, int id) {
+        String nazwa = null;
+        switch (nazwaPola) {
+            case "data_rozpoczecia":
+                nazwa = "data_rozpoczecia";
+                break;
+            case "data_zakonczenia":
+                nazwa = "data_zakonczenia";
+                break;
+            default:
+                nazwa = " ";
+        }
+        try {
+            getConnection();
+            ps = con.prepareStatement("update historia_stanowiska set " + nazwa + "='" + data + "' where id_historia_stanowiska=" + id);
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("updateHistoriaStanowiskD błąd:" + e);
+        }
+    }
+
 }
