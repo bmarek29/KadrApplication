@@ -11,11 +11,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
@@ -42,6 +47,13 @@ public class KadrManager {
         } catch (Exception e) {
             System.out.println("sql connection error: " + e);
         }
+    }
+
+    public long getDateInMilisecFromString(String s) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = formatter.parse(s);
+        long mili = date.getTime();
+        return mili;
     }
 
     public Pracownik getPracownikById(int id) {
@@ -676,50 +688,70 @@ public class KadrManager {
      */
 
     public void updatePracownik(Do_zatwierdzenia dz) {
-        String nazwa = null;
-        switch (dz.getNazwa_pola_do_zmiany()) {
-            case "imie":
-                nazwa = "imie";
-                break;
-            case "nazwisko":
-                nazwa = "nazwisko";
-                break;
-            case "plec":
-                nazwa = "plec";
-                break;
-            case "data_urodzenia":
-                nazwa = "data_urodzenia";
-                break;
-            case "tytul":
-                nazwa = "tytul";
-                break;
-            case "pesel":
-                nazwa = "pesel";
-                break;
-            case "czy_studiuje":
-                nazwa = "czy_studiuje";
-                break;
-            case "pensja":
-                nazwa = "pensja";
-                break;
-            case "data_przyjecia":
-                nazwa = "data_przyjecia";
-                break;
-            case "data_konca_umowy":
-                nazwa = "data_konca_umowy";
-                break;
-            default:
-                nazwa = " ";
-        }
         try {
-            getConnection();
-            ps = con.prepareStatement("update pracownik set " + nazwa + "='" + dz.getWartosc_do_zmiany() + "' where id_pracownik=" + dz.getId_pracownika());
-            ps.executeUpdate();
+            String nazwa = null;
+            long data;
+            int pensja;
+            String wartosc = dz.getWartosc_do_zmiany();
+            switch (dz.getNazwa_pola_do_zmiany()) {
+                case "imie":
+                    nazwa = "imie";
+                    break;
+                case "nazwisko":
+                    nazwa = "nazwisko";
+                    break;
+                case "plec":
+                    nazwa = "plec";
+                    break;
+                case "data_urodzenia":
+                    nazwa = "data_urodzenia";
+                    data = getDateInMilisecFromString(wartosc);
+                    wartosc = Long.toString(data);
+                    break;
+                case "tytul":
+                    nazwa = "tytul";
+                    break;
+                case "pesel":
+                    nazwa = "pesel";
+                    break;
+                case "czy_studiuje":
+                    nazwa = "czy_studiuje";
+                    if (wartosc.equals("Tak")) {
+                        wartosc = "0";
+                    } else {
+                        wartosc = "1";
+                    }
+                    break;
+                case "pensja":
+                    nazwa = "pensja";
+                    pensja = Integer.valueOf(wartosc);
+                    wartosc = Integer.toString(pensja);
+                    break;
+                case "data_przyjecia":
+                    nazwa = "data_przyjecia";
+                    data = getDateInMilisecFromString(wartosc);
+                    wartosc = Long.toString(data);
+                    break;
+                case "data_konca_umowy":
+                    nazwa = "data_konca_umowy";
+                    data = getDateInMilisecFromString(wartosc);
+                    wartosc = Long.toString(data);
+                    break;
+                default:
+                    nazwa = " ";
+            }
+            try {
+                getConnection();
+                ps = con.prepareStatement("update pracownik set " + nazwa + "='" + wartosc + "' where id_pracownik=" + dz.getId_pracownika());
+                ps.executeUpdate();
 
-            ps.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println("684błąd:" + e);
+                ps.close();
+                con.close();
+            } catch (Exception e) {
+                System.out.println("684błąd:" + e);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(KadrManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -861,13 +893,10 @@ public class KadrManager {
         String nazwa = null;
         switch (nazwaPola) {
             case "data_rozpoczecia":
-                nazwa = "data_rozpoczecia";
-                break;
-            case "data_zakonczenia":
-                nazwa = "data_zakonczenia";
+                nazwa = nazwaPola;
                 break;
             default:
-                nazwa = " ";
+                nazwa = nazwaPola;
         }
         try {
             getConnection();
@@ -905,13 +934,67 @@ public class KadrManager {
         }
         try {
             getConnection();
-            ps = con.prepareStatement("update uzytkownik set "+nazwa+"='"+text+"' where id_uzytkownik=" + id);
+            ps = con.prepareStatement("update uzytkownik set " + nazwa + "='" + text + "' where id_uzytkownik=" + id);
             ps.executeUpdate();
 
             ps.close();
             con.close();
         } catch (Exception e) {
             System.out.println("updateUzytkownik błąd:" + e);
+        }
+    }
+
+    void addDoZatwierdzeniaString(String nazwaPola, String text, int id, int uzytkownikId) {
+        String nazwa;
+        switch (nazwaPola) {
+            case "imie":
+                nazwa = nazwaPola;
+                break;
+            case "nazwisko":
+                nazwa = nazwaPola;
+                break;
+            case "pesel":
+                nazwa = nazwaPola;
+                break;
+            case "plec":
+                nazwa = nazwaPola;
+                break;
+            case "data_urodzenia":
+                nazwa = nazwaPola;
+                break;
+            case "data_przyjecia":
+                nazwa = nazwaPola;
+                break;
+            case "czy_studiuje":
+                nazwa = nazwaPola;
+                break;
+            case "pensja":
+                nazwa = nazwaPola;
+                break;
+            default:
+                nazwa = nazwaPola;
+        }
+        try {
+            getConnection();
+            ps = con.prepareStatement("insert into do_zatwierdzenia"
+                    + "(uzytkownik_id_uzytkownik, "
+                    + "id_pracownika, "
+                    + "nazwa_pola_do_zmiany, "
+                    + "wartosc_do_zmiany, "
+                    + "zatwierdzone) "
+                    + "values(?,?,?,?,?)");
+            ps.setInt(1, uzytkownikId);
+            ps.setInt(2, id);
+            ps.setString(3, nazwa);
+            ps.setString(4, text);
+            ps.setInt(5, 1);
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+            System.out.println("akuku");
+        } catch (Exception e) {
+            System.out.println("addToDoZatwierdzenia błąd:" + e);
         }
     }
 

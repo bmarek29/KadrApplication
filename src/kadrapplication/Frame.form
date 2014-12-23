@@ -988,8 +988,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="367" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel19" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1004,11 +1003,15 @@
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jComboBoxPracownikSzukaj" min="-2" pref="105" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                                           <Component id="jButtonRaporty" min="-2" pref="79" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jScrollPane1" min="-2" pref="367" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -1045,7 +1048,7 @@
                                               <Group type="102" alignment="1" attributes="0">
                                                   <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jTextFieldPrzPracwonikImie" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jTextFieldPrzPracownikImie" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="jLabel23" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
@@ -1076,7 +1079,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldPrzPracoKoniecUmowy" max="32767" attributes="0"/>
+                                          <Component id="jTextFieldPrzPracownikKoniecUmowy" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -1090,7 +1093,7 @@
                                           <Component id="jScrollPane3" min="-2" pref="131" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="jButtonPrzPracownikEdytujZatwierdz" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButtonPrzPracownikEdytujZatwierdz" min="-2" pref="121" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jButtonPrzPracownikUsun" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -1110,7 +1113,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jTextFieldPrzPracwonikImie" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldPrzPracownikImie" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1161,11 +1164,11 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel44" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldPrzPracoKoniecUmowy" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldPrzPracownikKoniecUmowy" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jButtonPrzPracownikEdytujZatwierdz" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButtonPrzPracownikEdytujZatwierdz" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                       <Component id="jButtonPrzPracownikUsun" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1290,7 +1293,7 @@
                     <Property name="text" type="java.lang.String" value="Imie"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldPrzPracwonikImie">
+                <Component class="javax.swing.JTextField" name="jTextFieldPrzPracownikImie">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1468,7 +1471,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButtonPrzPracownikEdytujZatwierdz">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Edytuj pracownika"/>
+                    <Property name="text" type="java.lang.String" value="Edytuj"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzPracownikEdytujZatwierdzActionPerformed"/>
@@ -1482,7 +1485,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzPracownikUsunActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldPrzPracoKoniecUmowy">
+                <Component class="javax.swing.JTextField" name="jTextFieldPrzPracownikKoniecUmowy">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -2613,7 +2616,10 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabelRaportData" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel58" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel58" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="-2" pref="247" max="-2" attributes="0"/>
                       </Group>
@@ -2739,6 +2745,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportImieINazwisko">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel45">
@@ -2749,6 +2758,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportDataUrodzenia">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel46">
@@ -2759,6 +2771,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportPesel">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel47">
@@ -2769,6 +2784,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportStudent">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel48">
@@ -2779,6 +2797,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportDataZatrudnienia">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel49">
@@ -2789,6 +2810,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportDataKoncaUmowy">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel50">
@@ -2799,6 +2823,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportPensja">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel51">
@@ -2811,6 +2838,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportStanowisko">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel54">
@@ -2821,6 +2851,9 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldRaportPensjaSrednia">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButtonRaportDrukuj">

@@ -10,10 +10,12 @@
  [x] edycja historii uzytkownikow
  [x] dodawanie historii uzytkownikow
  [x] usuwanie historii uzytkownikow
- [ ] edycja pracownikow
+ [x] edycja pracownikow
  [ ] jezyk polski w db
  [ ] zakladki i przyciski zalezne od uprawnien
  [ ] potwierdz usuwanie - zmiana koloru i tekstu przycisku
+ [ ] raporty skonfigurować
+ [ ] alert
  */
 package kadrapplication;
 
@@ -262,16 +264,18 @@ public class Frame extends JFrame {
     }
 
     public void disablePracownikTextFields(boolean b) {
-        jTextFieldPrzPracwonikImie.setEditable(b);
+        jTextFieldPrzPracownikImie.setEditable(b);
         jTextFieldPrzPracownikNazwisko.setEditable(b);
         jTextFieldPrzPracownikDataPrzyjecia.setEditable(b);
         jTextFieldPrzPracownikDataUrodzenia.setEditable(b);
+        jTextFieldPrzPracownikKoniecUmowy.setEditable(b);
         jTextFieldPrzPracownikPesel.setEditable(b);
         jTextFieldPrzPracownikTytul.setEditable(b);
         jComboBoxPrzPracownikPlec.setEnabled(b);
         jComboBoxPrzPracownikStanowisko.setEnabled(b);
         jCheckBoxPrzPracownikStudent.setEnabled(b);
         jTextFieldPrzPracownikPensja.setEditable(b);
+
     }
 
     /**
@@ -365,7 +369,7 @@ public class Frame extends JFrame {
         jLabel19 = new javax.swing.JLabel();
         jTextFieldPrzPracownikSzukaj = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jTextFieldPrzPracwonikImie = new javax.swing.JTextField();
+        jTextFieldPrzPracownikImie = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jTextFieldPrzPracownikNazwisko = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -393,7 +397,7 @@ public class Frame extends JFrame {
         jLabel44 = new javax.swing.JLabel();
         jButtonPrzPracownikEdytujZatwierdz = new javax.swing.JButton();
         jButtonPrzPracownikUsun = new javax.swing.JButton();
-        jTextFieldPrzPracoKoniecUmowy = new javax.swing.JTextField();
+        jTextFieldPrzPracownikKoniecUmowy = new javax.swing.JTextField();
         jPanelPrzegladanieStanowisk = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
@@ -1095,8 +1099,8 @@ public class Frame extends JFrame {
 
         jLabel22.setText("Imie");
 
-        jTextFieldPrzPracwonikImie.setEditable(false);
-        jTextFieldPrzPracwonikImie.setPreferredSize(new java.awt.Dimension(80, 20));
+        jTextFieldPrzPracownikImie.setEditable(false);
+        jTextFieldPrzPracownikImie.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel23.setText("Nazwisko");
 
@@ -1171,7 +1175,7 @@ public class Frame extends JFrame {
 
         jLabel44.setText("Koniec umowy");
 
-        jButtonPrzPracownikEdytujZatwierdz.setText("Edytuj pracownika");
+        jButtonPrzPracownikEdytujZatwierdz.setText("Edytuj");
         jButtonPrzPracownikEdytujZatwierdz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPrzPracownikEdytujZatwierdzActionPerformed(evt);
@@ -1185,7 +1189,7 @@ public class Frame extends JFrame {
             }
         });
 
-        jTextFieldPrzPracoKoniecUmowy.setEditable(false);
+        jTextFieldPrzPracownikKoniecUmowy.setEditable(false);
 
         javax.swing.GroupLayout jPanelPrzegladaniePracownikowLayout = new javax.swing.GroupLayout(jPanelPrzegladaniePracownikow);
         jPanelPrzegladaniePracownikow.setLayout(jPanelPrzegladaniePracownikowLayout);
@@ -1193,8 +1197,7 @@ public class Frame extends JFrame {
             jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19)
@@ -1207,9 +1210,12 @@ public class Frame extends JFrame {
                                 .addComponent(jButtonPrzPracownikSzukaj))
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                 .addComponent(jComboBoxPracownikSzukaj, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(73, 73, 73)
                                 .addComponent(jButtonRaporty, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(14, 14, 14)))))
+                                .addGap(14, 14, 14))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1237,7 +1243,7 @@ public class Frame extends JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                         .addComponent(jLabel22)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextFieldPrzPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel23)
                                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                         .addComponent(jLabel26)
@@ -1260,7 +1266,7 @@ public class Frame extends JFrame {
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                                 .addComponent(jLabel44)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldPrzPracoKoniecUmowy)))
+                                .addComponent(jTextFieldPrzPracownikKoniecUmowy)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelPrzPracownikPodlegleLabel)
                         .addGap(44, 44, 44))
@@ -1270,7 +1276,7 @@ public class Frame extends JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
-                                .addComponent(jButtonPrzPracownikEdytujZatwierdz)
+                                .addComponent(jButtonPrzPracownikEdytujZatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonPrzPracownikUsun)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -1284,7 +1290,7 @@ public class Frame extends JFrame {
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPrzPracwonikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPrzPracownikImie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel22))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1325,10 +1331,10 @@ public class Frame extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel44)
-                            .addComponent(jTextFieldPrzPracoKoniecUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldPrzPracownikKoniecUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonPrzPracownikEdytujZatwierdz)
+                            .addComponent(jButtonPrzPracownikEdytujZatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonPrzPracownikUsun)))
                     .addGroup(jPanelPrzegladaniePracownikowLayout.createSequentialGroup()
                         .addGroup(jPanelPrzegladaniePracownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1968,38 +1974,47 @@ public class Frame extends JFrame {
         jLabel43.setText("Imie i nazwisko");
 
         jTextFieldRaportImieINazwisko.setEditable(false);
+        jTextFieldRaportImieINazwisko.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel45.setText("Data urodzenia");
 
         jTextFieldRaportDataUrodzenia.setEditable(false);
+        jTextFieldRaportDataUrodzenia.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel46.setText("Pesel");
 
         jTextFieldRaportPesel.setEditable(false);
+        jTextFieldRaportPesel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel47.setText("Student");
 
         jTextFieldRaportStudent.setEditable(false);
+        jTextFieldRaportStudent.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel48.setText("Data zatrudnienia");
 
         jTextFieldRaportDataZatrudnienia.setEditable(false);
+        jTextFieldRaportDataZatrudnienia.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel49.setText("Data końca umowy");
 
         jTextFieldRaportDataKoncaUmowy.setEditable(false);
+        jTextFieldRaportDataKoncaUmowy.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel50.setText("Pensja");
 
         jTextFieldRaportPensja.setEditable(false);
+        jTextFieldRaportPensja.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel53.setText("Stanowisko");
 
         jTextFieldRaportStanowisko.setEditable(false);
+        jTextFieldRaportStanowisko.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel54.setText("Średnie wynagrodzenie z 3 ost. mies.");
 
         jTextFieldRaportPensjaSrednia.setEditable(false);
+        jTextFieldRaportPensjaSrednia.setBackground(new java.awt.Color(255, 255, 255));
 
         jButtonRaportDrukuj.setText("Drukuj");
         jButtonRaportDrukuj.addActionListener(new java.awt.event.ActionListener() {
@@ -2090,7 +2105,9 @@ public class Frame extends JFrame {
                         .addComponent(jLabel59)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelRaportData))
-                    .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelRaportyLayout.createSequentialGroup()
+                        .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(104, 104, 104)))
                 .addGap(247, 247, 247))
         );
         jPanelRaportyLayout.setVerticalGroup(
@@ -2363,6 +2380,9 @@ public class Frame extends JFrame {
         tabActionKartoteka();
         disablePracownikTextFields(false);
         jTablePrzPracownik.setModel(km.getPracownikDataTable());
+        jButtonPrzPracownikEdytujZatwierdz.setText("Edytuj");
+        jButtonPrzPracownikEdytujZatwierdz.setEnabled(false);
+
     }//GEN-LAST:event_jButtonKartotekaActionPerformed
 
     private void jTextFieldPrzPracownikSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrzPracownikSzukajActionPerformed
@@ -2383,7 +2403,7 @@ public class Frame extends JFrame {
         Pracownik p;
         p = km.getPracownikById(selectedId);
 
-        jTextFieldPrzPracwonikImie.setText(p.getImie());
+        jTextFieldPrzPracownikImie.setText(p.getImie());
         jTextFieldPrzPracownikNazwisko.setText(p.getNazwisko());
         if (p.getPlec().equalsIgnoreCase("Mezczyzna")) {
             jComboBoxPrzPracownikPlec.setSelectedIndex(0);
@@ -2395,7 +2415,7 @@ public class Frame extends JFrame {
         jTextFieldPrzPracownikTytul.setText(p.getTytul());
         jTextFieldPrzPracownikDataPrzyjecia.setText(dateLongToString(p.getData_przyjecia()));
         jTextFieldPrzPracownikDataUrodzenia.setText(dateLongToString(p.getData_urodzenia()));
-        jTextFieldPrzPracoKoniecUmowy.setText(dateLongToString(p.getData_konca_umowy()));
+        jTextFieldPrzPracownikKoniecUmowy.setText(dateLongToString(p.getData_konca_umowy()));
         if (p.getCzy_studiuje() == 0) {
             jCheckBoxPrzPracownikStudent.setSelected(true);
         } else {
@@ -2531,7 +2551,60 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
 
     private void jButtonPrzPracownikEdytujZatwierdzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikEdytujZatwierdzActionPerformed
-        disablePracownikTextFields(true);
+        int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+        Pracownik p = km.getPracownikById(selectedId);
+        int uzytkownikId = km.getUzytkownikIdByLogin(zalogowano_jako);
+        System.out.println("uzytkownik id: " + uzytkownikId + " zalogowano jako: " + zalogowano_jako);
+        if (jButtonPrzPracownikEdytujZatwierdz.getText().equals("Edytuj")) {
+            disablePracownikTextFields(true);
+            jButtonPrzPracownikEdytujZatwierdz.setText("Zatwierdź");
+        } else {          try {
+            //sprawdz czy sie zmienilo i wrzuc do do_zatwierdzenia
+            if (!jTextFieldPrzPracownikImie.getText().equals(p.getImie())) {
+                km.addDoZatwierdzeniaString("imie", jTextFieldPrzPracownikImie.getText(), selectedId, uzytkownikId);
+            }
+            if (!jTextFieldPrzPracownikNazwisko.getText().equals(p.getNazwisko())) {
+                km.addDoZatwierdzeniaString("nazwisko", jTextFieldPrzPracownikNazwisko.getText(), selectedId, uzytkownikId);
+            }
+            if (!jTextFieldPrzPracownikPesel.getText().equals(p.getPesel())) {
+                km.addDoZatwierdzeniaString("pesel", jTextFieldPrzPracownikPesel.getText(), selectedId, uzytkownikId);
+            }
+            if (!jTextFieldPrzPracownikTytul.getText().equals(p.getTytul())) {
+                km.addDoZatwierdzeniaString("tytul", jTextFieldPrzPracownikTytul.getText(), selectedId, uzytkownikId);
+            }
+            if (!((String) jComboBoxPrzPracownikPlec.getModel().getElementAt(jComboBoxPrzPracownikPlec.getSelectedIndex())).equals(p.getPlec())) {
+                km.addDoZatwierdzeniaString("plec", (String) jComboBoxPrzPracownikPlec.getModel().getElementAt(jComboBoxPrzPracownikPlec.getSelectedIndex()), selectedId, uzytkownikId);
+            }
+            
+            
+            if (!(getDateInMilisecFromString(jTextFieldPrzPracownikDataPrzyjecia.getText()) == p.getData_przyjecia()))
+                km.addDoZatwierdzeniaString("data_przyjecia", jTextFieldPrzPracownikDataPrzyjecia.getText(), selectedId, uzytkownikId);
+                      
+            if (!(getDateInMilisecFromString(jTextFieldPrzPracownikDataUrodzenia.getText()) == p.getData_urodzenia()))
+                km.addDoZatwierdzeniaString("data_urodzenia", jTextFieldPrzPracownikDataUrodzenia.getText(), selectedId, uzytkownikId);
+            
+            if (!(getDateInMilisecFromString(jTextFieldPrzPracownikKoniecUmowy.getText()) == p.getData_konca_umowy()))
+                km.addDoZatwierdzeniaString("data_konca_umowy", jTextFieldPrzPracownikKoniecUmowy.getText(), selectedId, uzytkownikId);
+            
+            
+            if ((jCheckBoxPrzPracownikStudent.isSelected() == true && p.getCzy_studiuje() == 1))
+                km.addDoZatwierdzeniaString("czy_studiuje", "Tak", selectedId, uzytkownikId);
+            if ((jCheckBoxPrzPracownikStudent.isSelected() == false && (p.getCzy_studiuje() == 0)))
+                km.addDoZatwierdzeniaString("czy_studiuje", "Nie", selectedId, uzytkownikId);      
+            if((Integer.valueOf(jTextFieldPrzPracownikPensja.getText())) != p.getPensja())
+                km.addDoZatwierdzeniaString("pensja", jTextFieldPrzPracownikPensja.getText(), selectedId, uzytkownikId);
+            
+            
+            
+            //jTablePrzPracownik.setModel(km.getPracownikDataTable());
+            disablePracownikTextFields(false);
+            jButtonPrzPracownikEdytujZatwierdz.setText("Edytuj");
+            jButtonPrzPracownikEdytujZatwierdz.setEnabled(false);
+            } catch (ParseException ex) {
+                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_jButtonPrzPracownikEdytujZatwierdzActionPerformed
 
     private void jButtonRaportyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportyActionPerformed
@@ -2646,6 +2719,7 @@ public class Frame extends JFrame {
 
     private void jButtonZatwierdzanieZmianOdrzucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieZmianOdrzucActionPerformed
         km.deleteFromDoZatwierdzenia((int) jTableZatwierdzanie.getModel().getValueAt(jTableZatwierdzanie.getSelectedRow(), 0));
+        jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());
     }//GEN-LAST:event_jButtonZatwierdzanieZmianOdrzucActionPerformed
 
     private void jButtonZatwierdzanieZmianZatwierdzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZatwierdzanieZmianZatwierdzActionPerformed
@@ -2657,6 +2731,9 @@ public class Frame extends JFrame {
         int id_uzytkownik = km.getUzytkownikIdByLogin(this.zalogowano_jako);
         km.updateDoZatwierdzenia(id_uzytkownik, dz);
         jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());
+        jTableHistoriaZatwierdzonychZmian.setModel(km.getHistoriaZmianZatwierdzaniaTable());
+        jButtonZatwierdzanieZmianZatwierdz.setEnabled(false);
+        jButtonZatwierdzanieZmianOdrzuc.setEnabled(false);
     }//GEN-LAST:event_jButtonZatwierdzanieZmianZatwierdzActionPerformed
 
     private void jComboBoxRaportTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeActionPerformed
@@ -2717,12 +2794,12 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jTextFieldEdycjaHistStanSzukajActionPerformed
 
     private void jButtonEdycjaHistStankSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdycjaHistStankSzukajActionPerformed
-        if(jTextFieldEdycjaHistStanSzukaj.getText().isEmpty()){
+        if (jTextFieldEdycjaHistStanSzukaj.getText().isEmpty()) {
             jTableEdycjaHistStan.setModel(null);
-        }else{
+        } else {
             jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTableWithQuery(jTextFieldEdycjaHistStanSzukaj.getText()));
         }
-        
+
     }//GEN-LAST:event_jButtonEdycjaHistStankSzukajActionPerformed
 
     private void jTableEdycjaHistStanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEdycjaHistStanMouseClicked
@@ -2745,16 +2822,18 @@ public class Frame extends JFrame {
     private void jButtonPrzUzytkownikowEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzUzytkownikowEdytujActionPerformed
         int selectedId = (int) jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
         Uzytkownik u = km.getUzytkownikById(selectedId);
-        if(jButtonPrzUzytkownikowEdytuj.getText().equals("Edytuj")){
+        if (jButtonPrzUzytkownikowEdytuj.getText().equals("Edytuj")) {
             jTextFieldPrzUzytHaslo.setEditable(true);
             jTextFieldPrzUzytkLogin.setEditable(true);
             jButtonPrzUzytkownikowEdytuj.setText("Zatwierdź");
-        }else{
+        } else {
             //sprawdz czy sie zmienilo i zrob update
-            if(!jTextFieldPrzUzytHaslo.getText().equals(u.getHaslo()))
-                km.updateUzytkownik("haslo",jTextFieldPrzUzytHaslo.getText(), selectedId);
-            if(!jTextFieldPrzUzytkLogin.getText().equals(u.getLogin()))
-                km.updateUzytkownik("login",jTextFieldPrzUzytkLogin.getText(), selectedId);
+            if (!jTextFieldPrzUzytHaslo.getText().equals(u.getHaslo())) {
+                km.updateUzytkownik("haslo", jTextFieldPrzUzytHaslo.getText(), selectedId);
+            }
+            if (!jTextFieldPrzUzytkLogin.getText().equals(u.getLogin())) {
+                km.updateUzytkownik("login", jTextFieldPrzUzytkLogin.getText(), selectedId);
+            }
             //
             jTextFieldPrzUzytHaslo.setEditable(false);
             jTextFieldPrzUzytkLogin.setEditable(false);
@@ -2764,41 +2843,44 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonPrzUzytkownikowEdytujActionPerformed
 
     private void jPanelEdycjahistoriiStanowiskPracownikaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
-        
+
     }//GEN-LAST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
 
     private void jButtonEdycjaHistStanEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdycjaHistStanEdytujActionPerformed
         int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
         Historia h = km.getHistoriaStanowiskPracownikById(selectedId);
-        if(jButtonEdycjaHistStanEdytuj.getText().equals("Edytuj")){
+        if (jButtonEdycjaHistStanEdytuj.getText().equals("Edytuj")) {
             jTextFieldEdycjaHistStanDataRozpoczecia.setEditable(true);
             jTextFieldEdycjaHistStanNazwa.setEditable(true);
             jTextFieldEdycjaHistStanDataZakonczenia.setEditable(true);
             jButtonEdycjaHistStanEdytuj.setText("Zatwierdź");
-        }
-        if(jButtonEdycjaHistStanEdytuj.getText().equals("Zatwierdź")){
-            if(jTextFieldEdycjaHistStanDataRozpoczecia.getText().isEmpty() ||
-                    jTextFieldEdycjaHistStanDataZakonczenia.getText().isEmpty() ||
-                    jTextFieldEdycjaHistStanNazwa.getText().isEmpty()){
+        } else {
+            if (jTextFieldEdycjaHistStanDataRozpoczecia.getText().isEmpty()
+                    || jTextFieldEdycjaHistStanDataZakonczenia.getText().isEmpty()
+                    || jTextFieldEdycjaHistStanNazwa.getText().isEmpty()) {
                 jLabelEdycjaHistStanError.setVisible(true);
-            }else{
+            } else {
                 jLabelEdycjaHistStanError.setVisible(false);
                 //sprawdz ktore pole zostalo zmienione i wyslij update
-                if(!jTextFieldEdycjaHistStanNazwa.getText().equals(h.getNazwa()))
-                km.updateHistoriaStanowiskNazwa(jTextFieldEdycjaHistStanNazwa.getText(), selectedId);
-                if(!jTextFieldEdycjaHistStanDataRozpoczecia.getText().equals(dateLongToString(h.getData_rozpoczęcia())))
-                try {
-                    km.updateHistoriaStanowiskData("data_rozpoczecia",getDateInMilisecFromString(jTextFieldEdycjaHistStanDataRozpoczecia.getText()), selectedId);
-                } catch (ParseException ex) {
-                    Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+                if (!jTextFieldEdycjaHistStanNazwa.getText().equals(h.getNazwa())) {
+                    km.updateHistoriaStanowiskNazwa(jTextFieldEdycjaHistStanNazwa.getText(), selectedId);
                 }
-                if(!jTextFieldEdycjaHistStanDataZakonczenia.getText().equals(dateLongToString(h.getData_zakończenia())))
-                try {
-                    km.updateHistoriaStanowiskData("data_zakonczenia",getDateInMilisecFromString(jTextFieldEdycjaHistStanDataZakonczenia.getText()), selectedId);
-                    //
-                } catch (ParseException ex) {
-                    Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+                if (!jTextFieldEdycjaHistStanDataRozpoczecia.getText().equals(dateLongToString(h.getData_rozpoczęcia()))) {
+                    try {
+                        km.updateHistoriaStanowiskData("data_rozpoczecia", getDateInMilisecFromString(jTextFieldEdycjaHistStanDataRozpoczecia.getText()), selectedId);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+                if (!jTextFieldEdycjaHistStanDataZakonczenia.getText().equals(dateLongToString(h.getData_zakończenia()))) {
+                    try {
+                        km.updateHistoriaStanowiskData("data_zakonczenia", getDateInMilisecFromString(jTextFieldEdycjaHistStanDataZakonczenia.getText()), selectedId);
+                        //
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
                 jTextFieldEdycjaHistStanDataRozpoczecia.setEditable(false);
                 jTextFieldEdycjaHistStanNazwa.setEditable(false);
                 jTextFieldEdycjaHistStanDataZakonczenia.setEditable(false);
@@ -3044,15 +3126,15 @@ public class Frame extends JFrame {
     private javax.swing.JTextField jTextFieldNowyPracownikTytul;
     private javax.swing.JTextField jTextFieldNowyUzytkownikHasloAdd;
     private javax.swing.JTextField jTextFieldNowyUzytkownikLoginAdd;
-    private javax.swing.JTextField jTextFieldPrzPracoKoniecUmowy;
     private javax.swing.JTextField jTextFieldPrzPracownikDataPrzyjecia;
     private javax.swing.JTextField jTextFieldPrzPracownikDataUrodzenia;
+    private javax.swing.JTextField jTextFieldPrzPracownikImie;
+    private javax.swing.JTextField jTextFieldPrzPracownikKoniecUmowy;
     private javax.swing.JTextField jTextFieldPrzPracownikNazwisko;
     private javax.swing.JTextField jTextFieldPrzPracownikPensja;
     private javax.swing.JTextField jTextFieldPrzPracownikPesel;
     private javax.swing.JTextField jTextFieldPrzPracownikSzukaj;
     private javax.swing.JTextField jTextFieldPrzPracownikTytul;
-    private javax.swing.JTextField jTextFieldPrzPracwonikImie;
     private javax.swing.JTextField jTextFieldPrzUzytDataUtworzenia;
     private javax.swing.JTextField jTextFieldPrzUzytHaslo;
     private javax.swing.JTextField jTextFieldPrzUzytkLogin;
