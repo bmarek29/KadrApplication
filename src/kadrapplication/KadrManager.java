@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -200,6 +201,19 @@ public class KadrManager {
 
             this.model = new FillTable(rs);
 
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+    public FillTable getPracownikHistStanoDataTable() {
+        try {
+            getConnection();
+            rs = st.executeQuery("select h.id_historia_stanowiska as id, "
+                    + "CONCAT(p.imie, ' ',p.nazwisko) as pracownik, "
+                    + "h.nazwa as nazwa from historia_stanowiska h, pracownik p "
+                    + "where h.pracownik_id_pracownik = p.id_pracownik");
+            this.model = new FillTable(rs);
         } catch (Exception e) {
             System.out.println("bład " + e);
         }
@@ -777,5 +791,54 @@ public class KadrManager {
             System.out.println("błądDodawanie histSrano: " + e);
         }
         return dodano;
+    }
+
+    TableModel getPracownikHistStanoDataTableWithQuery(String text) {
+        try {
+            getConnection();
+            rs = st.executeQuery("select h.id_historia_stanowiska as id, "
+                    + "CONCAT(p.imie, ' ',p.nazwisko) as pracownik, "
+                    + "h.nazwa as nazwa from historia_stanowiska h, pracownik p "
+                    + "where h.pracownik_id_pracownik = p.id_pracownik and p.nazwisko like '"+text+"'");
+            this.model = new FillTable(rs);
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+
+    Historia getHistoriaStanowiskPracownikById(int selectedId) {
+        Historia h = null;
+        try {
+            getConnection();
+            rs = st.executeQuery("select * from historia_stanowiska where id_historia_stanowsika='" + selectedId + "'");
+            while (rs.next()) {
+                h = new Historia(
+                        rs.getInt("id_historia_stanowsika"),
+                        rs.getInt("pracownik_id_pracownik"),
+                        rs.getLong("data_rozpoczecia"),
+                        rs.getLong("data_zakonczenia"),
+                        rs.getString("nazwa")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return h;
+
+    }
+
+    void deleteFromHistoriaStanowiskaById(int selectedId) {
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from historia_stanowiska where "
+                    + "id_historia_stanowiska=?");
+            ps.setInt(1, selectedId);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }
