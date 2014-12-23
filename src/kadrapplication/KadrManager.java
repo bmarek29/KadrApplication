@@ -881,4 +881,38 @@ public class KadrManager {
         }
     }
 
+    void deleteFromUzytkownik(int id) {
+        try {
+            getConnection();
+            ps = con.prepareStatement("delete from uzytkownik where id_uzytkownik=" + id);
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("deleteUzytkownik błąd:" + e);
+        }
+    }
+
+    void updateUzytkownik(String nazwaPola, String text, int id) {
+        String nazwa = null;
+        switch (nazwaPola) {
+            case "login":
+                nazwa = nazwaPola;
+                break;
+            default:
+                nazwa = nazwaPola;
+        }
+        try {
+            getConnection();
+            ps = con.prepareStatement("update uzytkownik set "+nazwa+"='"+text+"' where id_uzytkownik=" + id);
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("updateUzytkownik błąd:" + e);
+        }
+    }
+
 }

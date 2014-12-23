@@ -6,12 +6,14 @@
 
 /*
  TODO:
- [ ] edycja uzytkownikow
- [ ] edycja historii uzytkownikow
+ [x] edycja uzytkownikow
+ [x] edycja historii uzytkownikow
  [x] dodawanie historii uzytkownikow
  [x] usuwanie historii uzytkownikow
  [ ] edycja pracownikow
  [ ] jezyk polski w db
+ [ ] zakladki i przyciski zalezne od uprawnien
+ [ ] potwierdz usuwanie - zmiana koloru i tekstu przycisku
  */
 package kadrapplication;
 
@@ -352,8 +354,8 @@ public class Frame extends JFrame {
         jTextFieldPrzUzytHaslo = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonPrzUzytkownikowEdytuj = new javax.swing.JButton();
+        jButtonPrzPracownikowUsun = new javax.swing.JButton();
         jPanelPrzegladaniePracownikow = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -979,14 +981,19 @@ public class Frame extends JFrame {
 
         jLabel37.setText("Hasło");
 
-        jButton1.setText("Edytuj");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPrzUzytkownikowEdytuj.setText("Edytuj");
+        jButtonPrzUzytkownikowEdytuj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonPrzUzytkownikowEdytujActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Usuń");
+        jButtonPrzPracownikowUsun.setText("Usuń");
+        jButtonPrzPracownikowUsun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrzPracownikowUsunActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPrzegladanieUzytkownikowLayout = new javax.swing.GroupLayout(jPanelPrzegladanieUzytkownikow);
         jPanelPrzegladanieUzytkownikow.setLayout(jPanelPrzegladanieUzytkownikowLayout);
@@ -999,10 +1006,10 @@ public class Frame extends JFrame {
                     .addComponent(jLabel33)
                     .addComponent(jLabel36)
                     .addComponent(jLabel37)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonPrzUzytkownikowEdytuj, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPrzPracownikowUsun, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytkUprawnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytkLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytDataUtworzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1035,8 +1042,8 @@ public class Frame extends JFrame {
                     .addComponent(jLabel37))
                 .addGap(30, 30, 30)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonPrzUzytkownikowEdytuj)
+                    .addComponent(jButtonPrzPracownikowUsun))
                 .addContainerGap(140, Short.MAX_VALUE))
             .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
@@ -2735,9 +2742,26 @@ public class Frame extends JFrame {
         jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
     }//GEN-LAST:event_jButtonEdycjaHistStanUsunActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonPrzUzytkownikowEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzUzytkownikowEdytujActionPerformed
+        int selectedId = (int) jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
+        Uzytkownik u = km.getUzytkownikById(selectedId);
+        if(jButtonPrzUzytkownikowEdytuj.getText().equals("Edytuj")){
+            jTextFieldPrzUzytHaslo.setEditable(true);
+            jTextFieldPrzUzytkLogin.setEditable(true);
+            jButtonPrzUzytkownikowEdytuj.setText("Zatwierdź");
+        }else{
+            //sprawdz czy sie zmienilo i zrob update
+            if(!jTextFieldPrzUzytHaslo.getText().equals(u.getHaslo()))
+                km.updateUzytkownik("haslo",jTextFieldPrzUzytHaslo.getText(), selectedId);
+            if(!jTextFieldPrzUzytkLogin.getText().equals(u.getLogin()))
+                km.updateUzytkownik("login",jTextFieldPrzUzytkLogin.getText(), selectedId);
+            //
+            jTextFieldPrzUzytHaslo.setEditable(false);
+            jTextFieldPrzUzytkLogin.setEditable(false);
+            jButtonPrzUzytkownikowEdytuj.setText("Edytuj");
+            jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
+        }
+    }//GEN-LAST:event_jButtonPrzUzytkownikowEdytujActionPerformed
 
     private void jPanelEdycjahistoriiStanowiskPracownikaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
         
@@ -2784,6 +2808,12 @@ public class Frame extends JFrame {
 
     }//GEN-LAST:event_jButtonEdycjaHistStanEdytujActionPerformed
 
+    private void jButtonPrzPracownikowUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikowUsunActionPerformed
+        int selectedId = (int) jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
+        km.deleteFromUzytkownik(selectedId);
+        jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
+    }//GEN-LAST:event_jButtonPrzPracownikowUsunActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2825,8 +2855,6 @@ public class Frame extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonDodawanieHistStanDodaj;
     private javax.swing.JButton jButtonDodawanieHistStanWybierzPrac;
     private javax.swing.JButton jButtonEdStPodlDodaj;
@@ -2844,6 +2872,8 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonPrzPracownikEdytujZatwierdz;
     private javax.swing.JButton jButtonPrzPracownikSzukaj;
     private javax.swing.JButton jButtonPrzPracownikUsun;
+    private javax.swing.JButton jButtonPrzPracownikowUsun;
+    private javax.swing.JButton jButtonPrzUzytkownikowEdytuj;
     private javax.swing.JButton jButtonPrzegladanieStanowiskUsun;
     private javax.swing.JButton jButtonRaportDrukuj;
     private javax.swing.JButton jButtonRaporty;

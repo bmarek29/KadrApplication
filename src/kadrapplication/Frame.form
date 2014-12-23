@@ -792,11 +792,11 @@
                               <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                              <Component id="jButtonPrzUzytkownikowEdytuj" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="23" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton2" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jButtonPrzPracownikowUsun" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytkUprawnienia" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytkLogin" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytDataUtworzenia" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
@@ -838,8 +838,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonPrzUzytkownikowEdytuj" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonPrzPracownikowUsun" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="140" max="32767" attributes="0"/>
                       </Group>
@@ -953,18 +953,21 @@
                     <Property name="text" type="java.lang.String" value="Has&#x142;o"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="jButtonPrzUzytkownikowEdytuj">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Edytuj"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzUzytkownikowEdytujActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton2">
+                <Component class="javax.swing.JButton" name="jButtonPrzPracownikowUsun">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Usu&#x144;"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzPracownikowUsunActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
