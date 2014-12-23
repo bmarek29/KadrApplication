@@ -11,6 +11,7 @@
  [x] dodawanie historii uzytkownikow
  [x] usuwanie historii uzytkownikow
  [ ] edycja pracownikow
+ [ ] jezyk polski w db
  */
 package kadrapplication;
 
@@ -351,6 +352,7 @@ public class Frame extends JFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanelPrzegladaniePracownikow = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -975,23 +977,30 @@ public class Frame extends JFrame {
 
         jLabel37.setText("Hasło");
 
-        jButton1.setText("edytuj - TODO");
+        jButton1.setText("Edytuj");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Usuń");
 
         javax.swing.GroupLayout jPanelPrzegladanieUzytkownikowLayout = new javax.swing.GroupLayout(jPanelPrzegladanieUzytkownikow);
         jPanelPrzegladanieUzytkownikow.setLayout(jPanelPrzegladanieUzytkownikowLayout);
         jPanelPrzegladanieUzytkownikowLayout.setHorizontalGroup(
             jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
-                .addContainerGap(441, Short.MAX_VALUE)
-                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel34)
-                        .addComponent(jLabel33)
-                        .addComponent(jLabel36)
-                        .addComponent(jLabel37)))
-                .addGap(23, 23, 23)
+                .addContainerGap(473, Short.MAX_VALUE)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel33)
+                    .addComponent(jLabel36)
+                    .addComponent(jLabel37)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytkUprawnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytkLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytDataUtworzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1023,7 +1032,9 @@ public class Frame extends JFrame {
                     .addComponent(jTextFieldPrzUzytHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel37))
                 .addGap(30, 30, 30)
-                .addComponent(jButton1)
+                .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(140, Short.MAX_VALUE))
             .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
@@ -1536,6 +1547,11 @@ public class Frame extends JFrame {
         jTabbedPaneMain.addTab("Edycja stanowisk podległych", jPanelEdycjaStanowiskPodleglych);
 
         jPanelEdycjahistoriiStanowiskPracownika.setName("Edycja historii stanowisk pracownika"); // NOI18N
+        jPanelEdycjahistoriiStanowiskPracownika.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelEdycjahistoriiStanowiskPracownikaMouseClicked(evt);
+            }
+        });
 
         jScrollPane11.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -2630,6 +2646,7 @@ public class Frame extends JFrame {
             p = km.getPracownikById(selectedId);
             jTextFieldDodawanieHistStanImieINazw.setText(p.getImie() + " " + p.getNazwisko());
         }
+        jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
     }//GEN-LAST:event_jTabbedPaneMainMouseClicked
 
     private void jButtonDodawanieHistStanDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDodawanieHistStanDodajActionPerformed
@@ -2678,16 +2695,29 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonEdycjaHistStankSzukajActionPerformed
 
     private void jTableEdycjaHistStanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEdycjaHistStanMouseClicked
-        jButtonEdycjaHistStanEdytuj.setEnabled(true);
+        //jButtonEdycjaHistStanEdytuj.setEnabled(true);
         jButtonEdycjaHistStanUsun.setEnabled(true);
+        int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
+        Historia h = km.getHistoriaStanowiskPracownikById(selectedId);
+        jTextFieldEdycjaHistStanNazwa.setText(h.getNazwa());
+        jTextFieldEdycjaHistStanDataRozpoczecia.setText(dateLongToString(h.getData_rozpoczęcia()));
+        jTextFieldEdycjaHistStanDataZakonczenia.setText(dateLongToString(h.getData_zakończenia()));
     }//GEN-LAST:event_jTableEdycjaHistStanMouseClicked
 
     private void jButtonEdycjaHistStanUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdycjaHistStanUsunActionPerformed
         int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
         Historia h;
         km.deleteFromHistoriaStanowiskaById(selectedId);
-        jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTableWithQuery(jTextFieldEdycjaHistStanSzukaj.getText()));
+        jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
     }//GEN-LAST:event_jButtonEdycjaHistStanUsunActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPanelEdycjahistoriiStanowiskPracownikaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
+        
+    }//GEN-LAST:event_jPanelEdycjahistoriiStanowiskPracownikaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2731,6 +2761,7 @@ public class Frame extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonDodawanieHistStanDodaj;
     private javax.swing.JButton jButtonDodawanieHistStanWybierzPrac;
     private javax.swing.JButton jButtonEdStPodlDodaj;

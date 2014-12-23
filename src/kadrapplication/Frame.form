@@ -786,18 +786,17 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="441" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          <EmptySpace pref="473" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton1" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="23" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jButton2" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytkUprawnienia" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytkLogin" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytDataUtworzenia" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
@@ -838,7 +837,10 @@
                               <Component id="jLabel37" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace pref="140" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -953,7 +955,15 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="edytuj - TODO"/>
+                    <Property name="text" type="java.lang.String" value="Edytuj"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Usu&#x144;"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1844,6 +1854,9 @@
               <Properties>
                 <Property name="name" type="java.lang.String" value="Edycja historii stanowisk pracownika" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelEdycjahistoriiStanowiskPracownikaMouseClicked"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Edycja historii stanowisk pracownika">

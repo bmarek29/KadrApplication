@@ -811,10 +811,10 @@ public class KadrManager {
         Historia h = null;
         try {
             getConnection();
-            rs = st.executeQuery("select * from historia_stanowiska where id_historia_stanowsika='" + selectedId + "'");
+            rs = st.executeQuery("select * from historia_stanowiska where id_historia_stanowiska='" + selectedId + "'");
             while (rs.next()) {
                 h = new Historia(
-                        rs.getInt("id_historia_stanowsika"),
+                        selectedId,
                         rs.getInt("pracownik_id_pracownik"),
                         rs.getLong("data_rozpoczecia"),
                         rs.getLong("data_zakonczenia"),
