@@ -40,6 +40,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sun.awt.SunToolkit;
 
 /**
  *
@@ -2428,6 +2429,17 @@ public class Frame extends JFrame {
         jComboBoxPrzPracownikStanowisko.setSelectedIndex(index);
 
         jListPrzPracownikPodlegleList.setModel(km.getStanowiskoHisStanowiskoPodlegle(stanowiskoPracownika));
+        //jezeli koniec umowy za mniej niz 4 miesiace to alert
+        long koniecUmowy = p.getData_konca_umowy();
+        long teraz = generateDateInMiliseconds();
+        long roznica = koniecUmowy - teraz;
+        long czteryMiesiace = 10447506987L;
+        if(roznica < czteryMiesiace){
+            jTextFieldPrzPracownikKoniecUmowy.setBackground(Color.red);
+        }else{
+            jTextFieldPrzPracownikKoniecUmowy.setBackground(Color.lightGray);
+        }
+        
     }//GEN-LAST:event_jTablePrzPracownikMouseClicked
 
     private void jButtonPrzPracownikSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikSzukajActionPerformed
