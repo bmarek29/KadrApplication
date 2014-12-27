@@ -230,8 +230,8 @@ public class KadrManager {
     public FillTable getPracownikHistStanoRaportDataTable(int id) {
         try {
             getConnection();
-            rs = st.executeQuery("select h.data_rozpoczecia as 'data rozpoczęcia',"
-                    + "h.data_zakonczenia as 'data zakończenia', "
+            rs = st.executeQuery("select h.data_rozpoczecia as 'data rozpoczecia',"
+                    + "h.data_zakonczenia as 'data zakonczenia', "
                     + "h.nazwa as nazwa from historia_stanowiska h, "
                     + "pracownik p where h.pracownik_id_pracownik = p.id_pracownik and p.id_pracownik="+id);
             this.model = new FillTable(rs);

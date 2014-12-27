@@ -1,22 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- TODO:
- [x] edycja uzytkownikow
- [x] edycja historii uzytkownikow
- [x] dodawanie historii uzytkownikow
- [x] usuwanie historii uzytkownikow
- [x] edycja pracownikow
- [ ] jezyk polski w db
- [ ] zakladki i przyciski zalezne od uprawnien
- [ ] potwierdz usuwanie - zmiana koloru i tekstu przycisku
- [ ] raporty skonfigurować
- [x] alert
- */
 package kadrapplication;
 
 import java.awt.Color;
@@ -478,14 +459,14 @@ public class Frame extends JFrame {
         jTextFieldRaportStudent = new javax.swing.JTextField();
         jTextFieldRaportPensja = new javax.swing.JTextField();
         jTextFieldRaportPensjaSrednia = new javax.swing.JTextField();
-        jLabel74 = new javax.swing.JLabel();
-        jLabel75 = new javax.swing.JLabel();
-        jLabel76 = new javax.swing.JLabel();
+        jLabelRaportSrednieWynagrodzenie = new javax.swing.JLabel();
+        jLabelRaportPensja = new javax.swing.JLabel();
+        jLabelRaportStudent = new javax.swing.JLabel();
         jLabel77 = new javax.swing.JLabel();
         jLabel78 = new javax.swing.JLabel();
         jLabel79 = new javax.swing.JLabel();
-        jLabel80 = new javax.swing.JLabel();
-        jLabel81 = new javax.swing.JLabel();
+        jLabelRaportDataZatrudnienia = new javax.swing.JLabel();
+        jLabelRaportDataKoncaUmowy = new javax.swing.JLabel();
         jLabel82 = new javax.swing.JLabel();
         jTextFieldRaportStanowisko = new javax.swing.JTextField();
         jTextFieldRaportDataKoncaUmowy = new javax.swing.JTextField();
@@ -494,6 +475,10 @@ public class Frame extends JFrame {
         jButtonRaportDrukuj = new javax.swing.JButton();
         jLabel83 = new javax.swing.JLabel();
         jLabelRaportData = new javax.swing.JLabel();
+        jLabelRaportHistoriaStanowisk = new javax.swing.JLabel();
+        jPanelRaportTable = new javax.swing.JPanel();
+        jScrollPane18 = new javax.swing.JScrollPane();
+        jTableRaport = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabelZalogowanoJako = new javax.swing.JLabel();
 
@@ -1935,7 +1920,7 @@ public class Frame extends JFrame {
 
         jTabbedPaneMain.addTab("Dodawanie historii stanowisk pracownika", jPanelDodawanieHistoriiStanowisk);
 
-        jPanelRaporty.setName("..."); // NOI18N
+        jPanelRaporty.setName("Raport pracownika"); // NOI18N
 
         jScrollPane13.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane13.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -1986,11 +1971,11 @@ public class Frame extends JFrame {
         jTextFieldRaportPensjaSrednia.setEditable(false);
         jTextFieldRaportPensjaSrednia.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel74.setText("Średnie wynagrodzenie z 3 ost. mies.");
+        jLabelRaportSrednieWynagrodzenie.setText("Średnie wynagrodzenie z 3 ost. mies.");
 
-        jLabel75.setText("Pensja");
+        jLabelRaportPensja.setText("Pensja");
 
-        jLabel76.setText("Student");
+        jLabelRaportStudent.setText("Student");
 
         jLabel77.setText("Pesel");
 
@@ -1998,9 +1983,9 @@ public class Frame extends JFrame {
 
         jLabel79.setText("Data urodzenia");
 
-        jLabel80.setText("Data zatrudnienia");
+        jLabelRaportDataZatrudnienia.setText("Data zatrudnienia");
 
-        jLabel81.setText("Data końca umowy");
+        jLabelRaportDataKoncaUmowy.setText("Data końca umowy");
 
         jLabel82.setText("Stanowisko");
 
@@ -2027,6 +2012,34 @@ public class Frame extends JFrame {
 
         jLabelRaportData.setText("02/01/2015");
 
+        jLabelRaportHistoriaStanowisk.setText("Historia stanowisk");
+
+        jTableRaport.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableRaport.setEnabled(false);
+        jTableRaport.setName("Historia stanowisk"); // NOI18N
+        jScrollPane18.setViewportView(jTableRaport);
+
+        javax.swing.GroupLayout jPanelRaportTableLayout = new javax.swing.GroupLayout(jPanelRaportTable);
+        jPanelRaportTable.setLayout(jPanelRaportTableLayout);
+        jPanelRaportTableLayout.setHorizontalGroup(
+            jPanelRaportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanelRaportTableLayout.setVerticalGroup(
+            jPanelRaportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanelRaportv2Layout = new javax.swing.GroupLayout(jPanelRaportv2);
         jPanelRaportv2.setLayout(jPanelRaportv2Layout);
         jPanelRaportv2Layout.setHorizontalGroup(
@@ -2038,56 +2051,61 @@ public class Frame extends JFrame {
                         .addComponent(jLabel58)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBoxRaportType, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel83)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelRaportData))
                     .addComponent(jLabelRaportTytulRaportu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                        .addComponent(jLabelRaportSrednieWynagrodzenie, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldRaportPensjaSrednia))
+                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                        .addComponent(jLabelRaportHistoriaStanowisk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRaportDrukuj))
+                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
                         .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRaportv2Layout.createSequentialGroup()
-                                    .addComponent(jLabel75, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldRaportPensja))
-                                .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                    .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel76, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel77, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel78, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel70)
                             .addComponent(jLabel71)
                             .addComponent(jLabel72)
                             .addComponent(jLabel73)
-                            .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                    .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldRaportDataZatrudnienia))
-                                .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                    .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldRaportDataUrodzenia))
-                                .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                    .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldRaportStanowisko))
-                                .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                    .addComponent(jLabel81, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldRaportDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                        .addComponent(jLabel74, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldRaportPensjaSrednia, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonRaportDrukuj)))
+                            .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                        .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabelRaportStudent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel77, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel78, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldRaportImieINazwisko, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
+                                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                        .addComponent(jLabelRaportDataZatrudnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldRaportDataZatrudnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                        .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldRaportDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                        .addComponent(jLabelRaportDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldRaportDataKoncaUmowy))
+                                    .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                        .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldRaportStanowisko))))
+                            .addGroup(jPanelRaportv2Layout.createSequentialGroup()
+                                .addComponent(jLabelRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanelRaportTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 21, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelRaportv2Layout.setVerticalGroup(
@@ -2118,44 +2136,38 @@ public class Frame extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldRaportPesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel77))
+                            .addComponent(jLabel77)
+                            .addComponent(jLabel82)
+                            .addComponent(jTextFieldRaportStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldRaportStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel76)))
+                            .addComponent(jLabelRaportStudent)))
                     .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                        .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                .addGap(95, 95, 95)
-                                .addComponent(jLabel75))
-                            .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                .addGap(92, 92, 92)
-                                .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel79)
-                                    .addComponent(jTextFieldRaportDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldRaportDataZatrudnienia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel80))
-                                .addGap(11, 11, 11)
-                                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel81)
-                                    .addComponent(jTextFieldRaportDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanelRaportv2Layout.createSequentialGroup()
-                                .addGap(92, 92, 92)
-                                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel82)
-                                    .addComponent(jTextFieldRaportStanowisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel79)
+                            .addComponent(jTextFieldRaportDataUrodzenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72)
+                        .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelRaportDataKoncaUmowy)
+                            .addComponent(jTextFieldRaportDataKoncaUmowy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldRaportDataZatrudnienia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelRaportDataZatrudnienia))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelRaportPensja)
+                    .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelRaportSrednieWynagrodzenie)
+                    .addComponent(jTextFieldRaportPensjaSrednia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRaportv2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel74)
-                    .addComponent(jTextFieldRaportPensjaSrednia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelRaportHistoriaStanowisk)
                     .addComponent(jButtonRaportDrukuj))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelRaportTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -2180,14 +2192,14 @@ public class Frame extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRaportyLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
+                .addGap(468, 468, 468))
         );
         jPanelRaportyLayout.setVerticalGroup(
             jPanelRaportyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+            .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        jTabbedPaneMain.addTab("...", jPanelRaporty);
+        jTabbedPaneMain.addTab("Raport pracownika", jPanelRaporty);
 
         tlo.add(jTabbedPaneMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 690, 390));
 
@@ -2634,6 +2646,7 @@ public class Frame extends JFrame {
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
+        jTableRaport.setModel(km.getPracownikHistStanoRaportDataTable(selectedId));
 
         jTextFieldRaportImieINazwisko.setText(p.getImie() + " " + p.getNazwisko());
         jTextFieldRaportPesel.setText(p.getPesel());
@@ -2882,9 +2895,45 @@ public class Frame extends JFrame {
     private void jComboBoxRaportTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxRaportTypeMouseClicked
-
+        void showFieldsInRaportTab(boolean b){
+            jLabelRaportPensja.setVisible(b);
+            jTextFieldRaportPensja.setVisible(b);
+            
+            jLabelRaportDataKoncaUmowy.setVisible(b);
+            jTextFieldRaportDataKoncaUmowy.setVisible(b);
+            
+            jLabelRaportDataZatrudnienia.setVisible(b);
+            jTextFieldRaportDataZatrudnienia.setVisible(b);
+                    
+            jLabelRaportStudent.setVisible(b);
+            jTextFieldRaportStudent.setVisible(b);
+                    
+            jLabelRaportHistoriaStanowisk.setVisible(b);
+            jPanelRaportTable.setVisible(b);
+        }
     private void jComboBoxRaportTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeActionPerformed
-        // TODO add your handling code here:
+        if(jComboBoxRaportType.getSelectedIndex() == 0){
+            jLabelRaportTytulRaportu.setText("DANE PRACOWNIKA");
+            showFieldsInRaportTab(true);
+        }
+        if(jComboBoxRaportType.getSelectedIndex() == 1){
+            jLabelRaportTytulRaportu.setText("HISTORIA STANOWISK");
+            showFieldsInRaportTab(true);
+            jLabelRaportPensja.setVisible(false);
+            jTextFieldRaportPensja.setVisible(false);
+            jLabelRaportSrednieWynagrodzenie.setVisible(false);
+            jTextFieldRaportPensjaSrednia.setVisible(false);
+            
+        }
+        if(jComboBoxRaportType.getSelectedIndex() == 2){
+            jLabelRaportTytulRaportu.setText("ZAŚWIADCZENIE O ZAROBKACH");
+            showFieldsInRaportTab(false);
+            jPanelRaportTable.setVisible(false);
+            jLabelRaportSrednieWynagrodzenie.setVisible(true);
+            jTextFieldRaportPensjaSrednia.setVisible(true);
+            
+        }
+            
     }//GEN-LAST:event_jComboBoxRaportTypeActionPerformed
 
     private void jButtonRaportDrukujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportDrukujActionPerformed
@@ -3023,15 +3072,10 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
-    private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
-    private javax.swing.JLabel jLabel76;
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel80;
-    private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel9;
@@ -3050,6 +3094,12 @@ public class Frame extends JFrame {
     private javax.swing.JLabel jLabelPrzPracownikPodlegleLabel;
     private javax.swing.JLabel jLabelPrzegladanieStanowiskError;
     private javax.swing.JLabel jLabelRaportData;
+    private javax.swing.JLabel jLabelRaportDataKoncaUmowy;
+    private javax.swing.JLabel jLabelRaportDataZatrudnienia;
+    private javax.swing.JLabel jLabelRaportHistoriaStanowisk;
+    private javax.swing.JLabel jLabelRaportPensja;
+    private javax.swing.JLabel jLabelRaportSrednieWynagrodzenie;
+    private javax.swing.JLabel jLabelRaportStudent;
     private javax.swing.JLabel jLabelRaportTytulRaportu;
     private javax.swing.JLabel jLabelWarningHaslo;
     private javax.swing.JLabel jLabelWarningLogin;
@@ -3076,6 +3126,7 @@ public class Frame extends JFrame {
     private javax.swing.JPanel jPanelPrzegladaniePracownikow;
     private javax.swing.JPanel jPanelPrzegladanieStanowisk;
     private javax.swing.JPanel jPanelPrzegladanieUzytkownikow;
+    private javax.swing.JPanel jPanelRaportTable;
     private javax.swing.JPanel jPanelRaportv2;
     private javax.swing.JPanel jPanelRaporty;
     private javax.swing.JPanel jPanelZatwierdzanie;
@@ -3088,6 +3139,7 @@ public class Frame extends JFrame {
     private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane17;
+    private javax.swing.JScrollPane jScrollPane18;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -3102,6 +3154,7 @@ public class Frame extends JFrame {
     private javax.swing.JTable jTablePrzPracownik;
     private javax.swing.JTable jTablePrzStanowisko;
     private javax.swing.JTable jTablePrzUzytkownikow;
+    private javax.swing.JTable jTableRaport;
     private javax.swing.JTable jTableZatwierdzanie;
     private javax.swing.JTextField jTextFieldDodawanieHistStanDataRozpoczecia;
     private javax.swing.JTextField jTextFieldDodawanieHistStanDataZakonczenia;
