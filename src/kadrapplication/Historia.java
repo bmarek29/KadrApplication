@@ -12,14 +12,14 @@ package kadrapplication;
 public class Historia {
     private int id_historia;
     private int id_pracownik;
-    private long data_rozpoczęcia;
-    private long data_zakończenia;
+    private String data_rozpoczęcia;
+    private String data_zakończenia;
     private String nazwa;
 
     public Historia() {
     }
 
-    public Historia(int id_historia, int id_pracownik, long data_rozpoczęcia, long data_zakończenia, String nazwa) {
+    public Historia(int id_historia, int id_pracownik, String data_rozpoczęcia, String data_zakończenia, String nazwa) {
         this.id_historia = id_historia;
         this.id_pracownik = id_pracownik;
         this.data_rozpoczęcia = data_rozpoczęcia;
@@ -27,6 +27,7 @@ public class Historia {
         this.nazwa = nazwa;
     }
 
+    
     public int getId_historia() {
         return id_historia;
     }
@@ -43,19 +44,19 @@ public class Historia {
         this.id_pracownik = id_pracownik;
     }
 
-    public long getData_rozpoczęcia() {
+    public String getData_rozpoczęcia() {
         return data_rozpoczęcia;
     }
 
-    public void setData_rozpoczęcia(long data_rozpoczęcia) {
+    public void setData_rozpoczęcia(String data_rozpoczęcia) {
         this.data_rozpoczęcia = data_rozpoczęcia;
     }
 
-    public long getData_zakończenia() {
+    public String getData_zakończenia() {
         return data_zakończenia;
     }
 
-    public void setData_zakończenia(long data_zakończenia) {
+    public void setData_zakończenia(String data_zakończenia) {
         this.data_zakończenia = data_zakończenia;
     }
 
@@ -67,4 +68,5 @@ public class Historia {
         this.nazwa = nazwa;
     }
 
+    
 }

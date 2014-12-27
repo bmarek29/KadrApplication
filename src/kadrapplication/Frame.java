@@ -39,10 +39,6 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author qqq
- */
 public class Frame extends JFrame {
 
     private ArrayList<JPanel> tabList = new ArrayList<>();
@@ -146,7 +142,7 @@ public class Frame extends JFrame {
         tabList.add(jPanelPrzegladanieStanowisk);
         tabList.add(jPanelEdycjaStanowiskPodleglych);
         tabList.add(jPanelEdycjahistoriiStanowiskPracownika);
-        tabList.add(jPanelRaporty);
+        //tabList.add(jPanelRaporty);
         tabList.add(jPanelZatwierdzanie);
         tabList.add(jPanelHistoriaZatwierdzonychZmian);
         tabList.add(jPanelDodawanieHistoriiStanowisk);
@@ -1567,7 +1563,6 @@ public class Frame extends JFrame {
 
         jScrollPane11.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
         jTableEdycjaHistStan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableEdycjaHistStanMouseClicked(evt);
@@ -2485,6 +2480,8 @@ public class Frame extends JFrame {
 
     private void jButtonZarzadzanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZarzadzanieActionPerformed
         tabActionZarzadzanie();
+        jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
+
         jListEdStPodleglychStanowiska.setModel(km.getAllStanowiskoListModel());
         if (jTablePrzPracownik.getSelectedRow() == -1) {
             jTextFieldDodawanieHistStanImieINazw.setText("nie wybrano");
@@ -2758,15 +2755,13 @@ public class Frame extends JFrame {
             if (!jTextFieldDodawanieHistStanNazwa.getText().isEmpty()
                     && !jTextFieldDodawanieHistStanDataRozpoczecia.getText().isEmpty()
                     && !jTextFieldDodawanieHistStanDataZakonczenia.getText().isEmpty()) {
-                try {
+                
                     h = new Historia(0,
                             selectedId,
-                            getDateInMilisecFromString(jTextFieldDodawanieHistStanDataRozpoczecia.getText()),
-                            getDateInMilisecFromString(jTextFieldDodawanieHistStanDataZakonczenia.getText()),
+                            jTextFieldDodawanieHistStanDataRozpoczecia.getText(),
+                            jTextFieldDodawanieHistStanDataZakonczenia.getText(),
                             jTextFieldDodawanieHistStanNazwa.getText());
-                } catch (ParseException ex) {
-                    Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
                 if (km.addHistoriaStanowiska(h) == 1) {
                     jLabelDodawanieHistStanDodano.setVisible(true);
                 }
@@ -2796,8 +2791,8 @@ public class Frame extends JFrame {
         int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
         Historia h = km.getHistoriaStanowiskPracownikById(selectedId);
         jTextFieldEdycjaHistStanNazwa.setText(h.getNazwa());
-        jTextFieldEdycjaHistStanDataRozpoczecia.setText(dateLongToString(h.getData_rozpoczęcia()));
-        jTextFieldEdycjaHistStanDataZakonczenia.setText(dateLongToString(h.getData_zakończenia()));
+        jTextFieldEdycjaHistStanDataRozpoczecia.setText(h.getData_rozpoczęcia());
+        jTextFieldEdycjaHistStanDataZakonczenia.setText(h.getData_zakończenia());
     }//GEN-LAST:event_jTableEdycjaHistStanMouseClicked
 
     private void jButtonEdycjaHistStanUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdycjaHistStanUsunActionPerformed
@@ -2853,14 +2848,14 @@ public class Frame extends JFrame {
                 if (!jTextFieldEdycjaHistStanNazwa.getText().equals(h.getNazwa())) {
                     km.updateHistoriaStanowiskNazwa(jTextFieldEdycjaHistStanNazwa.getText(), selectedId);
                 }
-                if (!jTextFieldEdycjaHistStanDataRozpoczecia.getText().equals(dateLongToString(h.getData_rozpoczęcia()))) {
+                if (!jTextFieldEdycjaHistStanDataRozpoczecia.getText().equals(h.getData_rozpoczęcia())) {
                     try {
                         km.updateHistoriaStanowiskData("data_rozpoczecia", getDateInMilisecFromString(jTextFieldEdycjaHistStanDataRozpoczecia.getText()), selectedId);
                     } catch (ParseException ex) {
                         Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (!jTextFieldEdycjaHistStanDataZakonczenia.getText().equals(dateLongToString(h.getData_zakończenia()))) {
+                if (!jTextFieldEdycjaHistStanDataZakonczenia.getText().equals(h.getData_zakończenia())) {
                     try {
                         km.updateHistoriaStanowiskData("data_zakonczenia", getDateInMilisecFromString(jTextFieldEdycjaHistStanDataZakonczenia.getText()), selectedId);
                         //

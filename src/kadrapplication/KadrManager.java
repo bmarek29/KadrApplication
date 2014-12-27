@@ -21,10 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author qqq
- */
+
 public class KadrManager {
 
     private Connection con;
@@ -32,13 +29,14 @@ public class KadrManager {
     private ResultSet rs;
     private PreparedStatement ps;
     private final String url = "jdbc:mysql://localhost:3306/kadrapp";
-
+    
     private FillTable model;
 
     public void getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, "root", "");
+
             st = con.createStatement();
         } catch (Exception e) {
             System.out.println("sql connection error: " + e);
@@ -105,7 +103,7 @@ public class KadrManager {
             getConnection();
             rs = st.executeQuery("select nazwa from stanowisko_podlegle where id_stanowisko_podlegle=" + id_pracownik);
             while (rs.next()) {
-                h = new Historia(rs.getInt("id_historia_stanowiska"), id_pracownik, rs.getLong("data_rozpoczecia"), rs.getLong("data_zakonczenia"), rs.getString("nazwa"));
+                h = new Historia(rs.getInt("id_historia_stanowiska"), id_pracownik, rs.getString("data_rozpoczecia"), rs.getString("data_zakonczenia"), rs.getString("nazwa"));
             }
         } catch (Exception e) {
             System.out.println("bład " + e);
@@ -220,9 +218,22 @@ public class KadrManager {
         try {
             getConnection();
             rs = st.executeQuery("select h.id_historia_stanowiska as id, "
-                    + "CONCAT(p.imie, ' ',p.nazwisko) as pracownik, "
+                    + "CONCAT(p.imie, ' ',p.nazwisko) as pracownik,data_rozpoczecia, "
                     + "h.nazwa as nazwa from historia_stanowiska h, pracownik p "
                     + "where h.pracownik_id_pracownik = p.id_pracownik");
+            this.model = new FillTable(rs);
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
+    public FillTable getPracownikHistStanoRaportDataTable(int id) {
+        try {
+            getConnection();
+            rs = st.executeQuery("select h.data_rozpoczecia as 'data rozpoczęcia',"
+                    + "h.data_zakonczenia as 'data zakończenia', "
+                    + "h.nazwa as nazwa from historia_stanowiska h, "
+                    + "pracownik p where h.pracownik_id_pracownik = p.id_pracownik and p.id_pracownik="+id);
             this.model = new FillTable(rs);
         } catch (Exception e) {
             System.out.println("bład " + e);
@@ -800,6 +811,26 @@ public class KadrManager {
         }
         return model;
     }
+    public FillTable getHistoriaToRaportTable() {
+        try {
+            getConnection();
+            rs = st.executeQuery("select id_do_zatwierdzenia as id, "
+                    + "u.login as 'kto zatwierdzil', "
+                    + "CONCAT(p.imie, ' ', p.nazwisko) as 'dane pracownia',  "
+                    + "nazwa_pola_do_zmiany as pole, "
+                    + "wartosc_do_zmiany as wartosc  "
+                    + "from do_zatwierdzenia d, pracownik p, uzytkownik u "
+                    + "where d.id_pracownika = p.id_pracownik "
+                    + "and d.uzytkownik_id_uzytkownik = u.id_uzytkownik  "
+                    + "and d.zatwierdzone like 0");
+
+            this.model = new FillTable(rs);
+
+        } catch (Exception e) {
+            System.out.println("bład " + e);
+        }
+        return model;
+    }
 
     int addHistoriaStanowiska(Historia h) {
         int dodano = 0;
@@ -811,8 +842,8 @@ public class KadrManager {
                     + "data_zakonczenia,"
                     + "nazwa) values(?,?,?,?)");
             ps.setInt(1, h.getId_pracownik());
-            ps.setLong(2, h.getData_rozpoczęcia());
-            ps.setLong(3, h.getData_zakończenia());
+            ps.setString(2, h.getData_rozpoczęcia());
+            ps.setString(3, h.getData_zakończenia());
             ps.setString(4, h.getNazwa());
             dodano = ps.executeUpdate();
             ps.close();
@@ -846,8 +877,8 @@ public class KadrManager {
                 h = new Historia(
                         selectedId,
                         rs.getInt("pracownik_id_pracownik"),
-                        rs.getLong("data_rozpoczecia"),
-                        rs.getLong("data_zakonczenia"),
+                        rs.getString("data_rozpoczecia"),
+                        rs.getString("data_zakonczenia"),
                         rs.getString("nazwa")
                 );
             }
