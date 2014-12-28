@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class Frame extends JFrame {
 
@@ -32,7 +33,7 @@ public class Frame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             System.out.println("look&feel: " + e);
         }
         setResizable(false);
@@ -44,10 +45,25 @@ public class Frame extends JFrame {
         //km.getPracownikData();
     }
 
+    private void showButtonsAfterLogin(boolean b) {
+
+        jButtonKartoteka.setVisible(b);
+        jButtonZarzadzanie.setVisible(b);
+        if (this.privilage.equals("pracownik_kadr")) {
+            jButtonZatwierdzanie.setVisible(false);
+            jButtonNowy.setVisible(false);
+        } else {
+            jButtonNowy.setVisible(b);
+            jButtonZatwierdzanie.setVisible(b);
+        }
+    }
+
     private void tabActionZatwierdzanie() {
         hideTabs();
         showTabAtIndex(jPanelZatwierdzanie, 0);
-        showTabAtIndex(jPanelHistoriaZatwierdzonychZmian, 1);
+        if (this.privilage.equals("administrator")) {
+            showTabAtIndex(jPanelHistoriaZatwierdzonychZmian, 1);
+        }
         jButtonZatwierdzanieZmianZatwierdz.setEnabled(false);
         jButtonZatwierdzanieZmianOdrzuc.setEnabled(false);
     }
@@ -81,9 +97,14 @@ public class Frame extends JFrame {
     private void tabActionKartoteka() {
         hideTabs();
         showTabAtIndex(jPanelPrzegladaniePracownikow, 0);
-        showTabAtIndex(jPanelPrzegladanieUzytkownikow, 1);
-        showTabAtIndex(jPanelPrzegladanieStanowisk, 2);
-        jLabelPrzegladanieStanowiskError.setVisible(false);
+        if (this.privilage.equals("administrator")) {
+            jButtonPrzPracownikUsun.setVisible(true);
+            showTabAtIndex(jPanelPrzegladanieUzytkownikow, 1);
+            showTabAtIndex(jPanelPrzegladanieStanowisk, 2);
+            jLabelPrzegladanieStanowiskError.setVisible(false);
+        } else {
+            jButtonPrzPracownikUsun.setVisible(false);
+        }
         jButtonRaporty.setVisible(false);
         jButtonPrzPracownikUsun.setEnabled(false);
         jButtonPrzPracownikEdytujZatwierdz.setEnabled(false);
@@ -91,9 +112,14 @@ public class Frame extends JFrame {
 
     private void tabActionZarzadzanie() {
         hideTabs();
-        showTabAtIndex(jPanelEdycjaStanowiskPodleglych, 0);
-        showTabAtIndex(jPanelEdycjahistoriiStanowiskPracownika, 1);
-        showTabAtIndex(jPanelDodawanieHistoriiStanowisk, 2);
+        showTabAtIndex(jPanelEdycjahistoriiStanowiskPracownika, 0);
+        if (this.privilage.equals("administrator")) {
+            jButtonEdycjaHistStanUsun.setVisible(true);
+            showTabAtIndex(jPanelEdycjaStanowiskPodleglych, 1);
+            showTabAtIndex(jPanelDodawanieHistoriiStanowisk, 2);
+        } else {
+            jButtonEdycjaHistStanUsun.setVisible(false);
+        }
         jLabelEdStPodlErrorDodaj.setVisible(false);
         jLabelEdStPodlErrorUsun.setVisible(false);
         jLabelDodawanieHistStanDodano.setVisible(false);
@@ -105,6 +131,7 @@ public class Frame extends JFrame {
         tabList.clear();
         fillTabList();
         tabActionLogowanie();
+        showButtonsAfterLogin(false);
     }
 
     private void showTabAtIndex(JPanel jP, int index) {
@@ -123,7 +150,6 @@ public class Frame extends JFrame {
         tabList.add(jPanelPrzegladanieStanowisk);
         tabList.add(jPanelEdycjaStanowiskPodleglych);
         tabList.add(jPanelEdycjahistoriiStanowiskPracownika);
-        //tabList.add(jPanelRaporty);
         tabList.add(jPanelZatwierdzanie);
         tabList.add(jPanelHistoriaZatwierdzonychZmian);
         tabList.add(jPanelDodawanieHistoriiStanowisk);
@@ -239,6 +265,39 @@ public class Frame extends JFrame {
     }
 
     public void disablePracownikTextFields(boolean b) {
+        switch (this.privilage) {
+            case "administrator":
+                jTextFieldPrzPracownikImie.setEditable(b);
+                jTextFieldPrzPracownikNazwisko.setEditable(b);
+                jTextFieldPrzPracownikDataPrzyjecia.setEditable(b);
+                jTextFieldPrzPracownikDataUrodzenia.setEditable(b);
+                jTextFieldPrzPracownikKoniecUmowy.setEditable(b);
+                jTextFieldPrzPracownikPesel.setEditable(b);
+                jTextFieldPrzPracownikTytul.setEditable(b);
+                jComboBoxPrzPracownikPlec.setEnabled(b);
+                jComboBoxPrzPracownikStanowisko.setEnabled(b);
+                jCheckBoxPrzPracownikStudent.setEnabled(b);
+                jTextFieldPrzPracownikPensja.setEditable(b);
+                break;
+            case "kierownik_kadr":
+                jTextFieldPrzPracownikNazwisko.setEditable(b);
+                jTextFieldPrzPracownikTytul.setEditable(b);
+                jComboBoxPrzPracownikStanowisko.setEnabled(b);
+                jTextFieldPrzPracownikDataPrzyjecia.setEditable(b);
+                jCheckBoxPrzPracownikStudent.setEnabled(b);
+                jTextFieldPrzPracownikPensja.setEditable(b);
+                break;
+            default:
+                jTextFieldPrzPracownikNazwisko.setEditable(b);
+                jTextFieldPrzPracownikTytul.setEditable(b);
+                jComboBoxPrzPracownikStanowisko.setEnabled(b);
+                jTextFieldPrzPracownikDataPrzyjecia.setEditable(b);
+                jCheckBoxPrzPracownikStudent.setEnabled(b);
+                break;
+        }
+    }
+
+    private void disableAllPracownikTextFields(boolean b) {
         jTextFieldPrzPracownikImie.setEditable(b);
         jTextFieldPrzPracownikNazwisko.setEditable(b);
         jTextFieldPrzPracownikDataPrzyjecia.setEditable(b);
@@ -250,7 +309,6 @@ public class Frame extends JFrame {
         jComboBoxPrzPracownikStanowisko.setEnabled(b);
         jCheckBoxPrzPracownikStudent.setEnabled(b);
         jTextFieldPrzPracownikPensja.setEditable(b);
-
     }
 
     /**
@@ -2224,9 +2282,18 @@ public class Frame extends JFrame {
         jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());
 
     }//GEN-LAST:event_jButtonZatwierdzanieActionPerformed
+    void hideButtonsAfterLogout() {
 
+    }
     private void jButtonLogowanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogowanieActionPerformed
         initTabbedPaneList();
+        if (jButtonLogowanie.getText().equals("Wyloguj")) {
+            hideButtonsAfterLogout();
+            this.privilage = "nie zalogowano";
+            jButtonLogowanie.setText("Logowanie");
+            initTabbedPaneList();
+        }
+
     }//GEN-LAST:event_jButtonLogowanieActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
@@ -2245,6 +2312,7 @@ public class Frame extends JFrame {
                 jLabelWarningLogin.setVisible(false);
                 jButtonLogowanie.setText("Wyloguj");
                 this.zalogowano_jako = jTextLogin.getText();
+                showButtonsAfterLogin(true);
             } else {
                 jLabelLoginError.setVisible(true);
             }
@@ -2318,7 +2386,7 @@ public class Frame extends JFrame {
         long dataUr = 0;
         long dataKonca = 0;
         int student = 0;
-        //System.out.println(jComboBoxNowyPracownikPlec.getSelectedItem());
+
         if (jTextFieldNowyPracownikImie.getText().length() == 0) {
             jTextFieldNowyPracownikImie.setBackground(Color.red);
             jLabelNowyPracownikkError.setVisible(true);
@@ -2451,12 +2519,12 @@ public class Frame extends JFrame {
         long teraz = generateDateInMiliseconds();
         long roznica = koniecUmowy - teraz;
         long czteryMiesiace = 10447506987L;
-        if(roznica < czteryMiesiace){
+        if (roznica < czteryMiesiace) {
             jTextFieldPrzPracownikKoniecUmowy.setBackground(Color.red);
-        }else{
+        } else {
             jTextFieldPrzPracownikKoniecUmowy.setBackground(Color.lightGray);
         }
-        
+
     }//GEN-LAST:event_jTablePrzPracownikMouseClicked
 
     private void jButtonPrzPracownikSzukajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikSzukajActionPerformed
@@ -2537,7 +2605,7 @@ public class Frame extends JFrame {
             //dodaj nowa nazwe do bazy
             //i dodaj tą nazwe dla tego stanowiska do bazy
         }
-        System.out.println(id_stanowisko + " " + id_stanowisko_podlegle);
+
         if (id_stanowisko != 0 && id_stanowisko_podlegle != 0) {
             try {
                 if (km.addStanowiskoPodlegleToStanowisko(id_stanowisko, id_stanowisko_podlegle) == 1) {
@@ -2585,12 +2653,11 @@ public class Frame extends JFrame {
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p = km.getPracownikById(selectedId);
         int uzytkownikId = km.getUzytkownikIdByLogin(zalogowano_jako);
-        System.out.println("uzytkownik id: " + uzytkownikId + " zalogowano jako: " + zalogowano_jako);
+
         if (jButtonPrzPracownikEdytujZatwierdz.getText().equals("Edytuj")) {
             disablePracownikTextFields(true);
             jButtonPrzPracownikEdytujZatwierdz.setText("Zatwierdź");
-        } else {          try {
-            //sprawdz czy sie zmienilo i wrzuc do do_zatwierdzenia
+        } else {
             if (!jTextFieldPrzPracownikImie.getText().equals(p.getImie())) {
                 km.addDoZatwierdzeniaString("imie", jTextFieldPrzPracownikImie.getText(), selectedId, uzytkownikId);
             }
@@ -2606,43 +2673,45 @@ public class Frame extends JFrame {
             if (!((String) jComboBoxPrzPracownikPlec.getModel().getElementAt(jComboBoxPrzPracownikPlec.getSelectedIndex())).equals(p.getPlec())) {
                 km.addDoZatwierdzeniaString("plec", (String) jComboBoxPrzPracownikPlec.getModel().getElementAt(jComboBoxPrzPracownikPlec.getSelectedIndex()), selectedId, uzytkownikId);
             }
-            
-            
-            if (!(getDateInMilisecFromString(jTextFieldPrzPracownikDataPrzyjecia.getText()) == p.getData_przyjecia()))
+            if (!(jTextFieldPrzPracownikDataPrzyjecia.getText().equals(dateLongToString(p.getData_przyjecia())))) {
                 km.addDoZatwierdzeniaString("data_przyjecia", jTextFieldPrzPracownikDataPrzyjecia.getText(), selectedId, uzytkownikId);
-                      
-            if (!(getDateInMilisecFromString(jTextFieldPrzPracownikDataUrodzenia.getText()) == p.getData_urodzenia()))
+            }
+            if (!(jTextFieldPrzPracownikDataUrodzenia.getText().equals(dateLongToString(p.getData_urodzenia())))) {
                 km.addDoZatwierdzeniaString("data_urodzenia", jTextFieldPrzPracownikDataUrodzenia.getText(), selectedId, uzytkownikId);
-            
-            if (!(getDateInMilisecFromString(jTextFieldPrzPracownikKoniecUmowy.getText()) == p.getData_konca_umowy()))
+            }
+            if (!(jTextFieldPrzPracownikKoniecUmowy.getText().equals(dateLongToString(p.getData_konca_umowy())))) {
                 km.addDoZatwierdzeniaString("data_konca_umowy", jTextFieldPrzPracownikKoniecUmowy.getText(), selectedId, uzytkownikId);
-            
-            
-            if ((jCheckBoxPrzPracownikStudent.isSelected() == true && p.getCzy_studiuje() == 1))
+            }
+            if ((jCheckBoxPrzPracownikStudent.isSelected() == true && p.getCzy_studiuje() == 1)) {
                 km.addDoZatwierdzeniaString("czy_studiuje", "Tak", selectedId, uzytkownikId);
-            if ((jCheckBoxPrzPracownikStudent.isSelected() == false && (p.getCzy_studiuje() == 0)))
-                km.addDoZatwierdzeniaString("czy_studiuje", "Nie", selectedId, uzytkownikId);      
-            if((Integer.valueOf(jTextFieldPrzPracownikPensja.getText())) != p.getPensja())
+            }
+            if ((jCheckBoxPrzPracownikStudent.isSelected() == false && (p.getCzy_studiuje() == 0))) {
+                km.addDoZatwierdzeniaString("czy_studiuje", "Nie", selectedId, uzytkownikId);
+            }
+            if ((Integer.valueOf(jTextFieldPrzPracownikPensja.getText())) != p.getPensja()) {
                 km.addDoZatwierdzeniaString("pensja", jTextFieldPrzPracownikPensja.getText(), selectedId, uzytkownikId);
-            
-            
-            
-            //jTablePrzPracownik.setModel(km.getPracownikDataTable());
-            disablePracownikTextFields(false);
+            }
+            int idStanowisko = km.getStanowiskoIdByNazwa((String) jComboBoxPrzPracownikStanowisko.getSelectedItem());
+            if (idStanowisko != p.getStanowisko_id_stanowisko()) {
+                km.addDoZatwierdzeniaString("stanowisko",Integer.toString(idStanowisko), selectedId, uzytkownikId);
+            }
+
+            disableAllPracownikTextFields(false);
             jButtonPrzPracownikEdytujZatwierdz.setText("Edytuj");
             jButtonPrzPracownikEdytujZatwierdz.setEnabled(false);
-            } catch (ParseException ex) {
-                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-
     }//GEN-LAST:event_jButtonPrzPracownikEdytujZatwierdzActionPerformed
 
     private void jButtonRaportyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportyActionPerformed
         jComboBoxRaportType.setModel(cmbRaportListType());
-        showTabAtIndex(jPanelRaporty, 3);
-        jTabbedPaneMain.setSelectedIndex(3);
-
+        if (this.privilage.equals("administrator")) {
+            showTabAtIndex(jPanelRaporty, 3);
+            jTabbedPaneMain.setSelectedIndex(3);
+        } else {
+            showTabAtIndex(jPanelRaporty, 1);
+            jTabbedPaneMain.setSelectedIndex(1);
+        }
+        jComboBoxRaportType.setSelectedItem("Raport - historia stanowisk");
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         Pracownik p;
         p = km.getPracownikById(selectedId);
@@ -2706,8 +2775,7 @@ public class Frame extends JFrame {
         }
     }
 
-    
-    
+
     private void jButtonPrzPracownikUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikUsunActionPerformed
         int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
         km.deleteFromPracownikById(selectedId);
@@ -2768,13 +2836,13 @@ public class Frame extends JFrame {
             if (!jTextFieldDodawanieHistStanNazwa.getText().isEmpty()
                     && !jTextFieldDodawanieHistStanDataRozpoczecia.getText().isEmpty()
                     && !jTextFieldDodawanieHistStanDataZakonczenia.getText().isEmpty()) {
-                
-                    h = new Historia(0,
-                            selectedId,
-                            jTextFieldDodawanieHistStanDataRozpoczecia.getText(),
-                            jTextFieldDodawanieHistStanDataZakonczenia.getText(),
-                            jTextFieldDodawanieHistStanNazwa.getText());
-                
+
+                h = new Historia(0,
+                        selectedId,
+                        jTextFieldDodawanieHistStanDataRozpoczecia.getText(),
+                        jTextFieldDodawanieHistStanDataZakonczenia.getText(),
+                        jTextFieldDodawanieHistStanNazwa.getText());
+
                 if (km.addHistoriaStanowiska(h) == 1) {
                     jLabelDodawanieHistStanDodano.setVisible(true);
                 }
@@ -2895,45 +2963,42 @@ public class Frame extends JFrame {
     private void jComboBoxRaportTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxRaportTypeMouseClicked
-        void showFieldsInRaportTab(boolean b){
-            jLabelRaportPensja.setVisible(b);
-            jTextFieldRaportPensja.setVisible(b);
-            
-            jLabelRaportDataKoncaUmowy.setVisible(b);
-            jTextFieldRaportDataKoncaUmowy.setVisible(b);
-            
-            jLabelRaportDataZatrudnienia.setVisible(b);
-            jTextFieldRaportDataZatrudnienia.setVisible(b);
-                    
-            jLabelRaportStudent.setVisible(b);
-            jTextFieldRaportStudent.setVisible(b);
-                    
-            jLabelRaportHistoriaStanowisk.setVisible(b);
-            jPanelRaportTable.setVisible(b);
-        }
+    void showFieldsInRaportTab(boolean b) {
+        jLabelRaportPensja.setVisible(b);
+        jTextFieldRaportPensja.setVisible(b);
+
+        jLabelRaportDataKoncaUmowy.setVisible(b);
+        jTextFieldRaportDataKoncaUmowy.setVisible(b);
+
+        jLabelRaportDataZatrudnienia.setVisible(b);
+        jTextFieldRaportDataZatrudnienia.setVisible(b);
+
+        jLabelRaportStudent.setVisible(b);
+        jTextFieldRaportStudent.setVisible(b);
+
+        jLabelRaportHistoriaStanowisk.setVisible(b);
+        jPanelRaportTable.setVisible(b);
+    }
     private void jComboBoxRaportTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeActionPerformed
-        if(jComboBoxRaportType.getSelectedIndex() == 0){
+        if (jComboBoxRaportType.getSelectedItem().equals("Raport - dane pracownika")) {
             jLabelRaportTytulRaportu.setText("DANE PRACOWNIKA");
             showFieldsInRaportTab(true);
-        }
-        if(jComboBoxRaportType.getSelectedIndex() == 1){
+        } else if (jComboBoxRaportType.getSelectedItem().equals("Raport - historia stanowisk")) {
             jLabelRaportTytulRaportu.setText("HISTORIA STANOWISK");
             showFieldsInRaportTab(true);
             jLabelRaportPensja.setVisible(false);
             jTextFieldRaportPensja.setVisible(false);
             jLabelRaportSrednieWynagrodzenie.setVisible(false);
             jTextFieldRaportPensjaSrednia.setVisible(false);
-            
-        }
-        if(jComboBoxRaportType.getSelectedIndex() == 2){
+        } else {
             jLabelRaportTytulRaportu.setText("ZAŚWIADCZENIE O ZAROBKACH");
             showFieldsInRaportTab(false);
             jPanelRaportTable.setVisible(false);
             jLabelRaportSrednieWynagrodzenie.setVisible(true);
             jTextFieldRaportPensjaSrednia.setVisible(true);
-            
+
         }
-            
+
     }//GEN-LAST:event_jComboBoxRaportTypeActionPerformed
 
     private void jButtonRaportDrukujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportDrukujActionPerformed

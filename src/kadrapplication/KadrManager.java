@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.TableModel;
 
-
 public class KadrManager {
 
     private Connection con;
@@ -29,7 +28,7 @@ public class KadrManager {
     private ResultSet rs;
     private PreparedStatement ps;
     private final String url = "jdbc:mysql://localhost:3306/kadrapp";
-    
+
     private FillTable model;
 
     public void getConnection() {
@@ -227,13 +226,14 @@ public class KadrManager {
         }
         return model;
     }
+
     public FillTable getPracownikHistStanoRaportDataTable(int id) {
         try {
             getConnection();
             rs = st.executeQuery("select h.data_rozpoczecia as 'data rozpoczecia',"
                     + "h.data_zakonczenia as 'data zakonczenia', "
                     + "h.nazwa as nazwa from historia_stanowiska h, "
-                    + "pracownik p where h.pracownik_id_pracownik = p.id_pracownik and p.id_pracownik="+id);
+                    + "pracownik p where h.pracownik_id_pracownik = p.id_pracownik and p.id_pracownik=" + id);
             this.model = new FillTable(rs);
         } catch (Exception e) {
             System.out.println("bład " + e);
@@ -704,6 +704,9 @@ public class KadrManager {
                 case "imie":
                     nazwa = "imie";
                     break;
+                case "stanowisko":
+                    nazwa = "stanowisko_id_stanowisko";
+                    break;
                 case "nazwisko":
                     nazwa = "nazwisko";
                     break;
@@ -811,6 +814,7 @@ public class KadrManager {
         }
         return model;
     }
+
     public FillTable getHistoriaToRaportTable() {
         try {
             getConnection();
@@ -998,6 +1002,9 @@ public class KadrManager {
             case "pensja":
                 nazwa = nazwaPola;
                 break;
+            case "stanowisko":
+                nazwa = nazwaPola;
+                break;
             default:
                 nazwa = nazwaPola;
         }
@@ -1019,7 +1026,7 @@ public class KadrManager {
 
             ps.close();
             con.close();
-            System.out.println("akuku");
+
         } catch (Exception e) {
             System.out.println("addToDoZatwierdzenia błąd:" + e);
         }
