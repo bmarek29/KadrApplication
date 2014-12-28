@@ -796,7 +796,7 @@
                           </Group>
                           <EmptySpace min="23" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButtonPrzPracownikowUsun" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jButtonPrzUzytkownikowUsun" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytkUprawnienia" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytkLogin" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jTextFieldPrzUzytDataUtworzenia" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
@@ -839,7 +839,7 @@
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jButtonPrzUzytkownikowEdytuj" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButtonPrzPracownikowUsun" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonPrzUzytkownikowUsun" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="140" max="32767" attributes="0"/>
                       </Group>
@@ -961,12 +961,12 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzUzytkownikowEdytujActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButtonPrzPracownikowUsun">
+                <Component class="javax.swing.JButton" name="jButtonPrzUzytkownikowUsun">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Usu&#x144;"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzPracownikowUsunActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrzUzytkownikowUsunActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

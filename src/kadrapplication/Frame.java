@@ -25,7 +25,7 @@ public class Frame extends JFrame {
 
     private ArrayList<JPanel> tabList = new ArrayList<>();
     KadrManager km = new KadrManager();
-    private String privilage = "niezalogowany";
+    private String privilege = "niezalogowany";
     private String zalogowano_jako = null;
 
     public Frame() {
@@ -49,7 +49,7 @@ public class Frame extends JFrame {
 
         jButtonKartoteka.setVisible(b);
         jButtonZarzadzanie.setVisible(b);
-        if (this.privilage.equals("pracownik_kadr")) {
+        if (this.privilege.equals("pracownik_kadr")) {
             jButtonZatwierdzanie.setVisible(false);
             jButtonNowy.setVisible(false);
         } else {
@@ -61,7 +61,7 @@ public class Frame extends JFrame {
     private void tabActionZatwierdzanie() {
         hideTabs();
         showTabAtIndex(jPanelZatwierdzanie, 0);
-        if (this.privilage.equals("administrator")) {
+        if (this.privilege.equals("administrator")) {
             showTabAtIndex(jPanelHistoriaZatwierdzonychZmian, 1);
         }
         jButtonZatwierdzanieZmianZatwierdz.setEnabled(false);
@@ -74,7 +74,7 @@ public class Frame extends JFrame {
         jLabelWarningLogin.setVisible(false);
         jLabelWarningHaslo.setVisible(false);
         jLabelLoginError.setVisible(false);
-        jLabelZalogowanoJako.setText(this.privilage);
+        jLabelZalogowanoJako.setText(this.privilege);
     }
 
     private void tabActionNowy() {
@@ -97,7 +97,7 @@ public class Frame extends JFrame {
     private void tabActionKartoteka() {
         hideTabs();
         showTabAtIndex(jPanelPrzegladaniePracownikow, 0);
-        if (this.privilage.equals("administrator")) {
+        if (this.privilege.equals("administrator")) {
             jButtonPrzPracownikUsun.setVisible(true);
             showTabAtIndex(jPanelPrzegladanieUzytkownikow, 1);
             showTabAtIndex(jPanelPrzegladanieStanowisk, 2);
@@ -113,7 +113,7 @@ public class Frame extends JFrame {
     private void tabActionZarzadzanie() {
         hideTabs();
         showTabAtIndex(jPanelEdycjahistoriiStanowiskPracownika, 0);
-        if (this.privilage.equals("administrator")) {
+        if (this.privilege.equals("administrator")) {
             jButtonEdycjaHistStanUsun.setVisible(true);
             showTabAtIndex(jPanelEdycjaStanowiskPodleglych, 1);
             showTabAtIndex(jPanelDodawanieHistoriiStanowisk, 2);
@@ -172,7 +172,7 @@ public class Frame extends JFrame {
 
     public DefaultComboBoxModel cmbRaportListType() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        if (!this.privilage.equals("pracownik_kadr")) {
+        if (!this.privilege.equals("pracownik_kadr")) {
             model.addElement("Raport - dane pracownika");
             model.addElement("Raport - historia stanowisk");
             model.addElement("Raport - zaświadczenie o zarobkach");
@@ -265,7 +265,7 @@ public class Frame extends JFrame {
     }
 
     public void disablePracownikTextFields(boolean b) {
-        switch (this.privilage) {
+        switch (this.privilege) {
             case "administrator":
                 jTextFieldPrzPracownikImie.setEditable(b);
                 jTextFieldPrzPracownikNazwisko.setEditable(b);
@@ -392,7 +392,7 @@ public class Frame extends JFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jButtonPrzUzytkownikowEdytuj = new javax.swing.JButton();
-        jButtonPrzPracownikowUsun = new javax.swing.JButton();
+        jButtonPrzUzytkownikowUsun = new javax.swing.JButton();
         jPanelPrzegladaniePracownikow = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -1030,10 +1030,10 @@ public class Frame extends JFrame {
             }
         });
 
-        jButtonPrzPracownikowUsun.setText("Usuń");
-        jButtonPrzPracownikowUsun.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPrzUzytkownikowUsun.setText("Usuń");
+        jButtonPrzUzytkownikowUsun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrzPracownikowUsunActionPerformed(evt);
+                jButtonPrzUzytkownikowUsunActionPerformed(evt);
             }
         });
 
@@ -1051,7 +1051,7 @@ public class Frame extends JFrame {
                     .addComponent(jButtonPrzUzytkownikowEdytuj, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonPrzPracownikowUsun, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPrzUzytkownikowUsun, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytkUprawnienia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytkLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPrzUzytDataUtworzenia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1085,7 +1085,7 @@ public class Frame extends JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPrzUzytkownikowEdytuj)
-                    .addComponent(jButtonPrzPracownikowUsun))
+                    .addComponent(jButtonPrzUzytkownikowUsun))
                 .addContainerGap(140, Short.MAX_VALUE))
             .addGroup(jPanelPrzegladanieUzytkownikowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelPrzegladanieUzytkownikowLayout.createSequentialGroup()
@@ -2289,7 +2289,7 @@ public class Frame extends JFrame {
         initTabbedPaneList();
         if (jButtonLogowanie.getText().equals("Wyloguj")) {
             hideButtonsAfterLogout();
-            this.privilage = "nie zalogowano";
+            this.privilege = "nie zalogowano";
             jButtonLogowanie.setText("Logowanie");
             initTabbedPaneList();
         }
@@ -2305,8 +2305,8 @@ public class Frame extends JFrame {
         }
         if (jTextLogin.getText().length() != 0 && String.valueOf(jTextHaslo.getPassword()).length() != 0) {
             if (km.checkUserInDB(jTextLogin.getText(), String.valueOf(jTextHaslo.getPassword()))) {
-                this.privilage = km.getUserPrivilage(jTextLogin.getText());
-                jLabelZalogowanoJako.setText(this.privilage);
+                this.privilege = km.getUserPrivilage(jTextLogin.getText());
+                jLabelZalogowanoJako.setText(this.privilege);
                 jLabelLoginError.setVisible(false);
                 jLabelWarningHaslo.setVisible(false);
                 jLabelWarningLogin.setVisible(false);
@@ -2621,32 +2621,42 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jButtonEdStPodlDodajActionPerformed
 
     private void jButtonEdStPodlUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdStPodlUsunActionPerformed
-        jLabelEdStPodlErrorDodaj.setVisible(false);
-        int id_podl = 0;
-        int id_st = 0;
-        if (jListEdStPodlegStanowiskaPodlegle.getSelectedIndex() == -1) {
-            jLabelEdStPodlErrorUsun.setVisible(true);
+        if (jButtonEdStPodlUsun.getText().equals("Potwierdź")) {
+            jLabelEdStPodlErrorDodaj.setVisible(false);
+            int id_podl = 0;
+            int id_st = 0;
+            if (jListEdStPodlegStanowiskaPodlegle.getSelectedIndex() == -1) {
+                jLabelEdStPodlErrorUsun.setVisible(true);
+            } else {
+                jLabelEdStPodlErrorUsun.setVisible(false);
+                id_podl = km.getStanowiskoPodlegleIdByNazwa((String) jListEdStPodlegStanowiskaPodlegle.getModel().getElementAt(jListEdStPodlegStanowiskaPodlegle.getSelectedIndex()));
+                id_st = km.getStanowiskoIdByNazwa((String) jListEdStPodleglychStanowiska.getModel().getElementAt(jListEdStPodleglychStanowiska.getSelectedIndex()));
+            }
+            if (id_podl != 0 && id_st != 0) {
+                km.deleteStanowiskoPodlegleFromStanowisko(id_podl, id_st);
+                jListEdStPodlegStanowiskaPodlegle.setModel(km.getStanowiskoHisStanowiskoPodlegle(id_st));
+            }
+            jButtonEdStPodlUsun.setText("Usuń ze stanowisk podległych");
         } else {
-            jLabelEdStPodlErrorUsun.setVisible(false);
-            id_podl = km.getStanowiskoPodlegleIdByNazwa((String) jListEdStPodlegStanowiskaPodlegle.getModel().getElementAt(jListEdStPodlegStanowiskaPodlegle.getSelectedIndex()));
-            id_st = km.getStanowiskoIdByNazwa((String) jListEdStPodleglychStanowiska.getModel().getElementAt(jListEdStPodleglychStanowiska.getSelectedIndex()));
+            jButtonEdStPodlUsun.setText("Potwierdź");
         }
-        if (id_podl != 0 && id_st != 0) {
-            km.deleteStanowiskoPodlegleFromStanowisko(id_podl, id_st);
-            jListEdStPodlegStanowiskaPodlegle.setModel(km.getStanowiskoHisStanowiskoPodlegle(id_st));
-        }
+
 
     }//GEN-LAST:event_jButtonEdStPodlUsunActionPerformed
 
     private void jButtonPrzegladanieStanowiskUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
-        if (jTablePrzStanowisko.getSelectedRow() == -1) {
-            jLabelPrzegladanieStanowiskError.setVisible(true);
+        if (jButtonPrzegladanieStanowiskUsun.getText().equals("Potwierdź")) {
+            if (jTablePrzStanowisko.getSelectedRow() == -1) {
+                jLabelPrzegladanieStanowiskError.setVisible(true);
+            } else {
+                jLabelPrzegladanieStanowiskError.setVisible(false);
+                km.deleteStanowiskoById((int) jTablePrzStanowisko.getModel().getValueAt(jTablePrzStanowisko.getSelectedRow(), 0));
+                jTablePrzStanowisko.setModel(km.getStanowiskoDataTable());
+            }
+            jButtonPrzegladanieStanowiskUsun.setText("Usuń stanowisko");
         } else {
-            jLabelPrzegladanieStanowiskError.setVisible(false);
-            km.deleteStanowiskoById((int) jTablePrzStanowisko.getModel().getValueAt(jTablePrzStanowisko.getSelectedRow(), 0));
-            jTablePrzStanowisko.setModel(km.getStanowiskoDataTable());
+            jButtonPrzegladanieStanowiskUsun.setText("Potwierdź");
         }
-
     }//GEN-LAST:event_jButtonPrzegladanieStanowiskUsunActionPerformed
 
     private void jButtonPrzPracownikEdytujZatwierdzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikEdytujZatwierdzActionPerformed
@@ -2693,7 +2703,7 @@ public class Frame extends JFrame {
             }
             int idStanowisko = km.getStanowiskoIdByNazwa((String) jComboBoxPrzPracownikStanowisko.getSelectedItem());
             if (idStanowisko != p.getStanowisko_id_stanowisko()) {
-                km.addDoZatwierdzeniaString("stanowisko",Integer.toString(idStanowisko), selectedId, uzytkownikId);
+                km.addDoZatwierdzeniaString("stanowisko", Integer.toString(idStanowisko), selectedId, uzytkownikId);
             }
 
             disableAllPracownikTextFields(false);
@@ -2704,7 +2714,7 @@ public class Frame extends JFrame {
 
     private void jButtonRaportyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportyActionPerformed
         jComboBoxRaportType.setModel(cmbRaportListType());
-        if (this.privilage.equals("administrator")) {
+        if (this.privilege.equals("administrator")) {
             showTabAtIndex(jPanelRaporty, 3);
             jTabbedPaneMain.setSelectedIndex(3);
         } else {
@@ -2777,9 +2787,14 @@ public class Frame extends JFrame {
 
 
     private void jButtonPrzPracownikUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikUsunActionPerformed
-        int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
-        km.deleteFromPracownikById(selectedId);
-        jTablePrzPracownik.setModel(km.getPracownikDataTable());
+        if (jButtonPrzPracownikUsun.getText().equals("Potwierdź")) {
+            int selectedId = (int) jTablePrzPracownik.getModel().getValueAt(jTablePrzPracownik.getSelectedRow(), 0);
+            km.deleteFromPracownikById(selectedId);
+            jTablePrzPracownik.setModel(km.getPracownikDataTable());
+            jButtonPrzPracownikUsun.setText("Usuń pracownika");
+        } else {
+            jButtonPrzPracownikUsun.setText("Potwierdź");
+        }
     }//GEN-LAST:event_jButtonPrzPracownikUsunActionPerformed
 
     private void jTableZatwierdzanieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableZatwierdzanieMouseClicked
@@ -2877,10 +2892,16 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jTableEdycjaHistStanMouseClicked
 
     private void jButtonEdycjaHistStanUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdycjaHistStanUsunActionPerformed
-        int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
-        Historia h;
-        km.deleteFromHistoriaStanowiskaById(selectedId);
-        jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
+        if (jButtonEdycjaHistStanUsun.getText().equals("Potwierdź")) {
+            int selectedId = (int) jTableEdycjaHistStan.getModel().getValueAt(jTableEdycjaHistStan.getSelectedRow(), 0);
+            Historia h;
+            km.deleteFromHistoriaStanowiskaById(selectedId);
+            jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
+            jButtonEdycjaHistStanUsun.setText("Usuń");
+        } else {
+            jButtonEdycjaHistStanUsun.setText("Potwierdź");
+        }
+
     }//GEN-LAST:event_jButtonEdycjaHistStanUsunActionPerformed
 
     private void jButtonPrzUzytkownikowEdytujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzUzytkownikowEdytujActionPerformed
@@ -2954,11 +2975,16 @@ public class Frame extends JFrame {
 
     }//GEN-LAST:event_jButtonEdycjaHistStanEdytujActionPerformed
 
-    private void jButtonPrzPracownikowUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzPracownikowUsunActionPerformed
-        int selectedId = (int) jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
-        km.deleteFromUzytkownik(selectedId);
-        jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
-    }//GEN-LAST:event_jButtonPrzPracownikowUsunActionPerformed
+    private void jButtonPrzUzytkownikowUsunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrzUzytkownikowUsunActionPerformed
+        if (jButtonPrzUzytkownikowUsun.getText().equals("Potwierdź")) {
+            int selectedId = (int) jTablePrzUzytkownikow.getModel().getValueAt(jTablePrzUzytkownikow.getSelectedRow(), 0);
+            km.deleteFromUzytkownik(selectedId);
+            jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
+            jButtonPrzUzytkownikowUsun.setText("Usuń");
+        } else {
+            jButtonPrzUzytkownikowUsun.setText("Potwierdź");
+        }
+    }//GEN-LAST:event_jButtonPrzUzytkownikowUsunActionPerformed
 
     private void jComboBoxRaportTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxRaportTypeMouseClicked
         // TODO add your handling code here:
@@ -3063,8 +3089,8 @@ public class Frame extends JFrame {
     private javax.swing.JButton jButtonPrzPracownikEdytujZatwierdz;
     private javax.swing.JButton jButtonPrzPracownikSzukaj;
     private javax.swing.JButton jButtonPrzPracownikUsun;
-    private javax.swing.JButton jButtonPrzPracownikowUsun;
     private javax.swing.JButton jButtonPrzUzytkownikowEdytuj;
+    private javax.swing.JButton jButtonPrzUzytkownikowUsun;
     private javax.swing.JButton jButtonPrzegladanieStanowiskUsun;
     private javax.swing.JButton jButtonRaportDrukuj;
     private javax.swing.JButton jButtonRaporty;
