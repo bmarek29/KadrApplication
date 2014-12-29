@@ -17,6 +17,9 @@ import javax.swing.UIManager;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -42,7 +45,23 @@ public class Frame extends JFrame {
 
         initTabbedPaneList();
 
-        //km.getPracownikData();
+        go();
+    }
+    private void go() {
+        Runnable helloRunnable = new Runnable() {
+            public void run() {
+                jTableEdycjaHistStan.setModel(km.getPracownikHistStanoDataTable());
+                jTableHistoriaZatwierdzonychZmian.setModel(km.getHistoriaZmianZatwierdzaniaTable());
+                jTablePrzPracownik.setModel(km.getPracownikDataTable());
+                jTablePrzStanowisko.setModel(km.getStanowiskoDataTable());
+                jTablePrzUzytkownikow.setModel(km.getUzytkownikDataTable());
+                jTableZatwierdzanie.setModel(km.getZatwierdzanieDataTable());                
+                jListEdStPodleglychStanowiska.setModel(km.getAllStanowiskoListModel());
+            }
+        };
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(helloRunnable, 0, 300, TimeUnit.SECONDS);
+
     }
 
     private void showButtonsAfterLogin(boolean b) {
@@ -2044,7 +2063,7 @@ public class Frame extends JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldRaportPensja, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanelRaportTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 21, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelRaportv2Layout.setVerticalGroup(
@@ -2649,7 +2668,7 @@ public class Frame extends JFrame {
                 Graphics2D g2 = (Graphics2D) pg;
                 g2.translate(pf.getImageableX(), pf.getImageableY());
                 g2.translate(0f, 0f);
-                jPanelRaporty.paint(g2);
+                jPanelRaportv2.paint(g2);
 
                 return Printable.PAGE_EXISTS;
             }
@@ -2918,7 +2937,7 @@ public class Frame extends JFrame {
     }//GEN-LAST:event_jComboBoxRaportTypeActionPerformed
 
     private void jButtonRaportDrukujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaportDrukujActionPerformed
-        // TODO add your handling code here:
+        printCard();
     }//GEN-LAST:event_jButtonRaportDrukujActionPerformed
 
     /**
